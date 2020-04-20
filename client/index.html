@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+        <title>Artful App</title>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans|Quicksand&display=swap">
+        <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+        <!-- <link href="css/style.css" rel="stylesheet"> -->
+        <link href="css/style.min.css" rel="stylesheet">
+    </head>
+    <body>
+          <!--  ======================= Hayley's code starts ==============================  -->
+
+
+          <!--  ========================== APP HEADER ====================================  -->
+
+          <div class="header nav-border px-3 py-3">
+            <img src="images/logo.png" class="logo home-btn" alt="logo">
+            <div class="nav">
+              <li class="nav-item">
+                <a class="nav-link nav-font py-2 px-2 home-btn text-dark" href="#">Home</a>
+              </li>
+              <li class="nav-item">
+                <div id="signUpBtn" class="nav-font py-2 px-3 btn btn-dark text-white radius">Sign Up!</div>
+              </li>
+              <li class="nav-item">
+                <a id="loginBtn" class="nav-link nav-font signInButton text-dark" href="#">Login</a>
+              </li>
+              <li class="nav-item">
+                <button id="myPortfolioBtn" class="nav-font btn btn-dark py-2 px-2 radius">My Portfolio</button>
+              </li>
+              <li class="nav-item">
+                <a id="logoutBtn" class="nav-link nav-font py-2 px-2 text-dark" href="#">Logout</a>
+              </li>
+            </div>
+          </div>
+
+          <!--  =========================== LANDING PAGE ================================  -->
+          <div id="landingPage">
+
+            <!-- Banner -->
+            <div class="landingPage-banner"></div>
+            <div class="filterDropdown row">
+              <div class="input-group col-12 col-sm-12 col-md-3 col-lg-3">
+                <select id="filterDropdown-byPrice" class="custom-select filterInputGroup mx-2 my-2">
+                  <option value='{"min":0,"max":500000}' selected>Price</option>
+                  <option value='{"min":0,"max":50}'>Under $50</option>
+                  <option value='{"min":51,"max":150}'>From $51 to $150</option>
+                  <option value='{"min":151,"max":100000}'>From $151</option>
+                </select>
+              </div>
+
+              <!-- Filter dropdown -->
+              <div class="input-group col-12 col-sm-12 col-md-3 col-lg-3">
+                <select class="custom-select filterInputGroup mx-2 my-2" id="filterDropdown-byCategory">
+                  <option value="all" selected>Category</option>
+                  <option value="Painting">Painting</option>
+                  <option value="Photography">Photography</option>
+                  <option value="Prints">Prints</option>
+                  <option value="Others">Others</option>
+                </select>
+              </div>
+              <button id="filterButton" class="bg-info btn nav-font px-3 mr-3 text-white radius">Search</button>
+            </div>
+
+            <!-- Arts listing -->
+            <div class="landingPage-listing">
+              <div class="text-center h3 mt-4 mb-4">Latest Artworks</div>
+              <div class="loader mt-5 mb-5"></div>
+              <div id="artsDeck" class="mx-3 row"></div>
+            </div>
+          </div>
+
+
+          <!--  ========================== VIEWMORE PAGE ================================  -->
+
+          <div id="viewMorePage"></div>
+
+          <!--  ======================= Hayley's code ends ==============================  -->
+
+          <!--  ======================= Yana's code starts ==============================  -->
+
+
+          <!--  ======================== MYPORTFOLIO PAGE ===============================  -->
+
+          <div id="projectPage">
+              <div class="container">
+
+                  <!-- MyAccount summary -->
+                      <div id="memberName"></div>
+                  <div class="mb-5 mt-3 py-5 px-5 border-gray radius col-lg-9 col-md-12 col-sm-12 mx-auto">
+                      <div id="memberAccount">
+                          <div class="loader mt-5 mb-5"></div>
+                      </div>
+                      <button id="updateMemberBtn" name="updateMemberBtn" class="btn btn-dark btn-font float-right radius">Edit</button>
+                  </div>
+
+                  <!-- Upload a new project -->
+                  <h2 class="text-center mb-5">New Project</h2>
+                  <div class="mb-5 mt-3 pb-4 border-blue radius col-lg-10 col-md-10 col-sm-10 mx-auto text-center">
+                      <img src="images/upload-icon.png" alt="Upload project icon" class="mx-auto border-0 pb-4"><br>
+                      <button id="addPortfolio" name="addPortfolio" type="submit" class="btn btn-dark btn-font py-3 px-3 radius">Upload Project</button>
+                  </div>
+
+                  <!-- All my uploaded projects -->
+                  <h2 class="text-center mb-5">My Portfolio</h2>
+                  <div id="myProjectCards">
+                    <div class="loader mt-5 mb-5"></div>
+                  </div>
+
+              </div>
+          </div>
+
+
+          <!--  ===================== UPLOAD NEW PROJECT PAGE ============================  -->
+
+          <div id="uploadPortfolioPage" class="bg-page bg-upload">
+              <div class="container-form pb-3">
+                  <h1 class="text-center pt-3">Upload Project</h1>
+                  <form id="addPortfolioForm" class="mt-3 py-4 mb-5 px-3 border-blue radius col-lg-8 col-md-12 col-sm-12 mx-auto">
+                      <!-- Project title -->
+                      <div class="form-group">
+                          <label class="h5-label" for="addPortfolioTitle">Title</label>
+                          <input id="addPortfolioTitle" type="text" class="form-control rounded" placeholder="Title" name="addPortfolioTitle">
+                      </div>
+                      <!-- Project description -->
+                      <div class="form-group">
+                          <label class="h5-label" for="addPortfolioDescription">Description</label>
+                          <textarea id="addPortfolioDescription" class="form-control rounded" placeholder="Description" name="addPortfolioDescription"></textarea>
+                      </div>
+                      <!-- Project image url -->
+                      <div class="form-group">
+                          <label class="h5-label" for="addPortfolioImage">Image URL</label>
+                          <input id="addPortfolioImage" type="text" class="form-control rounded" placeholder="Image URL" name="addPortfolioImage">
+                      </div>
+                      <!-- Project category select -->
+                      <div class="row mb-2">
+                          <div class="form-group col-6">
+                            <label class="h5-label" for="addPortfolioCategory">Category</label>
+                            <div class="input-group">
+                              <select id="addPortfolioCategory" name="addPortfolioCategory" form="addPortfolioForm" class="custom-select filterInputGroup rounded">
+                                <option value="Painting">Painting</option>
+                                <option value="Photography">Photography</option>
+                                <option value="Prints">Prints</option>
+                                <option value="Others">Others</option>
+                              </select>
+                            </div>
+                        </div>
+                        <!-- Project price -->
+                        <div class="form-group col-6">
+                            <label class="h5-label" for="addPortfolioPrice">Price($)</label>
+                            <input type="number" id="addPortfolioPrice" class="form-control rounded" placeholder="Price" name="addPortfolioPrice">
+                        </div>
+                      </div>
+                    <button id="addPortfolioBtn" name="addPortfolioButton" type="submit" class="btn btn-dark btn-font float-right radius">Submit</button>
+                    <button name="addPortfolioButton" type="submit" class="btn mb-3 btn-danger btn-font float-left back-portfolio radius">Cancel</button><br>
+                </form>
+              <!-- Add project form ends -->
+            </div>
+          </div> <!-- Add project page ends -->
+
+
+          <!--  ===================== UPDATE A PROJECT PAGE ============================  -->
+
+          <div id="updatePortfolioPage" class="bg-page bg-update">
+              <div class="container-form pb-3">
+                  <h1 class="text-center pt-3">Update Project</h1>
+                  <form id="updatePortfolioForm" class="mt-3 py-4 mb-5 px-3 border-blue radius col-lg-8 col-md-12 col-sm-12 mx-auto">
+
+                      <!-- Title -->
+                      <div class="form-group">
+                          <label class="h5-label" for="updatePortfolioTitle">Title</label>
+                          <input type="text" id="updatePortfolioTitle" class="form-control rounded" placeholder="Title" name="updatePortfolioTitle" required>
+                      </div>
+
+                      <!-- Description -->
+                      <div class="form-group">
+                          <label class="h5-label" for="updatePortfolioDescription">Description</label>
+                          <textarea id="updatePortfolioDescription" class="form-control rounded" placeholder="Description" name="updatePortfolioDescription" required></textarea>
+                      </div>
+
+                      <!-- Image -->
+                      <div class="form-group">
+                          <label class="h5-label" for="updatePortfolioImage">Image URL</label>
+                          <input type="text" id="updatePortfolioImage" class="form-control rounded" placeholder="Image URL" name="updatePortfolioImage" required>
+                      </div>
+
+                      <!-- Category -->
+                      <div class="row mb-2">
+                        <div class="form-group col-6">
+                            <label class="h5-label" for="updatePortfolioCategory">Category</label>
+                            <div class="input-group">
+                                <select id="updatePortfolioCategory" name="updatePortfolioCategory" form="addPortfolioForm" class="custom-select filterInputGroup rounded">
+                                    <option value="Painting">Painting</option>
+                                    <option value="Photography">Photography</option>
+                                    <option value="Prints">Prints</option>
+                                    <option value="Others">Others</option>
+                                </select>
+                            </div>
+                        </div>
+                        <!-- Price -->
+                        <div class="form-group col-6">
+                            <label class="h5-label" for="updatePortfolioPrice">Price($)</label>
+                            <input type="number" id="updatePortfolioPrice" class="form-control rounded" placeholder="Price" name="updatePortfolioPrice" required>
+                        </div>
+                      </div>
+                    <button id="updatePortfolioBtn" name="updatePortfolioButton" type="submit" class="btn btn-dark btn-font float-right radius">Submit</button>
+                    <button name="updatePortfolioButton" type="submit" class="btn mb-3 btn-danger btn-font float-left back-portfolio radius">Cancel</button><br>
+                </form>
+              <!-- Update project form ends -->
+              </div>
+          </div> <!-- Update project page ends -->
+
+
+          <!--  ===================== REGISTRATION PAGE ============================  -->
+
+          <div id="signUpPage">
+              <div class="bg-page bg-register">
+                  <div class="form-box radius">
+                      <form id="registerForm" class="mt-2 mt-lg-5 col-lg-8 col-md-10 col-sm-10 mx-auto">
+                          <h2 class="text-center pt-4">Join Art App!</h2>
+                          <h3 class="mb-3 text-center text-dark">Support New Zealand Artists</h3>
+                          <!-- Username -->
+                          <div class="form-group">
+                              <label class="h5-label" for="registerUsername">Username</label>
+                              <input type="text" name="registerUsername" class="form-control rounded" placeholder="Username" id="registerUsername" >
+                          </div>
+                          <!-- Email -->
+                          <div class="form-group">
+                              <label class="h5-label" for="registerEmail">Email</label>
+                              <input id="registerEmail" class="form-control rounded" type="email" name="registerEmail" placeholder="Email" >
+                          </div>
+                          <!-- Password -->
+                          <div class="form-group">
+                              <label class="h5-label" for="registerPassword">Password</label>
+                              <input id="registerPassword" class="form-control rounded" type="password" autocomplete="new-password" name="registerPassword" placeholder="Password">
+                              <div id="errorPassword"></div>
+                          </div>
+                          <div class="text-center">
+                              <button id="registerSubmit" class="mt-3 btn btn-dark btn-lg btn-font radius" name="registerButton" type="submit" >Sign Up!</button>
+                          </div>
+                      </form>
+                  </div>
+              </div>
+          </div>
+
+          <!--  ========================= LOGIN PAGE ==============================  -->
+
+          <div id="loginPage">
+              <div class="row">
+                <div class="col-lg-5 col-md-6 d-none d-md-block">
+                    <img src="images/KateLeslie_ThePunk.jpg" alt="Kate Leslie Artist, The Punk" class="img-fluid">
+                  </div>
+                  <div class="col-lg-7 col-md-6 col-sm-12 pt-5">
+                      <form id="loginForm" class="mb-3">
+                          <h1 class="text-center mb-5">Login</h1>
+
+                          <!-- Username -->
+                          <div class="form-group col-lg-6 col-md-6 col-sm-12 mx-auto">
+                              <label for="inputUsernameLogin" class="h3-label"> Username </label>
+                              <input type="text" id="inputUsernameLogin" name="loginUsername" placeholder="Username" class="form-control rounded">
+                          </div>
+
+                          <!-- Password -->
+                          <div class="form-group col-lg-6 col-md-6 col-sm-12 mx-auto">
+                              <label for="inputPasswordLogin" class="h3-label"> Password </label>
+                              <input type="password" id="inputPasswordLogin" name="loginPassword" placeholder="Password" class="form-control rounded">
+                          </div>
+
+                          <!-- Login button -->
+                          <div class="text-center mb-5">
+                              <button id="loginSubmitBtn" name="button" type="submit" class="mt-5 mb-3 btn btn-dark btn-lg btn-font radius"> Login </button>
+                          </div>
+                      </form>
+                  </div>
+                  <div class="col-sm-12 d-block d-md-none">
+                    <img src="images/KateLeslie_ThePunk.jpg" alt="Kate Leslie Artist, The Punk" class="img-fluid">
+                  </div>
+              </div>
+          </div>
+
+
+          <!--  ============================ APP FOOTER ================================  -->
+
+
+          <footer class="navbar bg-cyan d-none d-md-block">
+            <div class="row mx-auto">
+              <div class="col-12 col-lg-12 col-sm-12 mt-3">
+                <div class="text-center">
+                  <p class="text-white btn-font">Created by Hayley, Rahul and Yana for a Yoobee Assignment.</p>
+                  <p class="text-white text-center">Featured art by <a class="text-white" href="https://www.kateleslie.com/">Kate Leslie</a> and <a class="text-white" href="https://www.brewster.co.nz">Barney Brewster</a></p>
+                </div>
+              </div>
+            </div>
+          </footer>
+
+
+          <!--  ======================= Yana's code ends ==============================  -->
+
+          <script src="node_modules/jquery/dist/jquery.min.js"></script>
+          <script src="node_modules/popper.js/dist/umd/popper.min.js"></script>
+          <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+          <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9.10.12/dist/sweetalert2.all.min.js"></script>
+          <!-- <script src="js/script.js"></script> -->
+          <script src="js/script.min.js"></script>
+    </body>
+</html>

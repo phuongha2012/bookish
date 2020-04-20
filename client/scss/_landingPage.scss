@@ -1,0 +1,120 @@
+// Hayley's code
+.landingPage-banner {
+  background-image: url('../images/BarneyBrewsterBanner.jpg');
+  background-size: cover;
+  height: 50vh;
+  // Yanas responsive code
+  @media (max-width: $desktop) {
+    background-repeat: no-repeat;
+    height: 25vh;
+  }
+}
+
+.filterDropdown {
+  background-color: $secondary;
+  justify-content: center;
+  padding-bottom: 20px;
+  padding-top: 20px;
+}
+
+.filterInputGroup {
+  border-radius: 20px;
+}
+
+#artsDeck {
+  display: flex;
+  flex-flow: row wrap;
+  height: auto;
+  justify-content: flex-start;
+}
+
+.artcard {
+  border: none;
+  height: 700px;
+  margin-bottom: 50px;
+  margin-left: 70px;
+  margin-right: 70px;
+  width: 450px;
+}
+
+.artcard-title {
+  height: 56px;
+  margin-right: 50px;
+}
+
+.artcard-body {
+  padding-left: 30px;
+  padding-right: 30px;
+}
+
+.artcard-columnwrap {
+  display: flex;
+  justify-content: space-between;
+}
+
+.artcard-description {
+  height: 72px;
+  overflow: hidden;
+  text-align: justify;
+}
+
+.art-image {
+  border: none;
+  border-radius: 50px;
+  height: auto;
+  max-height: 300px;
+  max-width: 449px;
+  width: auto;
+}
+
+.artcard-link {
+  color: black;
+  text-decoration: underline;
+}
+
+.artcard-category {
+  color: $primary;
+}
+
+// Hayley's code ends
+
+// Yanas code
+.nav-border
+{
+	border-bottom: 4px solid $blue;
+	width: 100%;
+}
+.card-border
+{
+	border-bottom: 2px solid $gray;
+	border-left: 0;
+	border-right: 0;
+	border-top: 0;
+	width: 100%;
+}
+
+.card-img-top
+{
+  height: 20vw;
+  object-fit: cover;
+  width: 100%;
+  @media (max-width: $tablet) {
+    height: 100%;
+    width: 100%;
+  }
+}
+
+.logo{
+  @media (max-width: $tablet) {
+    margin-right: 10%;
+    width: 35%;
+  }
+}
+
+#memberName
+{
+  @media (max-width: 900px) {
+    display: none;
+  }
+}
+// Yana code ends

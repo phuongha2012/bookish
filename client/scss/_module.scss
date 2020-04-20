@@ -1,0 +1,134 @@
+// buttons
+// yanas code
+.btn-font
+{
+	font-family: 'Quicksand', sans-serif;
+	font-weight: 700;
+	text-align: center;
+}
+.nav-font
+{
+	font-family: 'Open Sans', sans-serif;
+	font-weight: 700;
+}
+.radius
+{
+	border-radius: 50px;
+}
+
+.btn-red {
+  background-color: $red;
+  color: white;
+	cursor: pointer;
+  text-align: center;
+
+	:hover {
+		color: white;
+	}
+}
+
+.edit-button {
+  background-color: $gray-dark;
+  border-radius: 20px;
+  color: white;
+  cursor: pointer;
+  padding: 9px 15px;
+}
+
+// background colours
+.bg-blue
+{
+	background-color: $blue;
+}
+.bg-cyan
+{
+	background-color: $cyan;
+}
+// borders
+.border-blue
+{
+	border: 3px solid $blue;
+	  // Yanas responsive code
+	@media (max-width: $tablet) {
+		border: 0;
+	}
+}
+.border-gray
+{
+	border: 3px solid $gray;
+}
+.border-red
+{
+	border: 3px solid $red;
+}
+
+// Yanas code ends
+
+// Hayley's code
+.logo {
+  width: 200px;
+}
+
+.header {
+  // margin: 1rem;
+  align-items: center;
+  display: flex;
+  height: 10%;
+  justify-content: space-between;
+}
+
+.nav {
+  justify-content: space-evenly;
+  width: 300px;
+}
+
+.button {
+  background-color: $primary;
+  border-radius: 20px;
+  color: white;
+  cursor: pointer;
+  padding: 9px 15px;
+}
+
+.signInButton {
+  cursor: pointer;
+  padding: 6px 15px;
+}
+
+.button-red {
+  background-color: $red;
+  border-radius: 20px;
+  color: white;
+  cursor: pointer;
+  padding: 6px 15px;
+  text-align: center;
+}
+
+.button-black {
+  background-color: $gray-dark;
+  border-radius: 20px;
+  color: white;
+  cursor: pointer;
+  padding: 6px 15px;
+  text-align: center;
+}
+
+// Loading spinner
+
+.loader {
+  border: 5px solid #f3f3f3;
+  border-top: 5px solid #67696b;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  animation: spin 1s linear infinite;
+  margin: 0 auto;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+
+// Hayley's code ends

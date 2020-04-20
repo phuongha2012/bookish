@@ -1,0 +1,107 @@
+// Yanas code
+
+.container-form{
+  background-color: white;
+  height: 100vh;
+  margin: 0 auto;
+  width: 70%;
+  @media (max-width: $tablet) {
+    height: 100%;
+    width: 100%;
+}
+}
+
+.form-box{
+  background-color: white;
+  height: 85vh;
+  margin: 0 auto;
+  width: 60%;
+  @media (max-width: $tablet) {
+    height: 100%;
+    width: 100%;
+}
+}
+
+.bg-page
+{
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	height: 100vh;
+	overflow: hidden;
+	width: 100%;
+	z-index: -2;
+}
+// background image for upload project form
+.bg-upload
+{
+	background-image: url("../images/KateLeslie_HolidaySeries1.jpg");
+}
+// background image for sign up page
+.bg-register
+{
+	background-image: url("../images/KateLeslie_HolidaySeries2.jpg");
+}
+
+// background image for update page
+.bg-update
+{
+	background-image: url("../images/casmir-YanaBrewster.jpg");
+}
+
+// Yanas code ends
+
+// Hayley's code
+
+.portfolioCard {
+  border: none;
+  height: 400px;
+  margin-bottom: 40px;
+  margin-left: 70px;
+  margin-right: 70px;
+  width: 390px;
+}
+
+.portfolioPage-image {
+  background-color: $grey-light;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-radius: 50px;
+  height: 250px;
+  width: 100%;
+}
+
+#myProjectCards {
+  display: flex;
+  flex-flow: row wrap;
+  height: auto;
+  justify-content: flex-start;
+}
+
+.portfolioPage-buttonsWrapper {
+  display: flex;
+  justify-content: space-between;
+}
+
+.portfolioPage-buttonGroup {
+  display: flex;
+  justify-content: space-between;
+  width: 42%;
+}
+
+.noPortfolio {
+  font-size: x-large;
+  margin-bottom: 8rem;
+  width: 100%;
+}
+
+.userInfoField {
+  width: 100px;
+}
+
+.portfolioPage-cardTitle {
+  margin: auto;
+}
+
+// Hayley's code ends

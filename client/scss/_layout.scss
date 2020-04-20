@@ -1,0 +1,38 @@
+// Hayley's code
+.flexContainer-row {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.flexContainer-flexStart {
+    align-items: flex-start;
+    display: flex;
+    flex-direction: row;
+}
+
+.container-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding-left: 70px;
+}
+
+// Hayley's code ends
+
+// Yanas code
+
+footer {
+  bottom: 0;
+  position: absolute;
+}
+
+// grid break points - max
+
+$mobile: 540px;
+$tablet: 720px;
+$desktop: 960px;
+$desktop-xl: 1140px;
+
+// Yans code ends

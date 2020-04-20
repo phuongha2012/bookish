@@ -1,0 +1,73 @@
+// yanas code
+*
+{
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+// text
+h1
+{
+	color: $gray-dark;
+	font-family: 'Quicksand', sans-serif;
+	font-size: 2.250em;
+	font-weight: 700;
+}
+h2
+{
+	color: $gray-dark;
+	font-family: 'Quicksand', sans-serif;
+	font-size: 2em;
+	font-weight: 700;
+}
+h3
+{
+	color: $blue;
+	font-family: 'Quicksand', sans-serif;
+	font-size: 1.750em;
+	font-weight: 700;
+}
+h4
+{
+	color: $gray-dark;
+	font-family: 'Quicksand', sans-serif;
+	font-size: 1.250em;
+	font-weight: 700;
+}
+h5
+{
+	color: $gray-dark;
+	font-family: 'Open Sans', sans-serif;
+	font-size: 1.250em;
+	font-weight: 700;
+}
+p
+{
+	color: $gray-dark;
+	font-family: 'Open Sans', sans-serif;
+	text-align: left;
+}
+// forms
+.h5-label
+{
+	color: $gray-dark;
+	font-family: 'Open Sans', sans-serif;
+	font-size: 1.250em;
+	font-weight: 700;
+}
+.h3-label
+{
+	color: $blue;
+	font-family: 'Quicksand', sans-serif;
+	font-size: 1.750em;
+	font-weight: 700;
+}
+// yanas code ends
+// Hayleys code
+.h5-cyan
+{
+	color: $primary;
+	font-family: 'Open Sans', sans-serif;
+	font-size: 1.250em;
+	font-weight: 700;
+}

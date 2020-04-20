@@ -1,0 +1,61 @@
+#viewMorePage-artInfo {
+    padding-left: 10vw;
+    padding-right: 10vw;
+    padding-top: 3rem;
+}
+
+.viewMore-photoBackground {
+    align-content: center;
+    background-color: $grey-light;
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+}
+
+.viewMore-mainPhoto {
+    height: auto;
+    max-width: 70vw;
+}
+
+.viewMore-endBoarder {
+    border-bottom: lightgrey 2px solid;
+    padding-bottom: 2rem;
+}
+
+.viewMorePage-commentsWrapper {
+    max-width: 100%;
+    padding-left: 10vw;
+    padding-right: 10vw;
+}
+
+.comment-container {
+    border: $primary 1px solid;
+    border-radius: 20px;
+    padding: 1rem;
+
+    &--left {
+        text-align: left;
+    }
+
+    &--right {
+        text-align: right;
+    }
+}
+
+.comment-info {
+    display: flex;
+}
+
+// yana code
+
+.comment-right {
+    background-color: $blue;
+    text-align: right;
+}
+
+.comment-left {
+    background-color: white;
+    text-align: left;
+}
+
+// yana code ends

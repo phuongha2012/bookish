@@ -1,0 +1,492 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+h1 {
+  color: #333333;
+  font-family: 'Quicksand', sans-serif;
+  font-size: 2.250em;
+  font-weight: 700;
+}
+
+h2 {
+  color: #333333;
+  font-family: 'Quicksand', sans-serif;
+  font-size: 2em;
+  font-weight: 700;
+}
+
+h3 {
+  color: #99cccc;
+  font-family: 'Quicksand', sans-serif;
+  font-size: 1.750em;
+  font-weight: 700;
+}
+
+h4 {
+  color: #333333;
+  font-family: 'Quicksand', sans-serif;
+  font-size: 1.250em;
+  font-weight: 700;
+}
+
+h5 {
+  color: #333333;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 1.250em;
+  font-weight: 700;
+}
+
+p {
+  color: #333333;
+  font-family: 'Open Sans', sans-serif;
+  text-align: left;
+}
+
+.h5-label {
+  color: #333333;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 1.250em;
+  font-weight: 700;
+}
+
+.h3-label {
+  color: #99cccc;
+  font-family: 'Quicksand', sans-serif;
+  font-size: 1.750em;
+  font-weight: 700;
+}
+
+.h5-cyan {
+  color: #339999;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 1.250em;
+  font-weight: 700;
+}
+
+.flexContainer-row {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.flexContainer-flexStart {
+  align-items: flex-start;
+  display: flex;
+  flex-direction: row;
+}
+
+.container-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding-left: 70px;
+}
+
+footer {
+  bottom: 0;
+  position: absolute;
+}
+
+.btn-font {
+  font-family: 'Quicksand', sans-serif;
+  font-weight: 700;
+  text-align: center;
+}
+
+.nav-font {
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 700;
+}
+
+.radius {
+  border-radius: 50px;
+}
+
+.btn-red {
+  background-color: #FF9966;
+  color: white;
+  cursor: pointer;
+  text-align: center;
+}
+.btn-red :hover {
+  color: white;
+}
+
+.edit-button {
+  background-color: #333333;
+  border-radius: 20px;
+  color: white;
+  cursor: pointer;
+  padding: 9px 15px;
+}
+
+.bg-blue {
+  background-color: #99cccc;
+}
+
+.bg-cyan {
+  background-color: #339999;
+}
+
+.border-blue {
+  border: 3px solid #99cccc;
+}
+@media (max-width: 720px) {
+  .border-blue {
+    border: 0;
+  }
+}
+
+.border-gray {
+  border: 3px solid #cccccc;
+}
+
+.border-red {
+  border: 3px solid #FF9966;
+}
+
+.logo {
+  width: 200px;
+}
+
+.header {
+  align-items: center;
+  display: flex;
+  height: 10%;
+  justify-content: space-between;
+}
+
+.nav {
+  justify-content: space-evenly;
+  width: 300px;
+}
+
+.button {
+  background-color: #339999;
+  border-radius: 20px;
+  color: white;
+  cursor: pointer;
+  padding: 9px 15px;
+}
+
+.signInButton {
+  cursor: pointer;
+  padding: 6px 15px;
+}
+
+.button-red {
+  background-color: #FF9966;
+  border-radius: 20px;
+  color: white;
+  cursor: pointer;
+  padding: 6px 15px;
+  text-align: center;
+}
+
+.button-black {
+  background-color: #333333;
+  border-radius: 20px;
+  color: white;
+  cursor: pointer;
+  padding: 6px 15px;
+  text-align: center;
+}
+
+.loader {
+  border: 5px solid #f3f3f3;
+  border-top: 5px solid #67696b;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  animation: spin 1s linear infinite;
+  margin: 0 auto;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+.container-form {
+  background-color: white;
+  height: 100vh;
+  margin: 0 auto;
+  width: 70%;
+}
+@media (max-width: 720px) {
+  .container-form {
+    height: 100%;
+    width: 100%;
+  }
+}
+
+.form-box {
+  background-color: white;
+  height: 85vh;
+  margin: 0 auto;
+  width: 60%;
+}
+@media (max-width: 720px) {
+  .form-box {
+    height: 100%;
+    width: 100%;
+  }
+}
+
+.bg-page {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100vh;
+  overflow: hidden;
+  width: 100%;
+  z-index: -2;
+}
+
+.bg-upload {
+  background-image: url("../images/KateLeslie_HolidaySeries1.jpg");
+}
+
+.bg-register {
+  background-image: url("../images/KateLeslie_HolidaySeries2.jpg");
+}
+
+.bg-update {
+  background-image: url("../images/casmir-YanaBrewster.jpg");
+}
+
+.portfolioCard {
+  border: none;
+  height: 400px;
+  margin-bottom: 40px;
+  margin-left: 70px;
+  margin-right: 70px;
+  width: 390px;
+}
+
+.portfolioPage-image {
+  background-color: #f5f9f8;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-radius: 50px;
+  height: 250px;
+  width: 100%;
+}
+
+#myProjectCards {
+  display: flex;
+  flex-flow: row wrap;
+  height: auto;
+  justify-content: flex-start;
+}
+
+.portfolioPage-buttonsWrapper {
+  display: flex;
+  justify-content: space-between;
+}
+
+.portfolioPage-buttonGroup {
+  display: flex;
+  justify-content: space-between;
+  width: 42%;
+}
+
+.noPortfolio {
+  font-size: x-large;
+  margin-bottom: 8rem;
+  width: 100%;
+}
+
+.userInfoField {
+  width: 100px;
+}
+
+.portfolioPage-cardTitle {
+  margin: auto;
+}
+
+.landingPage-banner {
+  background-image: url("../images/BarneyBrewsterBanner.jpg");
+  background-size: cover;
+  height: 50vh;
+}
+@media (max-width: 960px) {
+  .landingPage-banner {
+    background-repeat: no-repeat;
+    height: 25vh;
+  }
+}
+
+.filterDropdown {
+  background-color: #cccccc;
+  justify-content: center;
+  padding-bottom: 20px;
+  padding-top: 20px;
+}
+
+.filterInputGroup {
+  border-radius: 20px;
+}
+
+#artsDeck {
+  display: flex;
+  flex-flow: row wrap;
+  height: auto;
+  justify-content: flex-start;
+}
+
+.artcard {
+  border: none;
+  height: 700px;
+  margin-bottom: 50px;
+  margin-left: 70px;
+  margin-right: 70px;
+  width: 450px;
+}
+
+.artcard-title {
+  height: 56px;
+  margin-right: 50px;
+}
+
+.artcard-body {
+  padding-left: 30px;
+  padding-right: 30px;
+}
+
+.artcard-columnwrap {
+  display: flex;
+  justify-content: space-between;
+}
+
+.artcard-description {
+  height: 72px;
+  overflow: hidden;
+  text-align: justify;
+}
+
+.art-image {
+  border: none;
+  border-radius: 50px;
+  height: auto;
+  max-height: 300px;
+  max-width: 449px;
+  width: auto;
+}
+
+.artcard-link {
+  color: black;
+  text-decoration: underline;
+}
+
+.artcard-category {
+  color: #339999;
+}
+
+.nav-border {
+  border-bottom: 4px solid #99cccc;
+  width: 100%;
+}
+
+.card-border {
+  border-bottom: 2px solid #cccccc;
+  border-left: 0;
+  border-right: 0;
+  border-top: 0;
+  width: 100%;
+}
+
+.card-img-top {
+  height: 20vw;
+  object-fit: cover;
+  width: 100%;
+}
+@media (max-width: 720px) {
+  .card-img-top {
+    height: 100%;
+    width: 100%;
+  }
+}
+
+@media (max-width: 720px) {
+  .logo {
+    margin-right: 10%;
+    width: 35%;
+  }
+}
+
+@media (max-width: 900px) {
+  #memberName {
+    display: none;
+  }
+}
+
+#viewMorePage-artInfo {
+  padding-left: 10vw;
+  padding-right: 10vw;
+  padding-top: 3rem;
+}
+
+.viewMore-photoBackground {
+  align-content: center;
+  background-color: #f5f9f8;
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.viewMore-mainPhoto {
+  height: auto;
+  max-width: 70vw;
+}
+
+.viewMore-endBoarder {
+  border-bottom: lightgrey 2px solid;
+  padding-bottom: 2rem;
+}
+
+.viewMorePage-commentsWrapper {
+  max-width: 100%;
+  padding-left: 10vw;
+  padding-right: 10vw;
+}
+
+.comment-container {
+  border: #339999 1px solid;
+  border-radius: 20px;
+  padding: 1rem;
+}
+.comment-container--left {
+  text-align: left;
+}
+.comment-container--right {
+  text-align: right;
+}
+
+.comment-info {
+  display: flex;
+}
+
+.comment-right {
+  background-color: #99cccc;
+  text-align: right;
+}
+
+.comment-left {
+  background-color: white;
+  text-align: left;
+}
+
+#signUpPage {
+  display: none;
+}
+
+/*# sourceMappingURL=style.css.map */

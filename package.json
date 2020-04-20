@@ -1,0 +1,28 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js",
+    "server": "nodemon index.js --ignore client",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=true npm install --prefix client"
+  },
+  "keywords": [],
+  "author": "Hayley",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "moment": "^2.24.0",
+    "momentjs": "^2.0.0",
+    "mongoose": "^5.9.5",
+    "nodemon": "^2.0.2"
+  },
+  "engines": {
+    "node": "10.16.3",
+    "npm": "6.14.2"
+  }
+}
