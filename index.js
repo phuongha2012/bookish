@@ -4,10 +4,8 @@ const path = require('path');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const bcryptjs = require('bcryptjs');
 
 const keys = require('./config/keys');
-const Member = require('./models/member.js');
 const Product = require('./models/product.js');
 const Comment = require('./models/comment.js');
 const CommentReply = require('./models/commentReply.js');

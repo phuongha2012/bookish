@@ -1,3 +1,7 @@
+const mongoose = require('mongoose');
+
+const Member = require('../models/product.js');
+
 module.exports = (app) => {
 
     // List a product
