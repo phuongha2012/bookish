@@ -5,8 +5,8 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const bcryptjs = require('bcryptjs');
-const keys = require('./config/keys');
 
+const keys = require('./config/keys');
 const Comment = require('./models/comment.js');
 const Member = require('./models/member.js');
 const Portfolio = require('./models/portfolio.js');
@@ -14,9 +14,9 @@ const Portfolio = require('./models/portfolio.js');
 const PORT = process.env.PORT || 3000;
 
 // CONNECT TO DATABASE WITH MONGOOSE
-const mongodbURI = `mongodb+srv://${keys.MONGO_USER}:${keys.MONGO_PASSWORD}@${keys.MONGO_CLUSTER_NAME}-tvmnw.mongodb.net/test?retryWrites=true&w=majority`;
+const mongodbURI = `mongodb+srv://${keys.MONGO_USER}:${keys.MONGO_PASSWORD}@${keys.MONGO_CLUSTER_NAME}-559tn.mongodb.net/test?retryWrites=true&w=majority`;
 mongoose.connect(mongodbURI, {useNewUrlParser: true, useUnifiedTopology: true})
-        .then(() => console.log('DB connected'))
+        .then(() => console.log('Connected to DB'))
         .catch(err => {
               console.log(`DBConnectionError: ${err.message}`);
         }
@@ -25,7 +25,7 @@ mongoose.connect(mongodbURI, {useNewUrlParser: true, useUnifiedTopology: true})
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {
-  console.log('We are connected to MongoDB');
+  console.log('Connected to MongoDB');
 });
 
 // APP SET-UPS
@@ -38,58 +38,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(cors());
 
-
-// ===================================================================================
-// ============================= YANA's code starts ==================================
-
-
-// Register a member
-app.post('/registerMember', (req,res) => {
-  //checking if member is found in the db already
-  Member.findOne({username:req.body.username},(err,memberResult)=> {
-    if (memberResult){
-      res.send('Members name is already taken. Please choose another name');
-    } else{
-      const hash = bcryptjs.hashSync(req.body.password); //hash the password
-      const member = new Member({
-        _id : new mongoose.Types.ObjectId,
-        username : req.body.username,
-        email : req.body.email,
-        password : hash,
-        about : req.body.about,
-        location : req.body.location,
-        website : req.body.website
-      });
-
-      member.save().then(result => {
-        // security measures
-        res.send('Your account has been created, please login to activate your account');
-      }).catch(err => res.send(err));
-    }
-  });
-});
-
-// Get all members
-app.get('/allMembers', (req,res) => {
-  Member.find().then(result => {
-    res.send(result);
-  });
-});
-
-// Login a member
-app.post('/loginMember', (req,res) => {
-  Member.findOne({username:req.body.username},(err,memberResult) => {
-    if (memberResult){
-      if (bcryptjs.compareSync(req.body.password, memberResult.password)){
-        res.send(memberResult);
-      } else {
-        res.send('Not Authorized');
-      }
-    } else {
-      res.send('Member not found. Please register');
-    }
-  });
-});
+// IMPORT ROUTES
+require('./routes/memberRoutes')(app);
 
 
 // Add an artwork to portfolio
@@ -138,14 +88,6 @@ app.delete('/deletePortfolio/:id',(req,res)=>{
   }).catch(err => res.send(err)); //refers to mogodb id
 });
 
-
-// =========================== YANA's code ends  =====================================
-// ===================================================================================
-
-
-// ===================================================================================
-// =========================== HAYLEY's code starts ==================================
-
 // Update a member info
 app.patch('/updateMember/:id', (req, res) => {
   const _id = req.params.id;
@@ -166,6 +108,7 @@ app.patch('/updateMember/:id', (req, res) => {
                             })
         .catch(err => console.log(err));
 })
+
 
 // Update a project
 app.patch('/updatePortfolio/:id', (req, res) => {
@@ -315,9 +258,5 @@ app.post('/addComment', (req, res) => {
           .then(result => res.send(result))
           .catch(err => res.send(err))
 })
-
-
-// =========================== HAYLEY's code ends  ===================================
-// ===================================================================================
 
 app.listen(PORT, () => console.log(`Example app listening on port ${PORT}!`))

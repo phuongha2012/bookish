@@ -3,8 +3,24 @@ $(document).ready(function(){
 
   $('html, body').animate({ scrollTop: 0 }, 'fast');
   sessionStorage.clear();
-  const url = "https://artful-nz.herokuapp.com";
-  generateLandingPageCards();
+  let url;
+  console.log(url);
+
+  // Get server config data
+  $.ajax({
+    url: 'config.json',
+    type: 'GET',
+    dataType: 'json',
+    success: function(config) {
+      url = config.SERVER_URL + ":" + config.SERVER_PORT;
+      console.log(url);
+      generateLandingPageCards();
+    },
+    error: function() {
+      console.log('Cannnot retrieve server url');
+    }
+  })
+  
 
 
   // Display spinner on ajax requests
