@@ -1,29 +1,35 @@
 const mongoose = require('mongoose');
 
-const Member = require('../models/product.js');
+const Product = require('../models/product.js');
 
 module.exports = (app) => {
 
     // List a product
-    app.post('/product/add', (req, res) => {
-        const Product = new Product({
+    app.post('/products/add', (req, res) => {
+        const product = new Product({
                                     _id : new mongoose.Types.ObjectId,
                                     title : req.body.title,
+                                    author: req.body.author,
                                     description : req.body.description,
-                                    image : req.body.image,
+                                    photoUrl : req.body.photoUrl,
                                     category : req.body.category,
                                     price : req.body.price,
-                                    memberId : req.body.memberId
+                                    condition : req.body.condition,
+                                    listedCity : req.body.listedCity,
+                                    format : req.body.format,
+                                    shipping: req.body.shipping,
+                                    seller : req.body.seller
         });
 
-        Product.save()
+        product.save()
                 .then(result => res.send(result))
                 .catch(err => res.send(err));
     });
 
     // Delete a product
-    app.delete('/product/:id/delete', (req, res) => {
+    app.delete('/products/:id/delete', (req, res) => {
         const id = req.params.id;
+
         Product.findOne({ _id: id }, (err, result) => {
                                                         if (result) {
                                                             Product.deleteOne({ _id: id }, err => {
@@ -35,83 +41,76 @@ module.exports = (app) => {
                 .catch(err => res.send(err));
     });
 
-    // Update a member info
-    app.patch('/member/:id/update', (req, res) => {
-        const _id = req.params.id;
-        const updatedMember = {
-                                username: req.body.username,
-                                email: req.body.email,
-                                about: req.body.about,
-                                location: req.body.location,
-                                website: req.body.website
-        }
-
-        Member.findByIdAndUpdate(_id, 
-                                    { $set: updatedMember }, 
-                                    { useFindAndModify: false, upsert: true, new: true },
-                                    (err, result) => {
-                                        console.log(result);
-                                        res.send(result);
-                                    })
-                .catch(err => console.log(err));
-    })
-
 
     // Update a product
-    app.patch('/product/:id/update', (req, res) => {
+    app.patch('/products/:id/update', (req, res) => {
         const _id = req.params.id;
         const updatedProject = {
                                 title : req.body.title,
+                                author: req.body.author,
                                 description : req.body.description,
-                                image : req.body.image,
+                                photoUrl : req.body.photoUrl,
                                 category : req.body.category,
-                                price : req.body.price
+                                price : req.body.price,
+                                condition : req.body.condition,
+                                listedCity : req.body.listedCity,
+                                format : req.body.format,
+                                shipping: req.body.shipping,
+                                seller : req.body.seller
         };
 
         Product.findByIdAndUpdate(_id, 
-                                        {$set: updatedProject}, 
-                                        { upsert: true, new: true}, 
+                                        { $set: updatedProject }, 
+                                        { upsert: true, new: true }, 
                                         (err, result) => {
-                                            res.send({
-                                            _id: result._id,
-                                            title: result.title,
-                                            description: result.description,
-                                            image: result.image,
-                                            category: result.category,
-                                            price: result.price,
-                                            memberId: result.memberId
-                                            })
-                    })
-                    .catch(err => res.send(err));
+                                                            if (err) res.send(err);
+                                                            res.send({
+                                                                _id: result._id,
+                                                                title: result.title,
+                                                                author: result.author,
+                                                                description: result.description,
+                                                                photoUrl: result.photoUrl,
+                                                                category: result.category,
+                                                                price: result.price,
+                                                                condition: result.condition,
+                                                                listedCity: result.listedCity,
+                                                                format: result.format,
+                                                                shipping: result.shipping,
+                                                                seller: result.seller
+                                                            })
+                })
+                .catch(err => res.send(err));
     })
 
     // Find and return a product
-    app.get('/product/:id', (req, res) => {
+    app.get('/products/:id', (req, res) => {
         let _projectID = req.params.id;
 
         Product.findById(_projectID, 
-                            (err, result) => { res.send(result); })
+                            (err, result) => { 
+                                if(results.length > 0) {
+                                    res.send(result);
+                                } else {
+                                    res.send('No product found!')
+                                }
+                            
+                            })
     })
 
-    // Find and return a user's account information
-    app.get('/member/:id', (req, res) => {
-        let _memberId = req.params.accountID;
-
-        Member.findById(_memberId, 
-                        (err, result) => { res.send(result); })
-    })
 
     // Find and return all projects that belong to a user
-    app.get('/products/:memberId', (req, res) => {
-        let _memberId = req.params.memberId;
+    app.get('/products/fromseller/:memberId', (req, res) => {
+        let _seller = req.params.memberId;
 
-        Product.find({ memberId: _memberId },
+        Product.find({ seller: _seller },
                         (err, results) => {
-                            if(results.length > 0) {
-                                res.send(results);
-                            } else {
-                                res.send('No portfolio by this user found');
-                            }
+                                            if(err) console.log(err);
+
+                                            if(results.length > 0) {
+                                                res.send(results);
+                                            } else {
+                                                res.send('No product by this user found');
+                                            }
         });
     });
 
@@ -120,27 +119,27 @@ module.exports = (app) => {
         let query = await Product.aggregate([
                                                 { $lookup: {
                                                             from: "members",
-                                                            localField: "memberId",
+                                                            localField: "seller",
                                                             foreignField: "_id",
-                                                            as: "authorInfo"
+                                                            as: "sellerInfo"
                                                 }},
-                                                { $unwind: "$authorInfo" }
+                                                { $unwind: "$sellerInfo" }
         ]);
         res.send(query);
     });
 
     // Return one project with corresponding author information
-    app.get('/product/:id', async (req, res) => {
+    app.get('/products/:id', async (req, res) => {
         let artId = req.params.id;
         let query = await Producr.aggregate([
                                                 { $match: { _id: mongoose.Types.ObjectId(artId) }},
                                                 { $lookup: {
                                                             from: "members",
-                                                            localField: "memberId",
+                                                            localField: "seller",
                                                             foreignField: "_id",
-                                                            as: "authorInfo"
+                                                            as: "sellerInfo"
                                                 }},
-                                                { $unwind: "$authorInfo" },
+                                                { $unwind: "$sellerInfo" },
                                                 { $lookup: {
                                                             from: "comments",
                                                             localField: "_id",
@@ -164,22 +163,22 @@ module.exports = (app) => {
                                             { $match: { price: { $gt: _minPrice, $lt: _maxPrice }}},
                                             { $lookup: {
                                                         from: "members",
-                                                        localField: "memberId",
+                                                        localField: "seller",
                                                         foreignField: "_id",
-                                                        as: "authorInfo"
+                                                        as: "sellerInfo"
                                             }},
-                                            { $unwind: "$authorInfo" }
+                                            { $unwind: "$sellerInfo" }
             ])
         } else {
             query = await Product.aggregate([
                                             { $match: { $and: [{ category: _category }, { price: { $gt: _minPrice, $lt: _maxPrice }}]}},
                                             { $lookup: {
                                                         from: "members",
-                                                        localField: "memberId",
+                                                        localField: "seller",
                                                         foreignField: "_id",
-                                                        as: "authorInfo"
+                                                        as: "sellerInfo"
                                             }},
-                                            { $unwind: "$authorInfo" }
+                                            { $unwind: "$sellerInfo" }
             ])
         }
 

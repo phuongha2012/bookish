@@ -53,4 +53,33 @@ module.exports = (app) => {
         });
     });
 
+    // Update a member info
+    app.patch('/members/:id/update', (req, res) => {
+        const _id = req.params.id;
+        const updatedMember = {
+                                username: req.body.username,
+                                email: req.body.email,
+                                about: req.body.about,
+                                location: req.body.location,
+                                website: req.body.website
+        }
+
+        Member.findByIdAndUpdate(_id, 
+                                    { $set: updatedMember }, 
+                                    { useFindAndModify: false, upsert: true, new: true },
+                                    (err, result) => {
+                                        console.log(result);
+                                        res.send(result);
+                                    })
+                .catch(err => console.log(err));
+    })
+
+    // Find and return a user's account information
+    app.get('/members/:id', (req, res) => {
+        let _memberId = req.params.id;
+
+        Member.findById(_memberId, 
+                        (err, result) => { res.send(result); })
+    })
+
 }
