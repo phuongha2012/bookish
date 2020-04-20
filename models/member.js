@@ -20,15 +20,15 @@ const memberSchema = new Schema({
   },
   purchased: [{
       type: Schema.Types.ObjectId,
-      ref: 'product'
+      ref: 'Product'
   }],
   sold: [{
       type: Schema.Types.ObjectId,
-      ref: 'product'
+      ref: 'Product'
   }],
   watchlist: [{
       type: Schema.Types.ObjectId,
-      ref: 'product'
+      ref: 'Product'
   }]
 });
 

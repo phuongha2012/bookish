@@ -1,11 +1,11 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const commentSchema = new mongoose.Schema({
+const commentReplySchema = new mongoose.Schema({
     _id : Schema.Types.ObjectId,
-    product_id: {
+    parent_id: {
         type: Schema.Types.ObjectId,
-        ref: 'Product'
+        ref: 'Comment'
     },
     postByID: {
         type: Schema.Types.ObjectId,
@@ -13,11 +13,7 @@ const commentSchema = new mongoose.Schema({
     },
     postByUsername: String,
     posted: Date,
-    text: String,
-    replies: [{
-        type: Schema.Types.ObjectId,
-        ref: 'CommentReply'
-    }]
+    text: String
 });
 
-module.exports = mongoose.model('Comment', commentSchema);
+module.exports = mongoose.model('CommentReply', commentReplySchema);

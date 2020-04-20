@@ -1,7 +1,7 @@
 module.exports = (app) => {
     
     // Register a member
-    app.post('/registerMember', (req,res) => {
+    app.post('/member/register', (req,res) => {
 
         //checking if member is found in the db already
         Member.findOne({username:req.body.username}, (err,memberResult)=> {
@@ -28,14 +28,14 @@ module.exports = (app) => {
     });
   
     // Get all members
-    app.get('/allMembers', (req,res) => {
+    app.get('/members', (req,res) => {
         Member.find().then(result => {
         res.send(result);
         });
     });
   
     // Login a member
-    app.post('/loginMember', (req,res) => {
+    app.post('/member/login', (req,res) => {
         Member.findOne({username:req.body.username},(err,memberResult) => {
         if (memberResult){
             if (bcryptjs.compareSync(req.body.password, memberResult.password)){
