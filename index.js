@@ -4,11 +4,7 @@ const path = require('path');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-
 const keys = require('./config/keys');
-const Product = require('./models/product.js');
-const Comment = require('./models/comment.js');
-const CommentReply = require('./models/commentReply.js');
 
 const PORT = process.env.PORT || 3000;
 

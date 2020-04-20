@@ -3,21 +3,27 @@ const Schema = mongoose.Schema;
 
 const commentSchema = new mongoose.Schema({
     _id : Schema.Types.ObjectId,
-    product_id: {
+    productId: {
         type: Schema.Types.ObjectId,
         ref: 'Product'
     },
-    postByID: {
+    memberId: {
         type: Schema.Types.ObjectId,
         ref: 'Member'
     },
-    postByUsername: String,
-    posted: Date,
-    text: String,
-    replies: [{
-        type: Schema.Types.ObjectId,
-        ref: 'CommentReply'
-    }]
+    memberUsername: String,
+    postedOn: Date,
+    content: String,
+    replies: [
+        {
+            content: String,
+            postedOn: Date,
+            memberId: {
+                type: Schema.Types.ObjectId,
+                ref: 'Member'
+            }
+        }
+    ]
 });
 
 module.exports = mongoose.model('Comment', commentSchema);

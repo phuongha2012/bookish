@@ -1,19 +1,23 @@
+const mongoose = require('mongoose');
+
+const Comment = require('../models/comment.js');
+
 module.exports = (app) => {
 
     // Add a comment to post
-    app.post('/addComment', (req, res) => {
+    app.post('/comments/add', (req, res) => {
         let comment = new Comment({
                                 _id : new mongoose.Types.ObjectId,
-                                portfolioID: req.body.portfolioID,
-                                postByID: mongoose.Types.ObjectId(req.body.postByID),
-                                postByUsername: req.body.postByUsername,
-                                posted: req.body.postDate,
-                                text: req.body.content
+                                productId: req.body.productId,
+                                memberId: mongoose.Types.ObjectId(req.body.memberId),
+                                memberUsername: req.body.memberUsername,
+                                postedOn: req.body.postedOn,
+                                content: req.body.content
         })
     
         comment.save()
                 .then(result => res.send(result))
                 .catch(err => res.send(err))
     })
-    
+
 }
