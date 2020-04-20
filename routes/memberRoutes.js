@@ -13,15 +13,16 @@ module.exports = (app) => {
             if (result){
                 res.send('Members name is already taken. Please choose another name');
             } else {
-                const hash = bcryptjs.hashSync(req.body.password); //hash the password
+                const hash = bcryptjs.hashSync(req.body.password); 
                 const member = new Member({
                                             _id : new mongoose.Types.ObjectId,
                                             username : req.body.username,
                                             email : req.body.email,
                                             password : hash,
                                             about : req.body.about,
-                                            location : req.body.location,
-                                            website : req.body.website
+                                            photoUrl: req.body.photoUrl,
+                                            address: req.body.address,
+                                            card : req.body.card
                                         });
         
                 member.save()
@@ -48,7 +49,7 @@ module.exports = (app) => {
             res.send('Not Authorized');
             }
         } else {
-            res.send('Member not found. Please register');
+            res.send('Member not found. Please register!');
         }
         });
     });
@@ -60,16 +61,17 @@ module.exports = (app) => {
                                 username: req.body.username,
                                 email: req.body.email,
                                 about: req.body.about,
-                                location: req.body.location,
-                                website: req.body.website
+                                photoUrl: req.body.photoUrl,
+                                address: req.body.address,
+                                card : req.body.card
         }
 
         Member.findByIdAndUpdate(_id, 
                                     { $set: updatedMember }, 
                                     { useFindAndModify: false, upsert: true, new: true },
-                                    (err, result) => {
-                                        console.log(result);
-                                        res.send(result);
+                                    ( err, result ) => {
+                                                        if (err) res.send(err);
+                                                        res.send(result);
                                     })
                 .catch(err => console.log(err));
     })
