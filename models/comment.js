@@ -1,12 +1,11 @@
-// Hayley code
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const commentSchema = new mongoose.Schema({
     _id : Schema.Types.ObjectId,
-    portfolioID: {
+    product_id: {
         type: Schema.Types.ObjectId,
-        ref: 'Portfolio'
+        ref: 'Product'
     },
     postByID: {
         type: Schema.Types.ObjectId,
@@ -17,4 +16,3 @@ const commentSchema = new mongoose.Schema({
     text: String
 });
 module.exports = mongoose.model('Comment', commentSchema);
-// Hayley code ends

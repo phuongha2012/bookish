@@ -9,7 +9,7 @@ const bcryptjs = require('bcryptjs');
 const keys = require('./config/keys');
 const Comment = require('./models/comment.js');
 const Member = require('./models/member.js');
-const Portfolio = require('./models/portfolio.js');
+const Product = require('./models/product.js');
 
 const PORT = process.env.PORT || 3000;
 
@@ -42,54 +42,45 @@ app.use(cors());
 require('./routes/memberRoutes')(app);
 
 
-// Add an artwork to portfolio
-app.post('/addPortfolio', (req,res) => {
-  //checking if portfolio is found in the db already
-  Portfolio.findOne({title:req.body.title},(err,portfolioResult)=>{
-    if (portfolioResult){
-      res.send('Artwork already added');
-    } else{
-      const portfolio = new Portfolio({
-        _id : new mongoose.Types.ObjectId,
-        title : req.body.title,
-        description : req.body.description,
-        image : req.body.image,
-        category : req.body.category,
-        price : req.body.price,
-        memberId : req.body.memberId
-      });
+// List a product
+app.post('/product/add', (req, res) => {
+    const Product = new Product({
+                                  _id : new mongoose.Types.ObjectId,
+                                  title : req.body.title,
+                                  description : req.body.description,
+                                  image : req.body.image,
+                                  category : req.body.category,
+                                  price : req.body.price,
+                                  memberId : req.body.memberId
+    });
 
-      portfolio.save().then(result => {
-        res.send(result);
-      }).catch(err => res.send(err));
-    }
-  });
+    Product.save()
+            .then(result => res.send(result))
+            .catch(err => res.send(err));
 });
 
-// Get all portfolios
-app.get('/allPortfolios', (req,res) => {
-  Portfolio.find().then(result => {
-    console.log(result);
-    res.json(result);
-  });
-});
+// Get all products
+// app.get('/products', (req, res) => {
+//     Product.find()
+//             .then(result => res.json(result));
+// });
 
-// Delete a project
-app.delete('/deletePortfolio/:id',(req,res)=>{
-  const idParam = req.params.id;
-  Portfolio.findOne({_id:idParam}, (err,portfolio)=>{
-    if (portfolio){
-      Portfolio.deleteOne({_id:idParam},err=>{
-        res.send('Portfolio deleted');
-      });
-    } else {
-      res.send('Portfolio not found');
-    }
-  }).catch(err => res.send(err)); //refers to mogodb id
+// Delete a product
+app.delete('/product/:id/delete', (req, res) => {
+  const id = req.params.id;
+  Product.findOne({ _id: id }, (err, result) => {
+                                                  if (result) {
+                                                      Product.deleteOne({ _id: id }, err => {
+                                                        res.send('Product deleted');
+                                                      });
+                                                  } else {
+                                                      res.send('Product not found');
+                                                  }})
+          .catch(err => res.send(err));
 });
 
 // Update a member info
-app.patch('/updateMember/:id', (req, res) => {
+app.patch('/member/:id/update', (req, res) => {
   const _id = req.params.id;
   const updatedMember = {
                           username: req.body.username,
@@ -110,8 +101,8 @@ app.patch('/updateMember/:id', (req, res) => {
 })
 
 
-// Update a project
-app.patch('/updatePortfolio/:id', (req, res) => {
+// Update a product
+app.patch('/product/:id/update', (req, res) => {
   const _id = req.params.id;
   const updatedProject = {
                           title : req.body.title,
@@ -121,7 +112,7 @@ app.patch('/updatePortfolio/:id', (req, res) => {
                           price : req.body.price
   };
 
-  Portfolio.findByIdAndUpdate(_id, 
+  Product.findByIdAndUpdate(_id, 
                                 {$set: updatedProject}, 
                                 { upsert: true, new: true}, 
                                 (err, result) => {
@@ -138,16 +129,16 @@ app.patch('/updatePortfolio/:id', (req, res) => {
             .catch(err => res.send(err));
 })
 
-// Find and return a project
-app.get('/findProject/:id', (req, res) => {
+// Find and return a product
+app.get('/product/:id', (req, res) => {
   let _projectID = req.params.id;
 
-  Portfolio.findById(_projectID, 
+  Product.findById(_projectID, 
                       (err, result) => { res.send(result); })
 })
 
 // Find and return a user's account information
-app.get('/myAccountInfo/:accountID', (req, res) => {
+app.get('/member/:id', (req, res) => {
   let _memberId = req.params.accountID;
 
   Member.findById(_memberId, 
@@ -155,10 +146,10 @@ app.get('/myAccountInfo/:accountID', (req, res) => {
 })
 
 // Find and return all projects that belong to a user
-app.get('/myPortfolios/:accountID', (req, res) => {
-  let _memberId = req.params.accountID;
+app.get('/products/:memberId', (req, res) => {
+  let _memberId = req.params.memberId;
 
-  Portfolio.find({ memberId: _memberId },
+  Product.find({ memberId: _memberId },
                   (err, results) => {
                       if(results.length > 0) {
                         res.send(results);
@@ -168,9 +159,9 @@ app.get('/myPortfolios/:accountID', (req, res) => {
   });
 });
 
-// Return all projects with corresponding author information
-app.get('/portfoliosAndAuthors', async (req, res) => {
-  let query = await Portfolio.aggregate([
+// Return all products with corresponding sellers information
+app.get('/products', async (req, res) => {
+  let query = await Product.aggregate([
                                         { $lookup: {
                                                     from: "members",
                                                     localField: "memberId",
@@ -183,9 +174,9 @@ app.get('/portfoliosAndAuthors', async (req, res) => {
 });
 
 // Return one project with corresponding author information
-app.get('/portfolioWithAuthor/:id', async (req, res) => {
+app.get('/product/:id', async (req, res) => {
   let artId = req.params.id;
-  let query = await Portfolio.aggregate([
+  let query = await Producr.aggregate([
                                         { $match: { _id: mongoose.Types.ObjectId(artId) }},
                                         { $lookup: {
                                                     from: "members",
@@ -206,14 +197,14 @@ app.get('/portfolioWithAuthor/:id', async (req, res) => {
 });
 
 // Find and return all products that match with price and category filter
-app.get('/filterPortfolios/:minPrice/:maxPrice/:category', async (req, res) => {
+app.get('/products/filter/:minPrice/:maxPrice/:category/', async (req, res) => {
   let _minPrice = parseInt(req.params.minPrice);
   let _maxPrice = parseInt(req.params.maxPrice);
   let _category = req.params.category;
   let query;
 
   if(_category === "all") {
-    query = await Portfolio.aggregate([
+    query = await Product.aggregate([
                                       { $match: { price: { $gt: _minPrice, $lt: _maxPrice }}},
                                       { $lookup: {
                                                   from: "members",
@@ -224,7 +215,7 @@ app.get('/filterPortfolios/:minPrice/:maxPrice/:category', async (req, res) => {
                                       { $unwind: "$authorInfo" }
     ])
   } else {
-    query = await Portfolio.aggregate([
+    query = await Product.aggregate([
                                       { $match: { $and: [{ category: _category }, { price: { $gt: _minPrice, $lt: _maxPrice }}]}},
                                       { $lookup: {
                                                   from: "members",

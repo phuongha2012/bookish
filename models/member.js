@@ -1,15 +1,35 @@
-// Yanas code
-const mongoose = require('mongoose');  // since we are using Moongoose we have to require it
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
-const memberSchema = new mongoose.Schema({
-  _id : mongoose.Schema.Types.ObjectId,
+const memberSchema = new Schema({
+  _id : Schema.Types.ObjectId,
   username : String,
   email : String,
   password : String,
   about : String,
-  location :String,
-  website : String
-
+  photoUrl: String,
+  address : {
+      street: String,
+      city: String,
+      zip: Number
+  },
+  card: {
+      number: String,
+      holder: String,
+      cvc: Number
+  },
+  purchased: [{
+      type: Schema.Types.ObjectId,
+      ref: 'product'
+  }],
+  sold: [{
+      type: Schema.Types.ObjectId,
+      ref: 'product'
+  }],
+  watchlist: [{
+      type: Schema.Types.ObjectId,
+      ref: 'product'
+  }]
 });
+
 module.exports = mongoose.model('Member', memberSchema);
-// Yanas code ends
