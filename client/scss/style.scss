@@ -1,32 +1,63 @@
-// yanas code
-// colours for app
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
 
-// dark grey for text and buttons
-$gray-dark: #333333;
-$dark: #333333;
 
-// light grey for background colour and boarders
-$gray: #cccccc;
-$secondary: #cccccc;
+// COLOURS
 
-// Light blue for boarders
-$blue: #99cccc;
-$info: #99cccc;
+$colour-pearl: rgb(245, 241, 237);
 
-// For blue button background colour and category name colour
-$cyan: #339999;
-$primary: #339999;
+$colour-aegean: #37465d;
 
-// red for delete buttons
-$red: #FF9966;
-$danger: #FF9966;
+$colour-aegean-dark: #263348;
 
-//Light grey for photo background
-$grey-light: #f5f9f8;
+$colour-grey: #828282;
+
+$colour-watermelon: #e9524d;
+
+$colour-rouge: #dd3c42;
+
+// TYPOGRAPHY
+
+body {
+    color: $colour-grey;
+    font-family: 'Roboto', sans-serif;
+    font-size: 17px;
+    line-height: 28px;
+}
+
+h2 {
+    color: black;
+    font-family: 'Crimson Text', sans-serif;
+    font-size: 50px;
+    line-height: 60px;
+}
+
+h3 {
+    color: black;
+    font-family: 'Crimson Text', sans-serif;
+    font-size: 35px;
+    line-height: 40px;
+}
+
+h5 {
+    color: black;
+    font-family: 'Crimson Text', sans-serif;
+    font-size: 25px;
+    line-height: 35px;
+}
+
+h6 {
+    color: $colour-grey;
+    font-family: 'Roboto', sans-serif;
+    font-size: 20px;
+    line-height: 28px;
+}
 
 
 // SMACCS Set up
-@import 'base';
 @import 'layout';
 @import 'module';
 @import 'portfolioPage';

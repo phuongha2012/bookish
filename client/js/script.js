@@ -19,8 +19,7 @@ $(document).ready(function(){
     error: function() {
       console.log('Cannnot retrieve server url');
     }
-  })
-  
+  });
 
 
   // Display spinner on ajax requests

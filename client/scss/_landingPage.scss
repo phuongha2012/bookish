@@ -11,7 +11,7 @@
 }
 
 .filterDropdown {
-  background-color: $secondary;
+  background-color: $colour-aegean;
   justify-content: center;
   padding-bottom: 20px;
   padding-top: 20px;
@@ -73,7 +73,7 @@
 }
 
 .artcard-category {
-  color: $primary;
+  color: $colour-watermelon;
 }
 
 // Hayley's code ends
@@ -81,12 +81,12 @@
 // Yanas code
 .nav-border
 {
-	border-bottom: 4px solid $blue;
+	border-bottom: 4px solid $colour-grey;
 	width: 100%;
 }
 .card-border
 {
-	border-bottom: 2px solid $gray;
+	border-bottom: 2px solid $colour-grey;
 	border-left: 0;
 	border-right: 0;
 	border-top: 0;

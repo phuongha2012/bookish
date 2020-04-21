@@ -17,7 +17,7 @@
 }
 
 .btn-red {
-  background-color: $red;
+  background-color: $colour-watermelon;
   color: white;
 	cursor: pointer;
   text-align: center;
@@ -28,7 +28,7 @@
 }
 
 .edit-button {
-  background-color: $gray-dark;
+  background-color: $colour-aegean-dark;
   border-radius: 20px;
   color: white;
   cursor: pointer;
@@ -38,16 +38,16 @@
 // background colours
 .bg-blue
 {
-	background-color: $blue;
+	background-color: $colour-grey;
 }
 .bg-cyan
 {
-	background-color: $cyan;
+	background-color: $colour-grey;
 }
 // borders
 .border-blue
 {
-	border: 3px solid $blue;
+	border: 3px solid $colour-grey;
 	  // Yanas responsive code
 	@media (max-width: $tablet) {
 		border: 0;
@@ -55,11 +55,11 @@
 }
 .border-gray
 {
-	border: 3px solid $gray;
+	border: 3px solid $colour-grey;
 }
 .border-red
 {
-	border: 3px solid $red;
+	border: 3px solid $colour-watermelon;
 }
 
 // Yanas code ends
@@ -67,6 +67,13 @@
 // Hayley's code
 .logo {
   width: 200px;
+  display: flex;
+
+  &__icon {
+    width: 60px;
+    height: 60px;
+    fill: $colour-rouge;
+  }
 }
 
 .header {
@@ -83,7 +90,7 @@
 }
 
 .button {
-  background-color: $primary;
+  background-color: $colour-watermelon;
   border-radius: 20px;
   color: white;
   cursor: pointer;
@@ -96,7 +103,7 @@
 }
 
 .button-red {
-  background-color: $red;
+  background-color: $colour-watermelon;
   border-radius: 20px;
   color: white;
   cursor: pointer;
@@ -105,7 +112,7 @@
 }
 
 .button-black {
-  background-color: $gray-dark;
+  background-color: $colour-aegean-dark;
   border-radius: 20px;
   color: white;
   cursor: pointer;

@@ -3,8 +3,8 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-        <title>Artful App</title>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans|Quicksand&display=swap">
+        <title>BOOKISH</title>
+        <link href="https://fonts.googleapis.com/css2?family=Crimson+Text&family=Roboto:wght@300&family=Source+Sans+Pro:wght@600&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
         <link href="css/style.css" rel="stylesheet">
         <!-- <link href="css/style.min.css" rel="stylesheet"> -->
@@ -16,7 +16,15 @@
           <!--  ========================== APP HEADER ====================================  -->
 
           <div class="header nav-border px-3 py-3">
-            <img src="images/logo.png" class="logo home-btn" alt="logo">
+            <div class="logo" id="logo">
+                <a href="index.html"></a>
+                <svg class="logo__icon">
+                    <use xlink:href="images/icons.svg#icon-books"></use>
+                </svg>
+                <h3 class="logo__text">
+                    Bookish
+                </h3>
+            </div>
             <div class="nav">
               <li class="nav-item">
                 <a class="nav-link nav-font py-2 px-2 home-btn text-dark" href="#">Home</a>

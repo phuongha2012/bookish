@@ -4,66 +4,39 @@
   padding: 0;
 }
 
-h1 {
-  color: #333333;
-  font-family: 'Quicksand', sans-serif;
-  font-size: 2.250em;
-  font-weight: 700;
+body {
+  color: #828282;
+  font-family: 'Roboto', sans-serif;
+  font-size: 17px;
+  line-height: 28px;
 }
 
 h2 {
-  color: #333333;
-  font-family: 'Quicksand', sans-serif;
-  font-size: 2em;
-  font-weight: 700;
+  color: black;
+  font-family: 'Crimson Text', sans-serif;
+  font-size: 50px;
+  line-height: 60px;
 }
 
 h3 {
-  color: #99cccc;
-  font-family: 'Quicksand', sans-serif;
-  font-size: 1.750em;
-  font-weight: 700;
-}
-
-h4 {
-  color: #333333;
-  font-family: 'Quicksand', sans-serif;
-  font-size: 1.250em;
-  font-weight: 700;
+  color: black;
+  font-family: 'Crimson Text', sans-serif;
+  font-size: 35px;
+  line-height: 40px;
 }
 
 h5 {
-  color: #333333;
-  font-family: 'Open Sans', sans-serif;
-  font-size: 1.250em;
-  font-weight: 700;
+  color: black;
+  font-family: 'Crimson Text', sans-serif;
+  font-size: 25px;
+  line-height: 35px;
 }
 
-p {
-  color: #333333;
-  font-family: 'Open Sans', sans-serif;
-  text-align: left;
-}
-
-.h5-label {
-  color: #333333;
-  font-family: 'Open Sans', sans-serif;
-  font-size: 1.250em;
-  font-weight: 700;
-}
-
-.h3-label {
-  color: #99cccc;
-  font-family: 'Quicksand', sans-serif;
-  font-size: 1.750em;
-  font-weight: 700;
-}
-
-.h5-cyan {
-  color: #339999;
-  font-family: 'Open Sans', sans-serif;
-  font-size: 1.250em;
-  font-weight: 700;
+h6 {
+  color: #828282;
+  font-family: 'Roboto', sans-serif;
+  font-size: 20px;
+  line-height: 28px;
 }
 
 .flexContainer-row {
@@ -107,7 +80,7 @@ footer {
 }
 
 .btn-red {
-  background-color: #FF9966;
+  background-color: #e9524d;
   color: white;
   cursor: pointer;
   text-align: center;
@@ -117,7 +90,7 @@ footer {
 }
 
 .edit-button {
-  background-color: #333333;
+  background-color: #263348;
   border-radius: 20px;
   color: white;
   cursor: pointer;
@@ -125,15 +98,15 @@ footer {
 }
 
 .bg-blue {
-  background-color: #99cccc;
+  background-color: #828282;
 }
 
 .bg-cyan {
-  background-color: #339999;
+  background-color: #828282;
 }
 
 .border-blue {
-  border: 3px solid #99cccc;
+  border: 3px solid #828282;
 }
 @media (max-width: 720px) {
   .border-blue {
@@ -142,15 +115,21 @@ footer {
 }
 
 .border-gray {
-  border: 3px solid #cccccc;
+  border: 3px solid #828282;
 }
 
 .border-red {
-  border: 3px solid #FF9966;
+  border: 3px solid #e9524d;
 }
 
 .logo {
   width: 200px;
+  display: flex;
+}
+.logo__icon {
+  width: 60px;
+  height: 60px;
+  fill: #dd3c42;
 }
 
 .header {
@@ -166,7 +145,7 @@ footer {
 }
 
 .button {
-  background-color: #339999;
+  background-color: #e9524d;
   border-radius: 20px;
   color: white;
   cursor: pointer;
@@ -179,7 +158,7 @@ footer {
 }
 
 .button-red {
-  background-color: #FF9966;
+  background-color: #e9524d;
   border-radius: 20px;
   color: white;
   cursor: pointer;
@@ -188,7 +167,7 @@ footer {
 }
 
 .button-black {
-  background-color: #333333;
+  background-color: #263348;
   border-radius: 20px;
   color: white;
   cursor: pointer;
@@ -272,7 +251,7 @@ footer {
 }
 
 .portfolioPage-image {
-  background-color: #f5f9f8;
+  background-color: #828282;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -326,7 +305,7 @@ footer {
 }
 
 .filterDropdown {
-  background-color: #cccccc;
+  background-color: #37465d;
   justify-content: center;
   padding-bottom: 20px;
   padding-top: 20px;
@@ -388,16 +367,16 @@ footer {
 }
 
 .artcard-category {
-  color: #339999;
+  color: #e9524d;
 }
 
 .nav-border {
-  border-bottom: 4px solid #99cccc;
+  border-bottom: 4px solid #828282;
   width: 100%;
 }
 
 .card-border {
-  border-bottom: 2px solid #cccccc;
+  border-bottom: 2px solid #828282;
   border-left: 0;
   border-right: 0;
   border-top: 0;
@@ -437,7 +416,7 @@ footer {
 
 .viewMore-photoBackground {
   align-content: center;
-  background-color: #f5f9f8;
+  background-color: #828282;
   display: flex;
   justify-content: center;
   margin-top: 2rem;
@@ -460,7 +439,7 @@ footer {
 }
 
 .comment-container {
-  border: #339999 1px solid;
+  border: #e9524d 1px solid;
   border-radius: 20px;
   padding: 1rem;
 }
@@ -476,7 +455,7 @@ footer {
 }
 
 .comment-right {
-  background-color: #99cccc;
+  background-color: #828282;
   text-align: right;
 }
 
