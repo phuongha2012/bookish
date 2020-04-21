@@ -64,31 +64,6 @@ footer {
   position: absolute;
 }
 
-.btn-font {
-  font-family: 'Quicksand', sans-serif;
-  font-weight: 700;
-  text-align: center;
-}
-
-.nav-font {
-  font-family: 'Open Sans', sans-serif;
-  font-weight: 700;
-}
-
-.radius {
-  border-radius: 50px;
-}
-
-.btn-red {
-  background-color: #e9524d;
-  color: white;
-  cursor: pointer;
-  text-align: center;
-}
-.btn-red :hover {
-  color: white;
-}
-
 .edit-button {
   background-color: #263348;
   border-radius: 20px;
@@ -97,38 +72,15 @@ footer {
   padding: 9px 15px;
 }
 
-.bg-blue {
-  background-color: #828282;
-}
-
-.bg-cyan {
-  background-color: #828282;
-}
-
-.border-blue {
-  border: 3px solid #828282;
-}
-@media (max-width: 720px) {
-  .border-blue {
-    border: 0;
-  }
-}
-
-.border-gray {
-  border: 3px solid #828282;
-}
-
-.border-red {
-  border: 3px solid #e9524d;
-}
-
 .logo {
   width: 200px;
   display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 .logo__icon {
-  width: 60px;
-  height: 60px;
+  width: 50px;
+  height: 50px;
   fill: #dd3c42;
 }
 
@@ -140,39 +92,49 @@ footer {
 }
 
 .nav {
+  justify-content: space-between;
+  width: 75vw;
+}
+
+.authBtnWrapper {
+  cursor: pointer;
+  display: flex;
   justify-content: space-evenly;
-  width: 300px;
+  width: 40%;
+}
+.authBtnWrapper > div:hover {
+  border-bottom: 1px #828282 solid;
 }
 
 .button {
-  background-color: #e9524d;
-  border-radius: 20px;
-  color: white;
+  color: #37465d;
+  font-family: 'Source Sans Pro', sans-serif;
+  font-size: 15px;
   cursor: pointer;
-  padding: 9px 15px;
+  line-height: 54px;
+  height: 54px;
+  background-color: transparent;
+  letter-spacing: 2.6px;
+  text-transform: uppercase;
+  border-width: 1px;
+  padding-left: 52px;
+  padding-right: 52px;
+}
+.button:hover {
+  background-color: #37465d;
+  color: white;
 }
 
-.signInButton {
+.buttonLink {
+  color: #37465d;
   cursor: pointer;
-  padding: 6px 15px;
+  font-family: 'Source Sans Pro', sans-serif;
+  font-size: 15px;
+  letter-spacing: 2.6px;
+  text-transform: uppercase;
 }
-
-.button-red {
-  background-color: #e9524d;
-  border-radius: 20px;
-  color: white;
-  cursor: pointer;
-  padding: 6px 15px;
-  text-align: center;
-}
-
-.button-black {
-  background-color: #263348;
-  border-radius: 20px;
-  color: white;
-  cursor: pointer;
-  padding: 6px 15px;
-  text-align: center;
+.buttonLink:hover {
+  border-bottom: 1px #37465d solid;
 }
 
 .loader {
@@ -293,7 +255,7 @@ footer {
 }
 
 .landingPage-banner {
-  background-image: url("../images/BarneyBrewsterBanner.jpg");
+  background-image: url("../images/banner.png");
   background-size: cover;
   height: 50vh;
 }
@@ -368,11 +330,6 @@ footer {
 
 .artcard-category {
   color: #e9524d;
-}
-
-.nav-border {
-  border-bottom: 4px solid #828282;
-  width: 100%;
 }
 
 .card-border {

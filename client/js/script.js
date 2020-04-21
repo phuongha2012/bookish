@@ -251,8 +251,10 @@ $('.edit-button').click(function(){
     let username = $('#inputUsernameLogin').val();
     let password = $('#inputPasswordLogin').val();
 
+    console.log(username, password);
+
     $.ajax({
-      url :`${url}/loginMember`,
+      url :`${url}/members/login`,
       type :'POST',
       data:{
         username : username,
@@ -290,6 +292,7 @@ $('.edit-button').click(function(){
           showMemberName(username);
           $('#logoutBtn').show();
           $('#myPortfolioBtn').show();
+          $('#authBtnGroup-question').hide();
           $('#loginBtn').hide();
           $('#signUpBtn').hide();
           $('#landingPage').show();
@@ -421,7 +424,7 @@ $('.edit-button').click(function(){
     document.getElementById('artsDeck').innerHTML = arr.map(art =>
                                                                   `<div class="col-sm-12 col-md-6 col-lg-4 my-xs-1 my-sm-1 my-md-3 my-lg-3">
                                                                         <div class="card card-border rounded-0 mb-4">
-                                                                            <img src="${art.image}" id="${art._id}" alt="Avatar" class="card-img-top radius viewMoreButton">
+                                                                            <img src="${art.image}" id="${art._id}" alt="Avatar" class="card-img-top  viewMoreButton">
                                                                             <div class="card-body artcard-body mx-1 my-1">
                                                                                 <div class="artcard-columnwrap">
                                                                                     <h4 class="card-title mb-3">${art.title}</h4>
@@ -431,7 +434,7 @@ $('.edit-button').click(function(){
                                                                                 <p class="mb-3 text-truncate">${art.description}</p>
                                                                                 <div class="artcard-columnwrap mt-4">
                                                                                     <p class="card-title h5-cyan">${art.category}</p>
-                                                                                    <div class="button viewMoreButton btn-font" id="${art._id}">View</div>
+                                                                                    <div class="button viewMoreButton " id="${art._id}">View</div>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -542,8 +545,7 @@ $('.edit-button').click(function(){
 
     // Conditionally render addComment HTML base on user's login status
     addCommentHTML = currentUser ? `<div class="col-12 col-sm-12 col-lg-10 col-md-10 mx-auto">
-                                        <label for="viewMorePage-postComment"
-                                              class="nav-font">
+                                        <label for="viewMorePage-postComment">
                                               Comment:
                                         </label>
                                         <textarea id="viewMorePage-postComment"
@@ -553,7 +555,7 @@ $('.edit-button').click(function(){
                                         </textarea>
                                         <div class="col-12 col-sm-12 col-lg-11 col-md-11">
                                             <div id="viewMorePage-postCommentButton"
-                                                class="button btn-font bg-dark float-right mt-2 mb-5">
+                                                class="button  bg-dark float-right mt-2 mb-5">
                                                 Submit
                                             </div>
                                         </div>
@@ -583,13 +585,13 @@ $('.edit-button').click(function(){
                                                             <div class="artcard-columnwrap mt-5 viewMore-endBoarder">
                                                                 <p class="card-title h5-cyan">${portfolio.category}</p>
                                                                 <div id="${portfolio._id}"
-                                                                    class="bg-info text-white radius py-2 px-3 btn-font">
+                                                                    class="bg-info text-white  py-2 px-3 ">
                                                                     Buy Now
                                                                 </div>
                                                             </div>
                                                             <button id="backToLanding"
                                                                     type="button"
-                                                                    class="btn btn-dark mt-3 mb-5 btn-font radius">
+                                                                    class="btn btn-dark mt-3 mb-5  ">
                                                                     Back
                                                             </button>
                                                         </div>
@@ -801,10 +803,10 @@ $('.edit-button').click(function(){
                                                                 </label>
                                                                 <input id="editUserForm__website" type="text" class="form-control col-md-9">
                                                             </div>
-                                                            <button id="cancelEditUserForm" class="btn btn-danger btn-font radius float-left mb-5">
+                                                            <button id="cancelEditUserForm" class="btn btn-danger   float-left mb-5">
                                                                 Cancel
                                                             </button>
-                                                            <button id="saveUserInfo" type="submit" class="float-right mb-5 btn btn-dark btn-font radius">
+                                                            <button id="saveUserInfo" type="submit" class="float-right mb-5 btn btn-dark  ">
                                                                 Save
                                                             </button>
                                                         </form>`;
@@ -934,7 +936,7 @@ $('.edit-button').click(function(){
                                                                                     <div id="${item._id}"
                                                                                         class="button
                                                                                                 viewMoreButton
-                                                                                                btn-font
+                                                                                                
                                                                                                 mb-3">
                                                                                                 View</div>
                                                                                 </div>
@@ -944,8 +946,8 @@ $('.edit-button').click(function(){
                                                                                     <div id="edit${item._id}"
                                                                                         class="editButton
                                                                                                 btn-dark
-                                                                                                btn-font
-                                                                                                radius
+                                                                                                
+                                                                                                
                                                                                                 py-2
                                                                                                 px-2
                                                                                                 mb-3">
@@ -956,10 +958,10 @@ $('.edit-button').click(function(){
                                                                                             col-lg-4">
                                                                                     <div id="delete${item._id}"
                                                                                         class="deleteButton
-                                                                                                btn-red radius
+                                                                                                btn-red 
                                                                                                 px-3 py-2
                                                                                                 mb-3
-                                                                                                btn-font
+                                                                                                
                                                                                                 float-lg-right">
                                                                                                 Delete</div>
                                                                                 </div>
@@ -1073,11 +1075,11 @@ $('.edit-button').click(function(){
                                     <p class="text-center">
                                         Are you sure you want to delete this project?</p>
                                     <button id="abortDeleteProject"
-                                            class="btn btn-danger btn-font back-portfolio radius float-left">
+                                            class="btn btn-danger  back-portfolio  float-left">
                                             Cancel</button>
                                     <button id="confirmDeleteProject"
                                             type="button"
-                                            class="btn btn-dark btn-font float-right radius">
+                                            class="btn btn-dark  float-right ">
                                             Delete</button>
                               </div>`;
 
@@ -1111,19 +1113,19 @@ $('.edit-button').click(function(){
     buttonWrapper.innerHTML =
                               `<div class="col-sm-12 col-md-4 col-lg-4">
                                     <div id="${projectId}"
-                                        class="button viewMoreButton btn-font mb-3">
+                                        class="button viewMoreButton  mb-3">
                                         View
                                     </div>
                                 </div>
                                 <div class="col-sm-12 col-md-4 col-lg-4">
                                     <div id="edit${projectId}"
-                                        class="editButton btn-dark btn-font radius py-2 px-2 mb-3">
+                                        class="editButton btn-dark   py-2 px-2 mb-3">
                                         Edit
                                     </div>
                                 </div>
                                 <div class="col-sm-12 col-md-4 col-lg-4">
                                     <div id="delete${projectId}"
-                                        class="deleteButton btn-red radius px-3 py-2 mb-3 btn-font float-lg-right">
+                                        class="deleteButton btn-red  px-3 py-2 mb-3  float-lg-right">
                                         Delete
                                     </div>
                               </div>`;

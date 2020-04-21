@@ -1,31 +1,5 @@
 // buttons
-// yanas code
-.btn-font
-{
-	font-family: 'Quicksand', sans-serif;
-	font-weight: 700;
-	text-align: center;
-}
-.nav-font
-{
-	font-family: 'Open Sans', sans-serif;
-	font-weight: 700;
-}
-.radius
-{
-	border-radius: 50px;
-}
 
-.btn-red {
-  background-color: $colour-watermelon;
-  color: white;
-	cursor: pointer;
-  text-align: center;
-
-	:hover {
-		color: white;
-	}
-}
 
 .edit-button {
   background-color: $colour-aegean-dark;
@@ -35,49 +9,21 @@
   padding: 9px 15px;
 }
 
-// background colours
-.bg-blue
-{
-	background-color: $colour-grey;
-}
-.bg-cyan
-{
-	background-color: $colour-grey;
-}
-// borders
-.border-blue
-{
-	border: 3px solid $colour-grey;
-	  // Yanas responsive code
-	@media (max-width: $tablet) {
-		border: 0;
-	}
-}
-.border-gray
-{
-	border: 3px solid $colour-grey;
-}
-.border-red
-{
-	border: 3px solid $colour-watermelon;
-}
 
-// Yanas code ends
-
-// Hayley's code
 .logo {
   width: 200px;
   display: flex;
+  align-items: center;
+  justify-content: space-between;
 
-  &__icon {
-    width: 60px;
-    height: 60px;
-    fill: $colour-rouge;
-  }
+    &__icon {
+      width: 50px;
+      height: 50px;
+      fill: $colour-rouge;
+    }
 }
 
 .header {
-  // margin: 1rem;
   align-items: center;
   display: flex;
   height: 10%;
@@ -85,40 +31,54 @@
 }
 
 .nav {
+  justify-content: space-between;
+  width: 75vw;
+}
+
+.authBtnWrapper {
+  cursor: pointer;
+  display: flex;
   justify-content: space-evenly;
-  width: 300px;
+  width: 40%;
+
+  & > div:hover {
+    border-bottom: 1px $colour-grey solid;
+  }
 }
 
 .button {
-  background-color: $colour-watermelon;
-  border-radius: 20px;
-  color: white;
+  color: $colour-aegean;
+  font-family: 'Source Sans Pro', sans-serif;
+  font-size: 15px;
   cursor: pointer;
-  padding: 9px 15px;
+  line-height: 54px;
+  height: 54px;
+  background-color: transparent;
+  letter-spacing: 2.6px;
+  text-transform: uppercase;
+  border-width: 1px;
+  padding-left: 52px;
+  padding-right: 52px;
+
+  &:hover {
+    background-color: $colour-aegean;
+    color: white;
+  }
 }
 
-.signInButton {
+.buttonLink {
+  color: #37465d;
   cursor: pointer;
-  padding: 6px 15px;
+  font-family: 'Source Sans Pro', sans-serif;
+  font-size: 15px;
+  letter-spacing: 2.6px;
+  text-transform: uppercase;
+
+  &:hover {
+    border-bottom: 1px $colour-aegean solid;
+  }
 }
 
-.button-red {
-  background-color: $colour-watermelon;
-  border-radius: 20px;
-  color: white;
-  cursor: pointer;
-  padding: 6px 15px;
-  text-align: center;
-}
-
-.button-black {
-  background-color: $colour-aegean-dark;
-  border-radius: 20px;
-  color: white;
-  cursor: pointer;
-  padding: 6px 15px;
-  text-align: center;
-}
 
 // Loading spinner
 
