@@ -56,13 +56,21 @@
   background-color: transparent;
   letter-spacing: 2.6px;
   text-transform: uppercase;
-  border-width: 1px;
   padding-left: 52px;
   padding-right: 52px;
+  width: fit-content;
 
   &:hover {
     background-color: $colour-aegean;
     color: white;
+  }
+
+  &--bordered {
+      border: 1px $colour-aegean solid;
+  }
+
+  &--accordion {
+    width: 400px;
   }
 }
 
@@ -73,9 +81,28 @@
   font-size: 15px;
   letter-spacing: 2.6px;
   text-transform: uppercase;
+  width: fit-content;
 
   &:hover {
     border-bottom: 1px $colour-aegean solid;
+  }
+
+  &--noCap {
+    font-family: 'Roboto', sans-serif;
+    text-transform: none;
+  }
+
+  &--small {
+    font-size: 13px;
+    letter-spacing: 0.5px;
+  }
+
+  &--grey {
+    color: $colour-grey;
+
+    &:hover {
+      border-bottom: 1px $colour-grey solid;
+    }
   }
 }
 

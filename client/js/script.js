@@ -62,8 +62,8 @@ $(document).ready(function(){
     $('#loginBtn').show();
     $('#signUpBtn').show();
     // pages
-    $('#landingPage').show();
-    $('#viewMorePage').hide();
+    $('#landingPage').hide();
+    $('#viewMorePage').show();
     $('#loginPage').hide();
     $('#signUpPage').hide();
     $('#projectPage').hide();
@@ -423,7 +423,7 @@ $('.edit-button').click(function(){
   function makeProductCards(arr) {
     document.getElementById('productsDeck').innerHTML = arr.map(product =>
                                                                   `<div class="card mb-4 col-sm-12 col-md-3">
-                                                                      <img src="${product.photoUrl}" id="${product._id}" alt="Avatar" class="viewMoreButton mb-5">
+                                                                      <img src="${product.photoUrl}" alt="Avatar" class="viewMoreButton mb-5">
                                                                       <div class="mx-1 my-1">
                                                                           <h5 class="text-center mb-2">${product.title}</h5>
                                                                           <div class="productCard-columnWrap">
@@ -431,7 +431,7 @@ $('.edit-button').click(function(){
                                                                               <small>${product.condition}</small>
                                                                           </div>
                                                                           <div id="toggleSection${product._id}" class="productCard-toggleSection" class="productCard-toggleSection">
-                                                                              <div id="productCard-viewMoreLink${product._id}" class="productCard-viewMoreLink buttonLink text-center">View more</div>
+                                                                              <div id="${product._id}" class="productCard-viewMoreLink buttonLink text-center">View more</div>
                                                                               <p id="productCard-price${product._id}" class="productCard-price mb-2">&dollar;${product.price}</p>
                                                                           </div>
                                                                       </div>
@@ -452,34 +452,17 @@ $('.edit-button').click(function(){
 
         $('#productCard-price' + id).css('opacity', '0');
         $('#toggleSection' + id).css('transform', 'translateX(33%)');
-        $('#productCard-viewMoreLink' + id).css('opacity', '1');
+        $('#' + id).css('opacity', '1');
     }
 
     function showPrice(rawId) {
         let id = rawId.slice(13);
 
         $('#productCard-price' + id).css('opacity', '1');
-        $('#productCard-viewMoreLink' + id).css('opacity', '0');
+        $('#' + id).css('opacity', '0');
         $('#toggleSection' + id).css('transform', 'translateX(-45%)');
 
     }
-
-  //   $('.productCard-toggleSection').on('mouseover', function() {
-  //       $('.productCard-price').css('opacity', '0');
-  //       $(this).css('transform', 'translateX(33%)');
-  //       $('.productCard-viewMoreLink').css('opacity', '1');
-  //   });
-
-  //   $('.productCard-toggleSection').on('mouseleave', function() {
-  //       $('.productCard-price').css('opacity', '1');
-  //       $('.productCard-viewMoreLink').css('opacity', '0');
-  //       $(this).css('transform', 'translateX(-45%)');
-      
-      
-      
-  // });
-
-
 
     // If viewMore button is clicked, show viewMorePage
     let viewMoreButtons = document.getElementsByClassName('productCard-viewMoreLink');
@@ -528,17 +511,18 @@ $('.edit-button').click(function(){
     let id = e.target.id;
 
     $.ajax({
-      url: `${url}/portfolioWithAuthor/${id}`,
+      url: `${url}/products/${id}`,
       type: 'GET',
       dataType: 'json',
-      success: function(portfolio) {
-            generateViewMoreHTML(portfolio[0]);
-            sessionStorage.setItem('currentPortfolio', portfolio[0]._id);
+      success: function(product) {
+            console.log(product);
+            generateViewMoreHTML(product[0]);
+            sessionStorage.setItem('currentProduct', product[0]._id);
             $("#viewMorePage").show();
             $("#projectPage").hide();
             $("#landingPage").hide();
 
-            if (portfolio[0].comments.length === 0) {
+            if (product[0].comments.length === 0) {
                 document.getElementById('viewMorePage-comments').innerHTML =
                                                                             `<div id="noCommentNote"
                                                                                   class="text-center">
@@ -553,13 +537,13 @@ $('.edit-button').click(function(){
   }
 
   // Generate viewMorePage HTML and attach to #viewMorePage div
-  function generateViewMoreHTML(portfolio) {
+  function generateViewMoreHTML(product) {
     let currentUser = sessionStorage.getItem('username');
     let commentsHTML;
     let addCommentHTML;
 
     // Map all comments into HTML
-    commentsHTML = portfolio.comments.map(function(item) {
+    commentsHTML = product.comments.map(function(item) {
                                               if (currentUser && (item.postByUsername === currentUser)) {
                                                 return `<div class="col-sm-12 col-lg-12 col-md-10">
                                                             <div class="comment-container comment-right mb-3">
@@ -605,26 +589,26 @@ $('.edit-button').click(function(){
     // Generate viewMorePgae HTML and attach to #viewMorePage
     document.getElementById('viewMorePage').innerHTML = `
                                                         <div id="viewMorePage-artInfo">
-                                                            <h5 class="h3">${portfolio.title}</h5>
+                                                            <h5 class="h3">${product.title}</h5>
                                                             <div class="viewMore-photoBackground">
-                                                                <img src="${portfolio.image}"
+                                                                <img src="${product.image}"
                                                                     class="viewMore-mainPhoto img-fluid"
-                                                                    alt="${portfolio.title} photo">
+                                                                    alt="${product.title} photo">
                                                             </div>
                                                             <div class="flexContainer-row mt-3 mb-3">
-                                                                <h5 class="h4">${portfolio.authorInfo.username}</h5>
-                                                                <h5 class="card-title h4 artcard-price">&dollar;${portfolio.price}</h5>
+                                                                <h5 class="h4">${product.seller.username}</h5>
+                                                                <h5 class="card-title h4 artcard-price">&dollar;${product.price}</h5>
                                                             </div>
-                                                            <p>${portfolio.description}</p>
-                                                            <strong class="mb-5">Location: ${portfolio.authorInfo.location}</strong>
+                                                            <p>${product.description}</p>
+                                                            <strong class="mb-5">Location: ${product.seller.location}</strong>
                                                             <br/>
-                                                            <a href="${portfolio.authorInfo.website}"
+                                                            <a href="${product.seller.website}"
                                                               class="artcard-link">
-                                                              ${portfolio.authorInfo.website}
+                                                              ${product.seller.website}
                                                             </a>
                                                             <div class="artcard-columnwrap mt-5 viewMore-endBoarder">
-                                                                <p class="card-title h5-cyan">${portfolio.category}</p>
-                                                                <div id="${portfolio._id}"
+                                                                <p class="card-title h5-cyan">${product.category}</p>
+                                                                <div id="${product._id}"
                                                                     class="bg-info text-white  py-2 px-3 ">
                                                                     Buy Now
                                                                 </div>
@@ -669,7 +653,7 @@ $('.edit-button').click(function(){
     document.getElementById('backToLanding').addEventListener('click', function() {
                                                                           $("#viewMorePage").hide();
                                                                           $("#landingPage").show();
-                                                                          sessionStorage.removeItem('currentPortfolio');
+                                                                          sessionStorage.removeItem('currentProduct');
     });
 
     let viewMorePageNode = document.getElementById('viewMorePage');

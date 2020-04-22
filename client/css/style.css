@@ -4,6 +4,26 @@
   padding: 0;
 }
 
+.color-pearl {
+  color: #f5f1ed;
+}
+
+.color-aegean {
+  color: #37465d;
+}
+
+.color-black {
+  color: black;
+}
+
+.color-grey {
+  color: #828282;
+}
+
+.color-watermelon {
+  color: #e9524d;
+}
+
 body {
   color: #828282;
   font-family: 'Roboto', sans-serif;
@@ -39,11 +59,23 @@ h6 {
   line-height: 28px;
 }
 
-.flexContainer-row {
+.capitalised {
+  text-transform: uppercase;
+}
+
+.flexContainer--row {
   align-items: center;
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+}
+
+.flexContainer--col {
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+}
+.flexContainer--col--centered {
+  align-items: center;
 }
 
 .flexContainer-flexStart {
@@ -116,13 +148,19 @@ footer {
   background-color: transparent;
   letter-spacing: 2.6px;
   text-transform: uppercase;
-  border-width: 1px;
   padding-left: 52px;
   padding-right: 52px;
+  width: fit-content;
 }
 .button:hover {
   background-color: #37465d;
   color: white;
+}
+.button--bordered {
+  border: 1px #37465d solid;
+}
+.button--accordion {
+  width: 400px;
 }
 
 .buttonLink {
@@ -132,9 +170,24 @@ footer {
   font-size: 15px;
   letter-spacing: 2.6px;
   text-transform: uppercase;
+  width: fit-content;
 }
 .buttonLink:hover {
   border-bottom: 1px #37465d solid;
+}
+.buttonLink--noCap {
+  font-family: 'Roboto', sans-serif;
+  text-transform: none;
+}
+.buttonLink--small {
+  font-size: 13px;
+  letter-spacing: 0.5px;
+}
+.buttonLink--grey {
+  color: #828282;
+}
+.buttonLink--grey:hover {
+  border-bottom: 1px #828282 solid;
 }
 
 .loader {
@@ -344,60 +397,34 @@ footer {
   }
 }
 
-#viewMorePage-artInfo {
+#viewMorePage {
+  border-top: 0.5px #f5f1ed solid;
   padding-left: 10vw;
   padding-right: 10vw;
-  padding-top: 3rem;
+  padding-top: 1rem;
 }
 
-.viewMore-photoBackground {
-  align-content: center;
-  background-color: #828282;
-  display: flex;
-  justify-content: center;
-  margin-top: 2rem;
+.backIcon {
+  fill: #828282;
+  width: 20px;
+  height: 20px;
 }
 
-.viewMore-mainPhoto {
-  height: auto;
-  max-width: 70vw;
+.viewMorePage__mainPhoto {
+  max-height: 500px;
 }
 
-.viewMore-endBoarder {
-  border-bottom: lightgrey 2px solid;
-  padding-bottom: 2rem;
+.viewMorePage__sellerPhoto {
+  border-radius: 50%;
+  border: 1.5px #f5f1ed solid;
+  height: 70px;
+  width: 70px;
+  background-size: contain;
+  background-position: center;
 }
 
-.viewMorePage-commentsWrapper {
-  max-width: 100%;
-  padding-left: 10vw;
-  padding-right: 10vw;
-}
-
-.comment-container {
-  border: #e9524d 1px solid;
-  border-radius: 20px;
-  padding: 1rem;
-}
-.comment-container--left {
-  text-align: left;
-}
-.comment-container--right {
-  text-align: right;
-}
-
-.comment-info {
-  display: flex;
-}
-
-.comment-right {
-  background-color: #828282;
-  text-align: right;
-}
-
-.comment-left {
-  background-color: white;
-  text-align: left;
+.viewMorePage__accordion--content {
+  max-width: 400px;
 }
 
 #signUpPage {

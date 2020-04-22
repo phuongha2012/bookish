@@ -1,61 +1,29 @@
-#viewMorePage-artInfo {
+#viewMorePage {
+    border-top: 0.5px $colour-pearl solid;
     padding-left: 10vw;
     padding-right: 10vw;
-    padding-top: 3rem;
+    padding-top: 1rem;
 }
 
-.viewMore-photoBackground {
-    align-content: center;
-    background-color: $colour-grey;
-    display: flex;
-    justify-content: center;
-    margin-top: 2rem;
+.backIcon {
+    fill: $colour-grey;
+    width: 20px;
+    height: 20px;
 }
 
-.viewMore-mainPhoto {
-    height: auto;
-    max-width: 70vw;
+.viewMorePage__mainPhoto {
+    max-height: 500px;
 }
 
-.viewMore-endBoarder {
-    border-bottom: lightgrey 2px solid;
-    padding-bottom: 2rem;
+.viewMorePage__sellerPhoto {
+    border-radius: 50%;
+    border: 1.5px $colour-pearl solid;
+    height: 70px;
+    width: 70px;
+    background-size: contain;
+    background-position: center;
 }
 
-.viewMorePage-commentsWrapper {
-    max-width: 100%;
-    padding-left: 10vw;
-    padding-right: 10vw;
+.viewMorePage__accordion--content {
+    max-width: 400px;
 }
-
-.comment-container {
-    border: $colour-watermelon 1px solid;
-    border-radius: 20px;
-    padding: 1rem;
-
-    &--left {
-        text-align: left;
-    }
-
-    &--right {
-        text-align: right;
-    }
-}
-
-.comment-info {
-    display: flex;
-}
-
-// yana code
-
-.comment-right {
-    background-color: $colour-grey;
-    text-align: right;
-}
-
-.comment-left {
-    background-color: white;
-    text-align: left;
-}
-
-// yana code ends

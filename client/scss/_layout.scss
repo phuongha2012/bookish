@@ -1,9 +1,18 @@
 // Hayley's code
-.flexContainer-row {
+.flexContainer--row {
     align-items: center;
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+}
+
+.flexContainer--col {
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
+
+   &--centered {
+       align-items: center;
+   }
 }
 
 .flexContainer-flexStart {

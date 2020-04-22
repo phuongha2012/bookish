@@ -19,6 +19,26 @@ $colour-watermelon: #e9524d;
 
 $colour-rouge: #dd3c42;
 
+.color-pearl {
+    color: $colour-pearl;
+}
+
+.color-aegean {
+    color: $colour-aegean;
+}
+
+.color-black {
+    color: black;
+}
+
+.color-grey {
+    color: $colour-grey;
+}
+
+.color-watermelon {
+    color: $colour-watermelon;
+}
+
 // TYPOGRAPHY
 
 body {
@@ -54,6 +74,10 @@ h6 {
     font-family: 'Roboto', sans-serif;
     font-size: 20px;
     line-height: 28px;
+}
+
+.capitalised {
+    text-transform: uppercase;
 }
 
 
