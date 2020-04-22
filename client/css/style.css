@@ -257,7 +257,8 @@ footer {
 .landingPage-banner {
   background-image: url("../images/banner.png");
   background-size: cover;
-  height: 50vh;
+  background-position-y: center;
+  height: 400px;
 }
 @media (max-width: 960px) {
   .landingPage-banner {
@@ -277,79 +278,57 @@ footer {
   border-radius: 20px;
 }
 
-#artsDeck {
+#productsDeck {
   display: flex;
   flex-flow: row wrap;
   height: auto;
   justify-content: flex-start;
+  max-width: 1300px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-.artcard {
-  border: none;
-  height: 700px;
-  margin-bottom: 50px;
-  margin-left: 70px;
-  margin-right: 70px;
-  width: 450px;
-}
-
-.artcard-title {
-  height: 56px;
-  margin-right: 50px;
-}
-
-.artcard-body {
-  padding-left: 30px;
-  padding-right: 30px;
-}
-
-.artcard-columnwrap {
+.productCard-columnWrap {
   display: flex;
   justify-content: space-between;
+  margin-left: 2rem;
+  margin-right: 2rem;
 }
 
-.artcard-description {
+.productCard-description {
   height: 72px;
   overflow: hidden;
   text-align: justify;
 }
 
-.art-image {
-  border: none;
-  border-radius: 50px;
-  height: auto;
-  max-height: 300px;
-  max-width: 449px;
-  width: auto;
-}
-
-.artcard-link {
-  color: black;
-  text-decoration: underline;
-}
-
-.artcard-category {
-  color: #e9524d;
-}
-
-.card-border {
-  border-bottom: 2px solid #828282;
-  border-left: 0;
-  border-right: 0;
-  border-top: 0;
+.productCard-toggleSection {
+  display: flex;
   width: 100%;
+  justify-content: space-between;
+  transform: translateX(-45%);
+  transition: all 1s;
 }
 
-.card-img-top {
-  height: 20vw;
-  object-fit: cover;
-  width: 100%;
+.productCard-price {
+  transition: opacity .1s;
 }
-@media (max-width: 720px) {
-  .card-img-top {
-    height: 100%;
-    width: 100%;
-  }
+
+.productCard-viewMoreLink {
+  width: 100px;
+  opacity: 0;
+  transition: opacity .1s;
+}
+
+.card {
+  border: 0;
+  width: 100%;
+  padding: 40px 15px 30px 15px;
+}
+.card > img {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  height: 220px;
+  width: 150px;
+  margin: 0 auto;
 }
 
 @media (max-width: 720px) {

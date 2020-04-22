@@ -4,7 +4,6 @@ $(document).ready(function(){
   $('html, body').animate({ scrollTop: 0 }, 'fast');
   sessionStorage.clear();
   let url;
-  console.log(url);
 
   // Get server config data
   $.ajax({
@@ -407,11 +406,12 @@ $('.edit-button').click(function(){
   function generateLandingPageCards() {
 
     $.ajax({
-      url: `${url}/portfoliosAndAuthors`,
+      url: `${url}/products`,
       type: 'GET',
       dataType: 'json',
-      success: function(portfolios) {
-            makeProductCards(portfolios);
+      success: function(products) {
+        console.log(products);
+            makeProductCards(products);
       },
       error: function(error) {
             console.log('Error: ' + error);
@@ -421,28 +421,68 @@ $('.edit-button').click(function(){
 
   // Map portfolios result from backend into product cards and attach to #artsDeck div
   function makeProductCards(arr) {
-    document.getElementById('artsDeck').innerHTML = arr.map(art =>
-                                                                  `<div class="col-sm-12 col-md-6 col-lg-4 my-xs-1 my-sm-1 my-md-3 my-lg-3">
-                                                                        <div class="card card-border rounded-0 mb-4">
-                                                                            <img src="${art.image}" id="${art._id}" alt="Avatar" class="card-img-top  viewMoreButton">
-                                                                            <div class="card-body artcard-body mx-1 my-1">
-                                                                                <div class="artcard-columnwrap">
-                                                                                    <h4 class="card-title mb-3">${art.title}</h4>
-                                                                                    <h5 class="card-title artcard-price">&dollar;${art.price}</h5>
-                                                                                </div>
-                                                                                <p class="card-title"><b> <a href="${art.authorInfo.website}" class="card-link artcard-link">${art.authorInfo.username}</a>, ${art.authorInfo.location}</b></p>
-                                                                                <p class="mb-3 text-truncate">${art.description}</p>
-                                                                                <div class="artcard-columnwrap mt-4">
-                                                                                    <p class="card-title h5-cyan">${art.category}</p>
-                                                                                    <div class="button viewMoreButton " id="${art._id}">View</div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
+    document.getElementById('productsDeck').innerHTML = arr.map(product =>
+                                                                  `<div class="card mb-4 col-sm-12 col-md-3">
+                                                                      <img src="${product.photoUrl}" id="${product._id}" alt="Avatar" class="viewMoreButton mb-5">
+                                                                      <div class="mx-1 my-1">
+                                                                          <h5 class="text-center mb-2">${product.title}</h5>
+                                                                          <div class="productCard-columnWrap">
+                                                                              <small class="mb-1">${product.format}</small>
+                                                                              <small>${product.condition}</small>
+                                                                          </div>
+                                                                          <div id="toggleSection${product._id}" class="productCard-toggleSection" class="productCard-toggleSection">
+                                                                              <div id="productCard-viewMoreLink${product._id}" class="productCard-viewMoreLink buttonLink text-center">View more</div>
+                                                                              <p id="productCard-price${product._id}" class="productCard-price mb-2">&dollar;${product.price}</p>
+                                                                          </div>
+                                                                      </div>
                                                                     </div>`
                                                                   ).join(' ');
 
+    
+    // Show viewMoreLink when price section is hovered
+    let toggleSections = document.getElementsByClassName('productCard-toggleSection');
+
+    for (let i = 0; i < toggleSections.length; i++) {
+        toggleSections[i].addEventListener('mouseover', showViewMoreLink.bind(null, toggleSections[i].id));
+        toggleSections[i].addEventListener('mouseleave', showPrice.bind(null, toggleSections[i].id));
+    }
+
+    function showViewMoreLink(rawId) {
+        let id = rawId.slice(13);
+
+        $('#productCard-price' + id).css('opacity', '0');
+        $('#toggleSection' + id).css('transform', 'translateX(33%)');
+        $('#productCard-viewMoreLink' + id).css('opacity', '1');
+    }
+
+    function showPrice(rawId) {
+        let id = rawId.slice(13);
+
+        $('#productCard-price' + id).css('opacity', '1');
+        $('#productCard-viewMoreLink' + id).css('opacity', '0');
+        $('#toggleSection' + id).css('transform', 'translateX(-45%)');
+
+    }
+
+  //   $('.productCard-toggleSection').on('mouseover', function() {
+  //       $('.productCard-price').css('opacity', '0');
+  //       $(this).css('transform', 'translateX(33%)');
+  //       $('.productCard-viewMoreLink').css('opacity', '1');
+  //   });
+
+  //   $('.productCard-toggleSection').on('mouseleave', function() {
+  //       $('.productCard-price').css('opacity', '1');
+  //       $('.productCard-viewMoreLink').css('opacity', '0');
+  //       $(this).css('transform', 'translateX(-45%)');
+      
+      
+      
+  // });
+
+
+
     // If viewMore button is clicked, show viewMorePage
-    let viewMoreButtons = document.getElementsByClassName('viewMoreButton');
+    let viewMoreButtons = document.getElementsByClassName('productCard-viewMoreLink');
 
     for (let i = 0; i < viewMoreButtons.length; i++) {
         viewMoreButtons[i].addEventListener('click', getArtworkInfo);
