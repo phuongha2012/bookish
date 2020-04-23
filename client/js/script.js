@@ -549,8 +549,13 @@ $('.edit-button').click(function(){
 
     // Map all comments into HTML
     commentsHTML = product.comments.map(function(item) {
+
+                                              let replyHTML = (item.replies.length > 0) ? 
+                                                              `<div class="buttonLink buttonLink--noCap buttonLink--small buttonLink--grey">${item.replies.length} replies</div>` :
+                                                              ``;
+
                                               if (currentUser && (item.postByUsername === currentUser)) {
-                                                return `<div class="col-sm-12 col-lg-12 col-md-10">
+                                                return `<div class="col-sm-12 col-lg-12 col-md-10 my-3">
                                                             <div class="comment-container comment-right mb-3">
                                                                 <div class="comment-info">
                                                                     <strong class="mr-1">You</strong>
@@ -560,7 +565,7 @@ $('.edit-button').click(function(){
                                                             </div>
                                                         </div>`;
                                               } else if (item.postByUsername !== currentUser) {
-                                                return `<div class="flexContainer--row col-sm-12 col-lg-12 col-md-10">
+                                                return `<div class="flexContainer--row col-sm-12 col-lg-12 col-md-10 my-3">
                                                             <div class="col-sm-3 col-md-2 mb-2">
                                                                 <div class="viewMorePage__thumbnail viewMorePage__thumbnail--commenter mx-auto" style="background-image:url(https://miro.medium.com/max/1200/1*pHb0M9z_UMhO22HlaOl2zw.jpeg)"></div>
                                                             </div>
@@ -570,6 +575,7 @@ $('.edit-button').click(function(){
                                                                     <span class="font-italic">on ${formatDate(item.postedOn)}</span>
                                                                 </small>
                                                                 <p>${item.content}</p>
+                                                                ${replyHTML}
                                                             </div>
                                                         </div>`;
                                               }})
