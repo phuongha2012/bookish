@@ -250,8 +250,6 @@ $('.edit-button').click(function(){
     let username = $('#inputUsernameLogin').val();
     let password = $('#inputPasswordLogin').val();
 
-    console.log(username, password);
-
     $.ajax({
       url :`${url}/members/login`,
       type :'POST',
@@ -259,22 +257,22 @@ $('.edit-button').click(function(){
         username : username,
         password : password
       },
-      success : function(loginData){
-        if (loginData === ' ') {
+      success : function(response){
+        if (response === ' ') {
           Swal.fire({
             title: 'Empty Input Field',
             text: 'Please fill in all input fields',
             icon: 'warning',
             confirmButtonText: 'OK'
         });
-        } else if (loginData === 'Member not found. Please register') {
+        } else if (response === 'Member not found. Please register') {
           Swal.fire({
             title: 'Not Registered',
             text: 'Member not found. Please register',
             icon: 'warning',
             confirmButtonText: 'OK'
         });
-        } else if (loginData === 'Not Authorized') {
+        } else if (response === 'Not Authorized') {
           Swal.fire({
             title: 'Opps',
             text: 'Incorrect username or password',
@@ -282,12 +280,7 @@ $('.edit-button').click(function(){
             confirmButtonText: 'OK'
         });
         }  else {
-          sessionStorage.setItem('memberId',loginData._id);
-          sessionStorage.setItem('username',loginData.username);
-          sessionStorage.setItem('email',loginData.email);
-          sessionStorage.setItem('location',loginData.location);
-          sessionStorage.setItem('website',loginData.website);
-          sessionStorage.setItem('about',loginData.about);
+          sessionStorage.setItem('currentUser', JSON.stringify(response));
           showMemberName(username);
           $('#logoutBtn').show();
           $('#myPortfolioBtn').show();
@@ -297,12 +290,13 @@ $('.edit-button').click(function(){
           $('#landingPage').show();
           $('#loginPage').hide();
           $('html, body').animate({ scrollTop: 0 }, 'fast');
+          console.log(sessionStorage);
         }
       },//success
-      error:function(){
+      error: function() {
         console.log('error: cannot call api');
       }//error
-    });//ajax
+    });
   });
 
   // show members name ===========================================================
@@ -515,13 +509,13 @@ $('.edit-button').click(function(){
       type: 'GET',
       dataType: 'json',
       success: function(product) {
-            console.log(product);
             generateViewMoreHTML(product[0]);
-            sessionStorage.setItem('currentProduct', product[0]._id);
+            sessionStorage.setItem('currentProduct', JSON.stringify(product[0]));
             $("#viewMorePage").show();
             $("#projectPage").hide();
             $("#landingPage").hide();
 
+            console.log(product[0].comments);
             if (product[0].comments.length === 0) {
                 document.getElementById('viewMorePage-comments').innerHTML =
                                                                             `<div id="noCommentNote"
@@ -539,10 +533,14 @@ $('.edit-button').click(function(){
   // Generate viewMorePage HTML and attach to #viewMorePage div
   function generateViewMoreHTML(product) {
     console.log(product);
-    let currentUser = sessionStorage.getItem('username');
+    let currentUser;
     let shippingOptions;
     let commentsHTML;
     let addCommentHTML;
+
+    if(currentUser) {
+      let currentUsername = (JSON.parse(sessionStorage.getItem('currentUser')))._userName;
+    }
 
     // Map product's shipping options into HTML
     shippingOptions = product.shipping.map(item => `<li>${item}</li>`).join(' ');
@@ -587,15 +585,21 @@ $('.edit-button').click(function(){
                                                                       </div>`;
 
 
-                                              if (currentUser && (item.postByUsername === currentUser)) {
-                                                return `<div class="col-sm-12 col-lg-12 col-md-10 my-3">
-                                                            <div class="comment-container comment-right mb-3">
-                                                                <div class="comment-info">
-                                                                    <strong class="mr-1">You</strong>
-                                                                    <p>on ${formatDate(item.posted)}</p>
+                                              if (currentUser && (item.memberUsername === currentUsername)) {
+                                                return `<div class="flexContainer--col col-sm-12 col-lg-12 col-md-10 my-3">
+                                                            <div class="flexContainer--row">
+                                                                <div class="col-sm-3 col-md-2 mb-2">
+                                                                    <div class="viewMorePage__thumbnail viewMorePage__thumbnail--commenter mx-auto" style="background-image:url(${(JSON.parse(sessionStorage.getItem('currentUser'))).photoUrl})"></div>
                                                                 </div>
-                                                                <p><b>${item.text}</b></p>
+                                                                <div class="col-sm-9 col-md-10">
+                                                                    <small class="comment-info flexContainer--row">
+                                                                        <span class="font-italic mr-1">You</span>
+                                                                        <span class="font-italic">on ${formatDate(item.postedOn)}</span>
+                                                                    </small>
+                                                                    <div>${item.content}</div>
+                                                                </div>
                                                             </div>
+                                                            <div class="flexContainer--col col-sm-12 col-md-10 ml-auto">${replyWrapperHTML}</div>
                                                         </div>`;
                                               } else if (item.postByUsername !== currentUser) {
                                                 return `<div class="flexContainer--col col-sm-12 col-lg-12 col-md-10 my-3">
@@ -744,7 +748,7 @@ $('.edit-button').click(function(){
                                                               <!-- Add comment section -->
                                                               <div id="viewMorePage-addCommentWrapper" class="flexContainer--row mx-auto">
                                                                   <div class="col-sm-3 col-md-2 mb-2">
-                                                                      <div class="viewMorePage__thumbnail viewMorePage__thumbnail--commenter mx-auto" style="background-image:url(https://miro.medium.com/max/1200/1*pHb0M9z_UMhO22HlaOl2zw.jpeg)"></div>
+                                                                      <div class="viewMorePage__thumbnail viewMorePage__thumbnail--commenter mx-auto" style="background-image:url(${(JSON.parse(sessionStorage.getItem('currentUser'))).photoUrl})"></div>
                                                                   </div>
                                                                   <div class="flexContainer--col flexContainer--col--right viewMorePage-postComment">
                                                                       <textarea id="viewMorePage-postComment" class="col-12" rows="3" cols="100"></textarea>
@@ -783,21 +787,23 @@ $('.edit-button').click(function(){
   function postComment() {
     let _content = $('textarea#viewMorePage-postComment').val();
     let _date = Date.now();
-    let _portfolioID = sessionStorage.getItem('currentPortfolio');
-    let _userID = sessionStorage.getItem('memberId');
-    let _username = sessionStorage.getItem('username');
+    let _productId = (JSON.parse(sessionStorage.getItem('currentProduct')))._id;
+    console.log('postComment Product ID', _productId);
+    let _userID = (JSON.parse(sessionStorage.getItem('currentUser')))._id;
+    let _username = (JSON.parse(sessionStorage.getItem('currentUser')))._userName;
 
     $.ajax({
-      url: `${url}/addComment`,
+      url: `${url}/comments/add`,
       type: 'POST',
       data: {
-            portfolioID: _portfolioID,
-            postByID: _userID,
-            postByUsername: _username,
-            postDate: _date,
+            productId: _productId,
+            memberId: _userID,
+            memberUsername: _username,
+            postedOn: _date,
             content: _content
       },
       success: function(comment) {
+        console.log(comment);
             $('textarea#viewMorePage-postComment').val('');
             addComment(comment);
       },
@@ -815,9 +821,9 @@ $('.edit-button').click(function(){
                           <div class="comment-container comment-right mb-3">
                               <div class="comment-info">
                                   <strong class="mr-1">You</strong>
-                                  <p>on ${formatDate(comment.posted)}</p>
+                                  <p>on ${formatDate(comment.postedOn)}</p>
                               </div>
-                              <p><b>${comment.text}</b></p>
+                              <p><b>${comment.content}</b></p>
                           </div>
                       </div>`;
 
