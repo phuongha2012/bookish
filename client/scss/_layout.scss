@@ -13,6 +13,10 @@
    &--centered {
        align-items: center;
    }
+
+   &--right {
+    align-items: flex-end;
+   }
 }
 
 .flexContainer-flexStart {

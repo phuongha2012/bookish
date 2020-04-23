@@ -77,6 +77,9 @@ h6 {
 .flexContainer--col--centered {
   align-items: center;
 }
+.flexContainer--col--right {
+  align-items: flex-end;
+}
 
 .flexContainer-flexStart {
   align-items: flex-start;
@@ -153,6 +156,15 @@ footer {
   width: fit-content;
 }
 .button:hover {
+  background-color: #37465d;
+  color: white;
+}
+.button--small {
+  font-size: 12px;
+  height: 34px;
+  line-height: 34px;
+  padding-left: 10px;
+  padding-right: 10px;
   background-color: #37465d;
   color: white;
 }
@@ -414,7 +426,7 @@ footer {
   max-height: 500px;
 }
 
-.viewMorePage__sellerPhoto {
+.viewMorePage__thumbnail {
   border-radius: 50%;
   border: 1.5px #f5f1ed solid;
   height: 70px;
@@ -425,6 +437,11 @@ footer {
 
 .viewMorePage__accordion--content {
   max-width: 400px;
+}
+
+.viewMorePage-postComment {
+  padding-bottom: 16px;
+  border-bottom: 1px #f5f1ed solid;
 }
 
 #signUpPage {
