@@ -549,10 +549,43 @@ $('.edit-button').click(function(){
 
     // Map all comments into HTML
     commentsHTML = product.comments.map(function(item) {
+                                              // Map comment's replies to HTML
+                                              let replies = item.replies.map(reply => `
+                                                                                    <div class="flexContainer--row col-sm-12 col-md-12 my-3">
+                                                                                        <div class="col-sm-3 col-md-2 mb-2">
+                                                                                            <div class="viewMorePage__thumbnail viewMorePage__thumbnail--commenter mx-auto" style="background-image:url(https://miro.medium.com/max/1200/1*pHb0M9z_UMhO22HlaOl2zw.jpeg)"></div>
+                                                                                        </div>
+                                                                                        <div class="col-12">
+                                                                                        <small class="comment-info flexContainer--row">
+                                                                                            <span class="font-italic mr-1">${reply.memberUsername}</span>
+                                                                                            <span class="font-italic">on ${formatDate(reply.postedOn)}</span>
+                                                                                        </small>
+                                                                                        <div>${reply.content}</div>
+                                                                                    </div>`);
+                                              
+                                              // Add reply input to replies
+                                              let replyInput = (item.replies.length === 0) ? `` :
+                                                                  `<div class="col-sm-3 col-md-2 mb-2">
+                                                                      <div class="viewMorePage__thumbnail viewMorePage__thumbnail--commenter mx-auto" style="background-image:url(https://miro.medium.com/max/1200/1*pHb0M9z_UMhO22HlaOl2zw.jpeg)"></div>
+                                                                  </div>
+                                                                  <div class="flexContainer--col col-12 flexContainer--col--right viewMorePage-postComment">
+                                                                      <textarea id="viewMorePage-postReply" class="col-12" rows="2" cols="100"></textarea>
+                                                                      <div id="viewMorePage-postCommentButton" class="button button--small mt-2">
+                                                                          Reply
+                                                                      </div>
+                                                                  </div>`;
 
-                                              let replyHTML = (item.replies.length > 0) ? 
-                                                              `<div class="buttonLink buttonLink--noCap buttonLink--small buttonLink--grey">${item.replies.length} replies</div>` :
-                                                              ``;
+                                                       
+
+                                              let replyWrapperHTML = (item.replies.length === 0) ? `` : 
+                                                                      `<div class="buttonLink buttonLink--noCap buttonLink--small buttonLink--grey" data-toggle="collapse" href="#showCommentReply">${item.replies.length} replies</div>
+                                                                      <div class="collapse" id="showCommentReply">
+                                                                          <div class="card card-body flexContainer--col">
+                                                                              <div>${replies}</div> 
+                                                                              <div class="flexContainer--row">${replyInput}<div>
+                                                                          </div>
+                                                                      </div>`;
+
 
                                               if (currentUser && (item.postByUsername === currentUser)) {
                                                 return `<div class="col-sm-12 col-lg-12 col-md-10 my-3">
@@ -565,18 +598,20 @@ $('.edit-button').click(function(){
                                                             </div>
                                                         </div>`;
                                               } else if (item.postByUsername !== currentUser) {
-                                                return `<div class="flexContainer--row col-sm-12 col-lg-12 col-md-10 my-3">
-                                                            <div class="col-sm-3 col-md-2 mb-2">
-                                                                <div class="viewMorePage__thumbnail viewMorePage__thumbnail--commenter mx-auto" style="background-image:url(https://miro.medium.com/max/1200/1*pHb0M9z_UMhO22HlaOl2zw.jpeg)"></div>
+                                                return `<div class="flexContainer--col col-sm-12 col-lg-12 col-md-10 my-3">
+                                                            <div class="flexContainer--row">
+                                                                <div class="col-sm-3 col-md-2 mb-2">
+                                                                    <div class="viewMorePage__thumbnail viewMorePage__thumbnail--commenter mx-auto" style="background-image:url(https://miro.medium.com/max/1200/1*pHb0M9z_UMhO22HlaOl2zw.jpeg)"></div>
+                                                                </div>
+                                                                <div class="col-sm-9 col-md-10">
+                                                                    <small class="comment-info flexContainer--row">
+                                                                        <span class="font-italic mr-1">${item.memberUsername}</span>
+                                                                        <span class="font-italic">on ${formatDate(item.postedOn)}</span>
+                                                                    </small>
+                                                                    <div>${item.content}</div>
+                                                                </div>
                                                             </div>
-                                                            <div class="mb-3 col-sm-9 col-md-10">
-                                                                <small class="comment-info flexContainer--row">
-                                                                    <span class="font-italic mr-1">${item.memberUsername}</span>
-                                                                    <span class="font-italic">on ${formatDate(item.postedOn)}</span>
-                                                                </small>
-                                                                <p>${item.content}</p>
-                                                                ${replyHTML}
-                                                            </div>
+                                                            <div class="flexContainer--col col-sm-12 col-md-10 ml-auto">${replyWrapperHTML}</div>
                                                         </div>`;
                                               }})
                                       .join(' ');

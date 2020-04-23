@@ -227,6 +227,10 @@ footer {
     transform: rotate(360deg);
   }
 }
+.card {
+  padding: 0;
+}
+
 .container-form {
   background-color: white;
   height: 100vh;
