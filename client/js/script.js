@@ -538,14 +538,15 @@ $('.edit-button').click(function(){
     let commentsHTML;
     let addCommentHTML;
 
-    if(currentUser) {
-      let currentUsername = (JSON.parse(sessionStorage.getItem('currentUser')))._userName;
-    }
+    // if(currentUser) {
+      let currentUsername = (JSON.parse(sessionStorage.getItem('currentUser')))._username;
+    // }
 
     // Map product's shipping options into HTML
     shippingOptions = product.shipping.map(item => `<li>${item}</li>`).join(' ');
 
     // Map all comments into HTML
+    console.log(product.comments);
     commentsHTML = product.comments.map(function(item) {
                                               // Map comment's replies to HTML
                                               let replies = item.replies.map(reply => `
@@ -601,7 +602,7 @@ $('.edit-button').click(function(){
                                                             </div>
                                                             <div class="flexContainer--col col-sm-12 col-md-10 ml-auto">${replyWrapperHTML}</div>
                                                         </div>`;
-                                              } else if (item.postByUsername !== currentUser) {
+                                              } else if (item.memberUsername !== currentUsername) {
                                                 return `<div class="flexContainer--col col-sm-12 col-lg-12 col-md-10 my-3">
                                                             <div class="flexContainer--row">
                                                                 <div class="col-sm-3 col-md-2 mb-2">
@@ -619,6 +620,7 @@ $('.edit-button').click(function(){
                                                         </div>`;
                                               }})
                                       .join(' ');
+      document.getElementById('viewMorePage').innerHTML += commentsHTML;
 
     // Conditionally render addComment HTML base on user's login status
     // addCommentHTML = currentUser ? `<div class="col-12 col-sm-12 col-lg-10 col-md-10 mx-auto">
@@ -790,7 +792,7 @@ $('.edit-button').click(function(){
     let _productId = (JSON.parse(sessionStorage.getItem('currentProduct')))._id;
     console.log('postComment Product ID', _productId);
     let _userID = (JSON.parse(sessionStorage.getItem('currentUser')))._id;
-    let _username = (JSON.parse(sessionStorage.getItem('currentUser')))._userName;
+    let _username = (JSON.parse(sessionStorage.getItem('currentUser'))).username;
 
     $.ajax({
       url: `${url}/comments/add`,
