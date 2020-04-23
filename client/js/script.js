@@ -62,8 +62,8 @@ $(document).ready(function(){
     $('#loginBtn').show();
     $('#signUpBtn').show();
     // pages
-    $('#landingPage').hide();
-    $('#viewMorePage').show();
+    $('#landingPage').show();
+    $('#viewMorePage').hide();
     $('#loginPage').hide();
     $('#signUpPage').hide();
     $('#projectPage').hide();
@@ -525,8 +525,8 @@ $('.edit-button').click(function(){
             if (product[0].comments.length === 0) {
                 document.getElementById('viewMorePage-comments').innerHTML =
                                                                             `<div id="noCommentNote"
-                                                                                  class="text-center">
-                                                                                  There has not been any question about this artwork</div>`;
+                                                                                  class="text-center mt-5">
+                                                                                  There has not been any question about this artwork.</div>`;
                 return;
             }
       },
@@ -538,9 +538,14 @@ $('.edit-button').click(function(){
 
   // Generate viewMorePage HTML and attach to #viewMorePage div
   function generateViewMoreHTML(product) {
+    console.log(product);
     let currentUser = sessionStorage.getItem('username');
+    let shippingOptions;
     let commentsHTML;
     let addCommentHTML;
+
+    // Map product's shipping options into HTML
+    shippingOptions = product.shipping.map(item => `<li>${item}</li>`).join(' ');
 
     // Map all comments into HTML
     commentsHTML = product.comments.map(function(item) {
@@ -555,97 +560,167 @@ $('.edit-button').click(function(){
                                                             </div>
                                                         </div>`;
                                               } else if (item.postByUsername !== currentUser) {
-                                                return `<div class="col-sm-12 col-lg-12 col-md-10">
-                                                            <div class="comment-container comment-left mb-3">
-                                                                <div class="comment-info">
-                                                                    <strong class="mr-1">${item.postByUsername}</strong>
-                                                                    <p>on ${formatDate(item.posted)}</p>
-                                                                </div>
-                                                                <p>${item.text}</p>
+                                                return `<div class="flexContainer--row col-sm-12 col-lg-12 col-md-10">
+                                                            <div class="col-sm-3 col-md-2 mb-2">
+                                                                <div class="viewMorePage__thumbnail viewMorePage__thumbnail--commenter mx-auto" style="background-image:url(https://miro.medium.com/max/1200/1*pHb0M9z_UMhO22HlaOl2zw.jpeg)"></div>
+                                                            </div>
+                                                            <div class="mb-3 col-sm-9 col-md-10">
+                                                                <small class="comment-info flexContainer--row">
+                                                                    <span class="font-italic mr-1">${item.memberUsername}</span>
+                                                                    <span class="font-italic">on ${formatDate(item.postedOn)}</span>
+                                                                </small>
+                                                                <p>${item.content}</p>
                                                             </div>
                                                         </div>`;
                                               }})
                                       .join(' ');
 
     // Conditionally render addComment HTML base on user's login status
-    addCommentHTML = currentUser ? `<div class="col-12 col-sm-12 col-lg-10 col-md-10 mx-auto">
-                                        <label for="viewMorePage-postComment">
-                                              Comment:
-                                        </label>
-                                        <textarea id="viewMorePage-postComment"
-                                                  class="col-12 col-sm-12 col-lg-10 col-md-10"
-                                                  rows="4"
-                                                  cols="100">
-                                        </textarea>
-                                        <div class="col-12 col-sm-12 col-lg-11 col-md-11">
-                                            <div id="viewMorePage-postCommentButton"
-                                                class="button  bg-dark float-right mt-2 mb-5">
-                                                Submit
-                                            </div>
-                                        </div>
-                                    </div>` : `
-                                    <div class="text-center mb-5">Please log in to add comment</div>`;
+    // addCommentHTML = currentUser ? `<div class="col-12 col-sm-12 col-lg-10 col-md-10 mx-auto">
+    //                                     <label for="viewMorePage-postComment">
+    //                                           Comment:
+    //                                     </label>
+    //                                     <textarea id="viewMorePage-postComment"
+    //                                               class="col-12 col-sm-12 col-lg-10 col-md-10"
+    //                                               rows="4"
+    //                                               cols="100">
+    //                                     </textarea>
+    //                                     <div class="col-12 col-sm-12 col-lg-11 col-md-11">
+    //                                         <div id="viewMorePage-postCommentButton"
+    //                                             class="button  bg-dark float-right mt-2 mb-5">
+    //                                             Submit
+    //                                         </div>
+    //                                     </div>
+    //                                 </div>` : `
+    //                                 <div class="text-center mb-5">Please log in to add comment</div>`;
 
     // Generate viewMorePgae HTML and attach to #viewMorePage
     document.getElementById('viewMorePage').innerHTML = `
-                                                        <div id="viewMorePage-artInfo">
-                                                            <h5 class="h3">${product.title}</h5>
-                                                            <div class="viewMore-photoBackground">
-                                                                <img src="${product.image}"
-                                                                    class="viewMore-mainPhoto img-fluid"
-                                                                    alt="${product.title} photo">
-                                                            </div>
-                                                            <div class="flexContainer-row mt-3 mb-3">
-                                                                <h5 class="h4">${product.seller.username}</h5>
-                                                                <h5 class="card-title h4 artcard-price">&dollar;${product.price}</h5>
-                                                            </div>
-                                                            <p>${product.description}</p>
-                                                            <strong class="mb-5">Location: ${product.seller.location}</strong>
-                                                            <br/>
-                                                            <a href="${product.seller.website}"
-                                                              class="artcard-link">
-                                                              ${product.seller.website}
-                                                            </a>
-                                                            <div class="artcard-columnwrap mt-5 viewMore-endBoarder">
-                                                                <p class="card-title h5-cyan">${product.category}</p>
-                                                                <div id="${product._id}"
-                                                                    class="bg-info text-white  py-2 px-3 ">
-                                                                    Buy Now
-                                                                </div>
-                                                            </div>
-                                                            <button id="backToLanding"
-                                                                    type="button"
-                                                                    class="btn btn-dark mt-3 mb-5  ">
-                                                                    Back
-                                                            </button>
-                                                        </div>
-                                                        <div class="bg-light pt-5">
-                                                            <div class="row mx-auto">
-                                                                <div class="col-12 mb-5">
-                                                                    <h5 class="text-center">
-                                                                        Questions About This Artwork
-                                                                    </h5>
-                                                                </div>
-                                                                <div class="col-sm-12 col-md-8 mx-auto">
-                                                                    <div id="viewMorePage-comments"
-                                                                        class="mb-5">
-                                                                        ${commentsHTML}
-                                                                    </div>
-                                                                </div>
-                                                            </div>
+                                                      <!-- General description section -->
+                                                      <div class="flexContainer--row mb-5">
+                                                          <div class="flexContainer--col col-sm-12 col-md-5">
+                                                              <div class="col-sm-12 col-md-6 flexContainer--row mb-5">
+                                                                  <svg class="backIcon mr-2">
+                                                                      <use xlink:href="images/icons.svg#icon-arrow-left2"></use>
+                                                                  </svg>
+                                                                  <p id="backToLanding" class="buttonLink buttonLink--noCap buttonLink--grey mt-3">
+                                                                      Back to Home
+                                                                  </p>
+                                                              </div>
+                                                              <img src="${product.photoUrl}" alt="Book image" class="viewMorePage__mainPhoto">
+                                                          </div>
+                                                          <div class="flexContainer--col col-sm-12 col-md-7">
+                                                              <h2>${product.title}</h2>
+                                                              <h3 class="color-grey mb-5">&dollar;${product.price}</h3>
+                                                              <p class="mb-5">
+                                                                  ${product.description}
+                                                              </p>
+                                                              <div class="flexContainer--row float-right mb-5">
+                                                                  <div class="button button--bordered mr-3">Buy Now</div>
+                                                                  <div class="buttonLink buttonLink--noCap buttonLink--grey buttonLink--small">Add to Watchlist</div>
+                                                              </div>
+                                                              <div class="flexContainer--row mb-2">
+                                                                  <small class="capitalised color-black mr-1">Condition:</small>
+                                                                  <small>${product.condition}</small>
+                                                              </div>
+                                                              <div class="flexContainer--row">
+                                                                  <small class="capitalised color-black mr-1">Listed city:</small>
+                                                                  <small>${product.listedCity}</small>
+                                                              </div>        
+                                                          </div>
+                                                      </div>
+                                                      <br/>
 
-                                                            <div class="row mx-auto">
-                                                                <div class="col-12 mb-4 mt-3">
-                                                                    <h5 class="text-center">
-                                                                        Ask the Artist a Question
-                                                                    </h5>
+                                                      <!-- Detail section -->
+                                                      <div class="flexContainer--row mt-5">
+
+                                                          <!-- Accordion section -->
+                                                          <div id="accordion" class="col-sm-12 col-md-5">
+                                                            <!-- Accordion - Product details -->
+                                                            <div class="mb-3"> 
+                                                              <button class="button button--bordered button--accordion" data-toggle="collapse" data-target="#viewMorePage__productDetails" aria-expanded="true" aria-controls="viewMorePage__productDetails">
+                                                                Details
+                                                              </button>
+                                                              <div id="viewMorePage__productDetails" class="collapse viewMorePage__accordion--content" aria-labelledby="headingOne" data-parent="#accordion">
+                                                                <div class="card-body">
+                                                                  <div class="flexContainer--row">
+                                                                      <small class="capitalised color-black mr-1">Author:</small>
+                                                                      <small>${product.author}</small>
+                                                                  </div>
+                                                                  <div class="flexContainer--row">
+                                                                      <small class="capitalised color-black mr-1">Category:</small>
+                                                                      <small>${product.category}</small>
+                                                                  </div>
+                                                                  <div class="flexContainer--row">
+                                                                      <small class="capitalised color-black mr-1">Format:</small>
+                                                                      <small>${product.format}</small>
+                                                                  </div>    
                                                                 </div>
-                                                                <div id="viewMorePage-addCommentWrapper"
-                                                                    class="row mx-auto">
-                                                                    ${addCommentHTML}
+                                                              </div>
+                                                            </div>
+                                                            <!-- Accordion - Shipping info -->
+                                                            <div class="mb-3"> 
+                                                              <button class="button button--bordered button--accordion" data-toggle="collapse" data-target="#viewMorePage__shippingInfo" aria-expanded="true" aria-controls="viewMorePage__shippingInfo">
+                                                                Shipping Information
+                                                              </button>
+                                                              <div id="viewMorePage__shippingInfo" class="collapse viewMorePage__accordion--content" aria-labelledby="headingOne" data-parent="#accordion">
+                                                                <div class="card-body">
+                                                                  <ul>
+                                                                    ${shippingOptions}
+                                                                  </ul>    
+                                                                </div>
+                                                              </div>
+                                                            </div>
+                                                            <!-- Accordion - Seller info -->
+                                                            <div class="mb-3"> 
+                                                              <button class="button button--bordered button--accordion" data-toggle="collapse" data-target="#viewMorePage__sellerInfo" aria-expanded="true" aria-controls="viewMorePage__sellerInfo">
+                                                                About Seller
+                                                              </button>
+                                                              <div id="viewMorePage__sellerInfo" class="collapse viewMorePage__accordion--content" aria-labelledby="headingOne" data-parent="#accordion">
+                                                                <div class="card-body btBorder btBorder--medium">
+                                                                  <div class="flexContainer--col flexContainer--col--centered">
+                                                                      <div class="viewMorePage__thumbnail viewMorePage__thumbnail--seller mb-2" style="background-image:url(${product.sellerInfo.photoUrl})"></div>
+                                                                      <span class="mb-3">${product.sellerInfo.username}</span>
+                                                                      <div class="flexContainer--row">
+                                                                          <small class="color-black mr-1">Location:</small>
+                                                                          <small>${product.sellerInfo.address.city}</small>
+                                                                      </div>
+                                                                      <div class="flexContainer--row">
+                                                                          <small class="color-black mr-1">Member Since:</small>
+                                                                          <small>17th June 2015</small>
+                                                                      </div>
+                                                                  </div>
+                                                                </div>
+                                                                
+                                                              </div>
+                                                            </div>
+                                                          </div>
+
+                                                          <!-- Q&A section -->
+                                                          <div class="flexContainer--col col-sm-12 col-md-6">
+                                                              <h3 class="mb-3">Questions</h3>
+
+                                                              <!-- Add comment section -->
+                                                              <div id="viewMorePage-addCommentWrapper" class="flexContainer--row mx-auto">
+                                                                  <div class="col-sm-3 col-md-2 mb-2">
+                                                                      <div class="viewMorePage__thumbnail viewMorePage__thumbnail--commenter mx-auto" style="background-image:url(https://miro.medium.com/max/1200/1*pHb0M9z_UMhO22HlaOl2zw.jpeg)"></div>
+                                                                  </div>
+                                                                  <div class="flexContainer--col flexContainer--col--right viewMorePage-postComment">
+                                                                      <textarea id="viewMorePage-postComment" class="col-12" rows="3" cols="100"></textarea>
+                                                                      <div id="viewMorePage-postCommentButton" class="button button--small mt-2">
+                                                                          Submit
+                                                                      </div>
+                                                                  </div>
+                                                              </div>
+
+                                                              <!-- Comments section -->
+                                                              <div class="col-sm-12 col-md-10 ml-auto">
+                                                                <div id="viewMorePage-comments" class="mb-5">
+                                                                    ${commentsHTML}
                                                                 </div>
                                                             </div>
-                                                        </div>`;
+                                                          </div>
+                                                      </div>`;
 
     $('html, body').animate({ scrollTop: 0 }, 'fast');
 
@@ -723,8 +798,9 @@ $('.edit-button').click(function(){
     let year = date.getFullYear();
     let hour = date.getHours();
     let minute = (date.getMinutes()<10?'0':'') + date.getMinutes();
+    let AMPM = (hour < 12) ? 'AM' : 'PM'; 
 
-    return `${day}/${month}/${year} at ${hour}:${minute}`;
+    return `${day}/${month}/${year} at ${hour}:${minute} ${AMPM}`;
   }
 
 

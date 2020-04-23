@@ -202,6 +202,13 @@ footer {
   border-bottom: 1px #828282 solid;
 }
 
+.btBorder {
+  border-bottom: 1px #f5f1ed solid;
+}
+.btBorder--medium {
+  padding-bottom: 30px;
+}
+
 .loader {
   border: 5px solid #f3f3f3;
   border-top: 5px solid #67696b;
@@ -423,16 +430,25 @@ footer {
 }
 
 .viewMorePage__mainPhoto {
-  max-height: 500px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  height: 500px;
+  margin-left: 80px;
+  margin-right: 80px;
 }
 
 .viewMorePage__thumbnail {
   border-radius: 50%;
   border: 1.5px #f5f1ed solid;
-  height: 70px;
-  width: 70px;
   background-size: contain;
   background-position: center;
+}
+.viewMorePage__thumbnail--seller {
+  height: 80px;
+  width: 80px;
+}
+.viewMorePage__thumbnail--commenter {
+  height: 50px;
+  width: 50px;
 }
 
 .viewMorePage__accordion--content {

@@ -12,16 +12,27 @@
 }
 
 .viewMorePage__mainPhoto {
-    max-height: 500px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    height: 500px;
+    margin-left: 80px;
+    margin-right: 80px;
 }
 
 .viewMorePage__thumbnail {
     border-radius: 50%;
     border: 1.5px $colour-pearl solid;
-    height: 70px;
-    width: 70px;
     background-size: contain;
     background-position: center;
+
+    &--seller {
+        height: 80px;
+        width: 80px;
+    }
+
+    &--commenter {
+        height: 50px;
+        width: 50px;
+    }
 }
 
 .viewMorePage__accordion--content {

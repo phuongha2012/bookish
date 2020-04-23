@@ -116,6 +116,14 @@
   }
 }
 
+.btBorder {
+  border-bottom: 1px $colour-pearl solid;
+
+  &--medium {
+    padding-bottom: 30px;
+  }
+}
+
 
 // Loading spinner
 
