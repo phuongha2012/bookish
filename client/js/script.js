@@ -532,35 +532,33 @@ $('.edit-button').click(function(){
 
   // Generate viewMorePage HTML and attach to #viewMorePage div
   function generateViewMoreHTML(product) {
-    console.log(product);
-    let currentUser;
+
     let shippingOptions;
     let commentsHTML;
     let addCommentHTML;
+    let currentUser = (JSON.parse(sessionStorage.getItem('currentUser')));
+    let currentUsername = currentUser.username;
 
-    // if(currentUser) {
-      let currentUsername = (JSON.parse(sessionStorage.getItem('currentUser')))._username;
-    // }
 
     // Map product's shipping options into HTML
     shippingOptions = product.shipping.map(item => `<li>${item}</li>`).join(' ');
 
     // Map all comments into HTML
-    console.log(product.comments);
     commentsHTML = product.comments.map(function(item) {
                                               // Map comment's replies to HTML
                                               let replies = item.replies.map(reply => `
                                                                                     <div class="flexContainer--row col-sm-12 col-md-12 my-3">
                                                                                         <div class="col-sm-3 col-md-2 mb-2">
-                                                                                            <div class="viewMorePage__thumbnail viewMorePage__thumbnail--commenter mx-auto" style="background-image:url(https://miro.medium.com/max/1200/1*pHb0M9z_UMhO22HlaOl2zw.jpeg)"></div>
+                                                                                            <div class="viewMorePage__thumbnail viewMorePage__thumbnail--commenter mx-auto" style="background-image:url(${reply.replier.memberPhotoUrl})"></div>
                                                                                         </div>
                                                                                         <div class="col-12">
                                                                                         <small class="comment-info flexContainer--row">
-                                                                                            <span class="font-italic mr-1">${reply.memberUsername}</span>
+                                                                                            <span class="font-italic mr-1">${reply.replier.memberUsername}</span>
                                                                                             <span class="font-italic">on ${formatDate(reply.postedOn)}</span>
                                                                                         </small>
                                                                                         <div>${reply.content}</div>
-                                                                                    </div>`);
+                                                                                    </div>`)
+                                                                          .join(' ');
                                               
                                               // Add reply input to replies
                                               let replyInput = (item.replies.length === 0) ? `` :
@@ -586,7 +584,7 @@ $('.edit-button').click(function(){
                                                                       </div>`;
 
 
-                                              if (currentUser && (item.memberUsername === currentUsername)) {
+                                              if (currentUser && (item.commenter.memberUsername === currentUsername)) {
                                                 return `<div class="flexContainer--col col-sm-12 col-lg-12 col-md-10 my-3">
                                                             <div class="flexContainer--row">
                                                                 <div class="col-sm-3 col-md-2 mb-2">
@@ -602,15 +600,15 @@ $('.edit-button').click(function(){
                                                             </div>
                                                             <div class="flexContainer--col col-sm-12 col-md-10 ml-auto">${replyWrapperHTML}</div>
                                                         </div>`;
-                                              } else if (item.memberUsername !== currentUsername) {
+                                              } else if (item.commenter.memberUsername !== currentUsername) {
                                                 return `<div class="flexContainer--col col-sm-12 col-lg-12 col-md-10 my-3">
                                                             <div class="flexContainer--row">
                                                                 <div class="col-sm-3 col-md-2 mb-2">
-                                                                    <div class="viewMorePage__thumbnail viewMorePage__thumbnail--commenter mx-auto" style="background-image:url(https://miro.medium.com/max/1200/1*pHb0M9z_UMhO22HlaOl2zw.jpeg)"></div>
+                                                                    <div class="viewMorePage__thumbnail viewMorePage__thumbnail--commenter mx-auto" style="background-image:url(${item.commenter.memberPhotoUrl})"></div>
                                                                 </div>
                                                                 <div class="col-sm-9 col-md-10">
                                                                     <small class="comment-info flexContainer--row">
-                                                                        <span class="font-italic mr-1">${item.memberUsername}</span>
+                                                                        <span class="font-italic mr-1">${item.commenter.memberUsername}</span>
                                                                         <span class="font-italic">on ${formatDate(item.postedOn)}</span>
                                                                     </small>
                                                                     <div>${item.content}</div>
@@ -620,7 +618,6 @@ $('.edit-button').click(function(){
                                                         </div>`;
                                               }})
                                       .join(' ');
-      document.getElementById('viewMorePage').innerHTML += commentsHTML;
 
     // Conditionally render addComment HTML base on user's login status
     // addCommentHTML = currentUser ? `<div class="col-12 col-sm-12 col-lg-10 col-md-10 mx-auto">
@@ -790,19 +787,20 @@ $('.edit-button').click(function(){
     let _content = $('textarea#viewMorePage-postComment').val();
     let _date = Date.now();
     let _productId = (JSON.parse(sessionStorage.getItem('currentProduct')))._id;
-    console.log('postComment Product ID', _productId);
     let _userID = (JSON.parse(sessionStorage.getItem('currentUser')))._id;
     let _username = (JSON.parse(sessionStorage.getItem('currentUser'))).username;
+    let _photoUrl = (JSON.parse(sessionStorage.getItem('currentUser'))).photoUrl;
 
     $.ajax({
       url: `${url}/comments/add`,
       type: 'POST',
       data: {
             productId: _productId,
+            postedOn: _date,
+            content: _content,
             memberId: _userID,
             memberUsername: _username,
-            postedOn: _date,
-            content: _content
+            memberPhotoUrl: _photoUrl
       },
       success: function(comment) {
         console.log(comment);
