@@ -554,7 +554,7 @@ $('.edit-button').click(function(){
                                                                                         <div class="col-12">
                                                                                         <small class="comment-info flexContainer--row">
                                                                                             <span class="font-italic mr-1">${reply.replier.memberUsername}</span>
-                                                                                            <span class="font-italic">on ${formatDate(reply.postedOn)}</span>
+                                                                                            <span class="font-italic">${formatDate(reply.postedOn)}</span>
                                                                                         </small>
                                                                                         <div>${reply.content}</div>
                                                                                     </div>`)
@@ -593,7 +593,7 @@ $('.edit-button').click(function(){
                                                                 <div class="col-sm-9 col-md-10">
                                                                     <small class="comment-info flexContainer--row">
                                                                         <span class="font-italic mr-1">You</span>
-                                                                        <span class="font-italic">on ${formatDate(item.postedOn)}</span>
+                                                                        <span class="font-italic">${formatDate(item.postedOn)}</span>
                                                                     </small>
                                                                     <div>${item.content}</div>
                                                                 </div>
@@ -609,7 +609,7 @@ $('.edit-button').click(function(){
                                                                 <div class="col-sm-9 col-md-10">
                                                                     <small class="comment-info flexContainer--row">
                                                                         <span class="font-italic mr-1">${item.commenter.memberUsername}</span>
-                                                                        <span class="font-italic">on ${formatDate(item.postedOn)}</span>
+                                                                        <span class="font-italic">${formatDate(item.postedOn)}</span>
                                                                     </small>
                                                                     <div>${item.content}</div>
                                                                 </div>
@@ -742,7 +742,7 @@ $('.edit-button').click(function(){
 
                                                           <!-- Q&A section -->
                                                           <div class="flexContainer--col col-sm-12 col-md-6">
-                                                              <h3 class="mb-3">Questions</h3>
+                                                              <h3 class="mb-3">Chat about this book</h3>
 
                                                               <!-- Add comment section -->
                                                               <div id="viewMorePage-addCommentWrapper" class="flexContainer--row mx-auto">
@@ -785,7 +785,6 @@ $('.edit-button').click(function(){
   // Submit comment to backend and add new comment to comment list
   function postComment() {
     let _content = $('textarea#viewMorePage-postComment').val();
-    let _date = Date.now();
     let _productId = (JSON.parse(sessionStorage.getItem('currentProduct')))._id;
     let _userID = (JSON.parse(sessionStorage.getItem('currentUser')))._id;
     let _username = (JSON.parse(sessionStorage.getItem('currentUser'))).username;
@@ -796,7 +795,6 @@ $('.edit-button').click(function(){
       type: 'POST',
       data: {
             productId: _productId,
-            postedOn: _date,
             content: _content,
             memberId: _userID,
             memberUsername: _username,
@@ -817,15 +815,20 @@ $('.edit-button').click(function(){
   // Add newly-added comment to comment list without calling backend
   function addComment(comment) {
     let commentHtml = `
-                      <div class="col-sm-12 col-lg-12 col-md-10">
-                          <div class="comment-container comment-right mb-3">
-                              <div class="comment-info">
-                                  <strong class="mr-1">You</strong>
-                                  <p>on ${formatDate(comment.postedOn)}</p>
-                              </div>
-                              <p><b>${comment.content}</b></p>
-                          </div>
-                      </div>`;
+                        <div class="flexContainer--col col-sm-12 col-lg-12 col-md-10 my-3">
+                            <div class="flexContainer--row">
+                                <div class="col-sm-3 col-md-2 mb-2">
+                                    <div class="viewMorePage__thumbnail viewMorePage__thumbnail--commenter mx-auto" style="background-image:url(${(JSON.parse(sessionStorage.getItem('currentUser'))).photoUrl})"></div>
+                                </div>
+                                <div class="col-sm-9 col-md-10">
+                                    <small class="comment-info flexContainer--row">
+                                        <span class="font-italic mr-1">You</span>
+                                        <span class="font-italic">${formatDate(comment.postedOn)}</span>
+                                    </small>
+                                    <div>${comment.content}</div>
+                                </div>
+                            </div>
+                        </div>`;
 
     let commentsContainer = document.getElementById('viewMorePage-comments');
     let noCommentNote = document.getElementById('noCommentNote');
@@ -839,15 +842,34 @@ $('.edit-button').click(function(){
 
   // Helper to return readable date
   function formatDate(datestring) {
-    let date = new Date(datestring);
+    const months = ["January", "February", "March", "April", "May", "June", "July",
+    "August", "September", "October", "November", "December"];
+    const DAY_IN_MS = 86400000;
+
+    // date values generated from datestring
+    let date = new Date(Date.parse(datestring));
     let day = date.getDate();
-    let month = date.getMonth();
+    let month = months[date.getMonth()];
     let year = date.getFullYear();
     let hour = date.getHours();
-    let minute = (date.getMinutes()<10?'0':'') + date.getMinutes();
+    let minute = (date.getMinutes() < 10 ? '0' : '') + date.getMinutes();
     let AMPM = (hour < 12) ? 'AM' : 'PM'; 
 
-    return `${day}/${month}/${year} at ${hour}:${minute} ${AMPM}`;
+    // compare with default values
+    const today = new Date();
+		const yesterday = new Date(today - DAY_IN_MS);
+		const seconds = Math.round((today - date) / 1000);
+		const minutes = Math.round(seconds / 60);
+		const isToday = today.toDateString() === date.toDateString();
+		const isYesterday = yesterday.toDateString() === date.toDateString();
+
+		if (seconds < 10) { return 'just now';}
+		else if (seconds < 60) { return `${seconds} seconds ago`; }
+		else if (seconds < 100) { return 'about a minute ago'; }
+		else if (minutes < 60) { return `${minutes} minutes ago`; }
+		else if (isToday) { return `on today at ${hour}:${minute}${AMPM}`; }
+		else if (isYesterday) { return `on yesterday at ${hour}:${minute}`; }
+		else { return `on ${month} ${day} ${year} at ${hour}:${minute}${AMPM}`; }
   }
 
 
