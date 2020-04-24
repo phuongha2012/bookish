@@ -1,6 +1,6 @@
 $(document).ready(function(){
 
-
+  console.log('hello');
   $('html, body').animate({ scrollTop: 0 }, 'fast');
   sessionStorage.clear();
   let url;
@@ -546,6 +546,7 @@ $('.edit-button').click(function(){
     // Map all comments into HTML
     commentsHTML = product.comments.map(function(item) {
                                               // Map comment's replies to HTML
+                                              
                                               let replies = item.replies.map(reply => `
                                                                                     <div class="flexContainer--row col-sm-12 col-md-12 my-3">
                                                                                         <div class="col-sm-3 col-md-2 mb-2">
@@ -556,7 +557,7 @@ $('.edit-button').click(function(){
                                                                                             <span class="font-italic mr-1">${reply.replier.memberUsername}</span>
                                                                                             <span class="font-italic">${formatDate(reply.postedOn)}</span>
                                                                                         </small>
-                                                                                        <div>${reply.content}</div>
+                                                                                        <div class="col-11 pl-0">${reply.content}</div>
                                                                                     </div>`)
                                                                           .join(' ');
                                               
@@ -565,9 +566,9 @@ $('.edit-button').click(function(){
                                                                   `<div class="col-sm-3 col-md-2 mb-2">
                                                                       <div class="viewMorePage__thumbnail viewMorePage__thumbnail--commenter mx-auto" style="background-image:url(https://miro.medium.com/max/1200/1*pHb0M9z_UMhO22HlaOl2zw.jpeg)"></div>
                                                                   </div>
-                                                                  <div class="flexContainer--col col-12 flexContainer--col--right viewMorePage-postComment">
+                                                                  <div class="flexContainer--col col-10 flexContainer--col--right viewMorePage-postComment">
                                                                       <textarea id="viewMorePage-postReply" class="col-12" rows="2" cols="100"></textarea>
-                                                                      <div id="viewMorePage-postCommentButton" class="button button--small mt-2">
+                                                                      <div id="viewMorePage-postCommentButton" class="button button--small button--noCap mt-2">
                                                                           Reply
                                                                       </div>
                                                                   </div>`;
@@ -577,7 +578,7 @@ $('.edit-button').click(function(){
                                               let replyWrapperHTML = (item.replies.length === 0) ? `` : 
                                                                       `<div class="buttonLink buttonLink--noCap buttonLink--small buttonLink--grey" data-toggle="collapse" href="#showCommentReply">${item.replies.length} replies</div>
                                                                       <div class="collapse" id="showCommentReply">
-                                                                          <div class="card card-body flexContainer--col">
+                                                                          <div class="card card-body flexContainer--col bg__grey--light">
                                                                               <div>${replies}</div> 
                                                                               <div class="flexContainer--row">${replyInput}<div>
                                                                           </div>
@@ -598,6 +599,20 @@ $('.edit-button').click(function(){
                                                                     <div>${item.content}</div>
                                                                 </div>
                                                             </div>
+                                                            <div class="col-sm-9 col-md-10 ml-auto">
+                                                                <div class="buttonLink buttonLink--noCap buttonLink--small buttonLink--grey float-right" data-toggle="collapse" href="#showCommentReply">Reply</div>
+                                                                <div class="collapse" id="showCommentReply">
+                                                                    <div class="card card-body flexContainer--row bg__grey--light">
+                                                                        <div class="col-sm-3 col-md-2 mb-2">
+                                                                            <div class="viewMorePage__thumbnail viewMorePage__thumbnail--commenter mx-auto" style="background-image:url(https://miro.medium.com/max/1200/1*pHb0M9z_UMhO22HlaOl2zw.jpeg)"></div>
+                                                                            </div>
+                                                                            <div class="flexContainer--col col-10 flexContainer--col--right viewMorePage-postComment">
+                                                                                <textarea id="viewMorePage-postReply" class="col-12" rows="2" cols="100"></textarea>
+                                                                                <div id="viewMorePage-postCommentButton" class="button button--small button--noCap mt-2">Reply</div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                            </div>
                                                             <div class="flexContainer--col col-sm-12 col-md-10 ml-auto">${replyWrapperHTML}</div>
                                                         </div>`;
                                               } else if (item.commenter.memberUsername !== currentUsername) {
@@ -614,6 +629,8 @@ $('.edit-button').click(function(){
                                                                     <div>${item.content}</div>
                                                                 </div>
                                                             </div>
+                                                            
+                                                            
                                                             <div class="flexContainer--col col-sm-12 col-md-10 ml-auto">${replyWrapperHTML}</div>
                                                         </div>`;
                                               }})
@@ -751,14 +768,14 @@ $('.edit-button').click(function(){
                                                                   </div>
                                                                   <div class="flexContainer--col flexContainer--col--right viewMorePage-postComment">
                                                                       <textarea id="viewMorePage-postComment" class="col-12" rows="3" cols="100"></textarea>
-                                                                      <div id="viewMorePage-postCommentButton" class="button button--small mt-2">
+                                                                      <div id="viewMorePage-postCommentButton" class="button button--small button--noCap mt-2">
                                                                           Submit
                                                                       </div>
                                                                   </div>
                                                               </div>
 
                                                               <!-- Comments section -->
-                                                              <div class="col-sm-12 col-md-10 ml-auto">
+                                                              <div class="col-12">
                                                                 <div id="viewMorePage-comments" class="mb-5">
                                                                     ${commentsHTML}
                                                                 </div>
@@ -867,7 +884,7 @@ $('.edit-button').click(function(){
 		else if (seconds < 60) { return `${seconds} seconds ago`; }
 		else if (seconds < 100) { return 'about a minute ago'; }
 		else if (minutes < 60) { return `${minutes} minutes ago`; }
-		else if (isToday) { return `on today at ${hour}:${minute}${AMPM}`; }
+		else if (isToday) { return `on today at ${hour}:${minute} ${AMPM}`; }
 		else if (isYesterday) { return `on yesterday at ${hour}:${minute}`; }
 		else { return `on ${month} ${day} ${year} at ${hour}:${minute}${AMPM}`; }
   }

@@ -79,6 +79,10 @@
       border: 1px $colour-aegean solid;
   }
 
+  &--noCap {
+    text-transform: none;
+  }
+
   &--accordion {
     width: 400px;
   }
@@ -144,4 +148,8 @@
 
 .card {
   padding: 0;
+}
+
+.bg__grey--light {
+  background-color: $colour-grey--light;
 }

@@ -171,6 +171,9 @@ footer {
 .button--bordered {
   border: 1px #37465d solid;
 }
+.button--noCap {
+  text-transform: none;
+}
 .button--accordion {
   width: 400px;
 }
@@ -229,6 +232,10 @@ footer {
 }
 .card {
   padding: 0;
+}
+
+.bg__grey--light {
+  background-color: #f0f1f052;
 }
 
 .container-form {
