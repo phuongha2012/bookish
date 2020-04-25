@@ -644,7 +644,7 @@ $('.edit-button').click(function(){
                                                               </p>
                                                               <div class="flexContainer--row float-right mb-5">
                                                                   <div class="button button--bordered mr-3">Buy Now</div>
-                                                                  <div class="buttonLink buttonLink--noCap buttonLink--grey buttonLink--small">Add to Watchlist</div>
+                                                                  <a id="addToWatchButton${product._id}" tabindex="0" class="buttonLink buttonLink--noCap buttonLink--grey buttonLink--small addToWatchButton popOver" role="button" data-toggle="popover" data-trigger="focus" data-content="Please sign up or log in to add this book to your watchlist">Add to Watchlist</a>
                                                               </div>
                                                               <div class="flexContainer--row mb-2">
                                                                   <small class="capitalised color-black mr-1">Condition:</small>
@@ -742,6 +742,18 @@ $('.edit-button').click(function(){
                                                       </div>`;
 
     $('html, body').animate({ scrollTop: 0 }, 'fast');
+    
+    $('.addToWatchButton').popover();
+
+    $('#addToWatchButton' + product._id).on('click', function() {
+      if (!currentUser) {
+          $('.addToWatchButton').popover('show');
+      }
+      else {
+        $('.addToWatchButton').popover('hide');
+        console.log('Added to watch list');
+      }
+    })
 
     // If Back button is clicked, go back to landingPage
     document.getElementById('backToLanding').addEventListener('click', function() {

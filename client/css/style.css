@@ -240,6 +240,10 @@ footer {
   background-color: #f0f1f052;
 }
 
+.popOver + .tooltip {
+  color: #e9524d;
+}
+
 .container-form {
   background-color: white;
   height: 100vh;
