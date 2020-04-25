@@ -567,30 +567,34 @@ $('.edit-button').click(function(){
                                                                       `
                                                                       <div class="buttonLink buttonLink--noCap buttonLink--small buttonLink--grey" data-toggle="collapse" href="#showCommentReply${item._id}">Reply</div>
                                                                       <div class="collapse" id="showCommentReply${item._id}">
-                                                                          <div class="card card-body flexContainer--row bg__grey--light">
-                                                                              <div class="col-sm-3 col-md-2 mb-2">
-                                                                                  <div class="viewMorePage__thumbnail viewMorePage__thumbnail--commenter mx-auto" style="background-image:url(${(JSON.parse(sessionStorage.getItem('currentUser'))).photoUrl})"></div>
-                                                                                  </div>
-                                                                                  <div class="flexContainer--col col-10 flexContainer--col--right viewMorePage-postComment">
-                                                                                      <textarea id="viewMorePage-postReplyInput${item._id}" class="col-12" rows="2" cols="100"></textarea>
-                                                                                      <div id="viewMorePage-postReplyButton${item._id}" class="viewMorePage-postReplyButton button button--small button--noCap mt-2">Reply</div>
-                                                                                  </div>
-                                                                              </div>
+                                                                          <div class="card card-body flexContainer--col bg__grey--light">
+                                                                              <div id="viewMorePage__commentReplies${item._id}" class="flexContainer--col"></div>
+                                                                              <div class="flexContainer--col">
+                                                                                    <div class="flexContainer--row">
+                                                                                        <div class="col-sm-3 col-md-2 mb-2">
+                                                                                            <div class="viewMorePage__thumbnail viewMorePage__thumbnail--commenter mx-auto" style="background-image:url(${(JSON.parse(sessionStorage.getItem('currentUser'))).photoUrl})"></div>
+                                                                                            </div>
+                                                                                            <div class="flexContainer--col col-10 flexContainer--col--right viewMorePage-postComment">
+                                                                                                <textarea id="viewMorePage-postReplyInput${item._id}" class="col-12" rows="2" cols="100"></textarea>
+                                                                                                <div id="viewMorePage-postReplyButton${item._id}" class="viewMorePage-postReplyButton button button--small button--noCap mt-2">Reply</div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                               </div>       
                                                                         </div>
                                                                       ` : 
                                                                       `<div class="buttonLink buttonLink--noCap buttonLink--small buttonLink--grey" data-toggle="collapse" href="#showCommentReply${item._id}">${item.replies.length} replies</div>
                                                                       <div class="collapse" id="showCommentReply${item._id}">
                                                                           <div class="card card-body flexContainer--col bg__grey--light">
-                                                                                  <div class="flexContainer--col">${replies}</div>
-                                                                                  <div class="flexContainer--col">
-                                                                                      <div class="flexContainer--row">
-                                                                                          <div class="col-sm-3 col-md-2 mb-2">
-                                                                                            <div class="viewMorePage__thumbnail viewMorePage__thumbnail--commenter mx-auto" style="background-image:url(${(JSON.parse(sessionStorage.getItem('currentUser'))).photoUrl})"></div>
-                                                                                          </div>
-                                                                                          <div class="flexContainer--col col-10 flexContainer--col--right viewMorePage-postComment">
-                                                                                              <textarea id="viewMorePage-postReplyInput${item._id}" class="col-12" rows="2" cols="100"></textarea>
-                                                                                              <div id="viewMorePage-postReplyButton${item._id}" class="viewMorePage-postReplyButton button button--small button--noCap mt-2">Reply</div>
-                                                                                          </div>
+                                                                              <div id="viewMorePage__commentReplies${item._id}" class="flexContainer--col">${replies}</div>
+                                                                              <div class="flexContainer--col">
+                                                                                  <div class="flexContainer--row">
+                                                                                      <div class="col-sm-3 col-md-2 mb-2">
+                                                                                        <div class="viewMorePage__thumbnail viewMorePage__thumbnail--commenter mx-auto" style="background-image:url(${(JSON.parse(sessionStorage.getItem('currentUser'))).photoUrl})"></div>
+                                                                                      </div>
+                                                                                      <div class="flexContainer--col col-10 flexContainer--col--right viewMorePage-postComment">
+                                                                                          <textarea id="viewMorePage-postReplyInput${item._id}" class="col-12" rows="2" cols="100"></textarea>
+                                                                                          <div id="viewMorePage-postReplyButton${item._id}" class="viewMorePage-postReplyButton button button--small button--noCap mt-2">Reply</div>
                                                                                       </div>
                                                                                   </div>
                                                                               </div>
@@ -598,27 +602,10 @@ $('.edit-button').click(function(){
                                                                       </div>`;
 
 
-                                              if (currentUser && (item.commenter.memberUsername === currentUsername)) {
                                                 return `<div class="flexContainer--col col-sm-12 col-lg-12 col-md-10 my-3">
                                                             <div class="flexContainer--row">
                                                                 <div class="col-sm-3 col-md-2 mb-2">
                                                                     <div class="viewMorePage__thumbnail viewMorePage__thumbnail--commenter mx-auto" style="background-image:url(${(JSON.parse(sessionStorage.getItem('currentUser'))).photoUrl})"></div>
-                                                                </div>
-                                                                <div class="col-sm-9 col-md-10">
-                                                                    <small class="comment-info flexContainer--row">
-                                                                        <span class="font-italic mr-1">You</span>
-                                                                        <span class="font-italic">${formatDate(item.postedOn)}</span>
-                                                                    </small>
-                                                                    <div>${item.content}</div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="replyInputWrapper flexContainer--col col-sm-12 col-md-10 ml-auto">${replyInputWrapper}</div>
-                                                        </div>`;
-                                              } else if (item.commenter.memberUsername !== currentUsername) {
-                                                return `<div class="flexContainer--col col-sm-12 col-lg-12 col-md-10 my-3">
-                                                            <div class="flexContainer--row">
-                                                                <div class="col-sm-3 col-md-2 mb-2">
-                                                                    <div class="viewMorePage__thumbnail viewMorePage__thumbnail--commenter mx-auto" style="background-image:url(${item.commenter.memberPhotoUrl})"></div>
                                                                 </div>
                                                                 <div class="col-sm-9 col-md-10">
                                                                     <small class="comment-info flexContainer--row">
@@ -628,11 +615,8 @@ $('.edit-button').click(function(){
                                                                     <div>${item.content}</div>
                                                                 </div>
                                                             </div>
-                                                            
-                                                            
                                                             <div class="replyInputWrapper flexContainer--col col-sm-12 col-md-10 ml-auto">${replyInputWrapper}</div>
-                                                        </div>`;
-                                              }})
+                                                        </div>`;})
                                       .join(' ');
 
     // Conditionally render addComment HTML base on user's login status
@@ -775,7 +759,7 @@ $('.edit-button').click(function(){
 
                                                               <!-- Comments section -->
                                                               <div class="col-12">
-                                                                <div id="viewMorePage-comments" class="mb-5">
+                                                                <div id="viewMorePage-comments">
                                                                     ${commentsHTML}
                                                                 </div>
                                                             </div>
@@ -802,13 +786,12 @@ $('.edit-button').click(function(){
 
     for (let i = 0; i < replyInputWrappers.length; i++) {
       replyInputWrappers[i].addEventListener('click', function(e) {
-        console.log('replyInputWrapper clicked');
         let regex = /^viewMorePage-postReplyButton/g;
         if (regex.test(e.target.id)) {
             let commentId = e.target.id.slice(28);
             postReply(commentId);
         }
-      })
+      });
     }
 
   }
@@ -839,7 +822,6 @@ $('.edit-button').click(function(){
       error: function(err) {
             console.log(err);
       }
-
     });
   }
 
@@ -853,11 +835,30 @@ $('.edit-button').click(function(){
                                 </div>
                                 <div class="col-sm-9 col-md-10">
                                     <small class="comment-info flexContainer--row">
-                                        <span class="font-italic mr-1">You</span>
+                                        <span class="font-italic mr-1">${(JSON.parse(sessionStorage.getItem('currentUser'))).username}</span>
                                         <span class="font-italic">${formatDate(comment.postedOn)}</span>
                                     </small>
                                     <div>${comment.content}</div>
                                 </div>
+                            </div>
+                            <div class="replyInputWrapper flexContainer--col col-sm-12 col-md-10 ml-auto">
+                                <div class="buttonLink buttonLink--noCap buttonLink--small buttonLink--grey" data-toggle="collapse" href="#showCommentReply${comment._id}">Reply</div>
+                                <div class="collapse" id="showCommentReply${comment._id}">
+                                    <div class="card card-body flexContainer--col bg__grey--light">
+                                        <div id="viewMorePage__commentReplies${comment._id}" class="flexContainer--col"></div>
+                                        <div class="flexContainer--col">
+                                              <div class="flexContainer--row">
+                                                  <div class="col-sm-3 col-md-2 mb-2">
+                                                      <div class="viewMorePage__thumbnail viewMorePage__thumbnail--commenter mx-auto" style="background-image:url(${(JSON.parse(sessionStorage.getItem('currentUser'))).photoUrl})"></div>
+                                                      </div>
+                                                      <div class="flexContainer--col col-10 flexContainer--col--right viewMorePage-postComment">
+                                                          <textarea id="viewMorePage-postReplyInput${comment._id}" class="col-12" rows="2" cols="100"></textarea>
+                                                          <div id="viewMorePage-postReplyButton${comment._id}" class="viewMorePage-postReplyButton button button--small button--noCap mt-2">Reply</div>
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                        </div>       
+                                  </div>
                             </div>
                         </div>`;
 
@@ -869,14 +870,26 @@ $('.edit-button').click(function(){
     }
 
     document.getElementById('viewMorePage-comments').innerHTML += commentHtml;
+
+    let replyInputWrappers = document.getElementsByClassName('replyInputWrapper');
+
+    for (let i = 0; i < replyInputWrappers.length; i++) {
+      replyInputWrappers[i].addEventListener('click', function(e) {
+        let regex = /^viewMorePage-postReplyButton/g;
+        if (regex.test(e.target.id)) {
+            let commentId = e.target.id.slice(28);
+            postReply(commentId);
+        }
+      });
+    }
   }
 
   function postReply(commentId) {
     let _content = $('textarea#viewMorePage-postReplyInput' + commentId).val();
     let _memberId = (JSON.parse(sessionStorage.getItem('currentUser')))._id;
     let _memberUsername = (JSON.parse(sessionStorage.getItem('currentUser'))).username;
-    let _memberPhotoUrl = (JSON.parse(sessionStorage.getItem('currentUser'))).photoUrl; 
-    console.log(_content, _memberId, _memberUsername, _memberPhotoUrl);
+    let _memberPhotoUrl = (JSON.parse(sessionStorage.getItem('currentUser'))).photoUrl;
+    let _postedOn = new Date(); 
 
     $.ajax({
       url: `${url}/comments/${commentId}/reply`,
@@ -887,15 +900,29 @@ $('.edit-button').click(function(){
         memberUsername: _memberUsername,
         memberPhotoUrl: _memberPhotoUrl
       },
-      success: function(reply) {
-        console.log(reply);
+      success: function() {
         $('textarea#viewMorePage-postReplyInput' + commentId).val('');
-        // addComment(comment);
+        
+        let replyHTML = `
+                        <div class="flexContainer--row col-sm-12 col-md-12 my-3">
+                            <div class="col-sm-3 col-md-2 mb-2">
+                                <div class="viewMorePage__thumbnail viewMorePage__thumbnail--commenter mx-auto" style="background-image:url(${_memberPhotoUrl})"></div>
+                            </div>
+                            <div class="col-12 flexContainer--col">
+                                <small class="comment-info flexContainer--row">
+                                    <span class="font-italic mr-1">${_memberUsername}</span>
+                                    <span class="font-italic">${formatDate(_postedOn)}</span>
+                                </small>
+                                <div class="col-11 pl-0">${_content}</div>
+                            </div>
+                        </div>`;
+
+        document.getElementById(`viewMorePage__commentReplies${commentId}`).innerHTML += replyHTML;
       },
       error: function(err) {
         console.log(err);
       }
-    })
+    });
   }
 
   function addReply(reply) {
