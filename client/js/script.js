@@ -551,12 +551,13 @@ $('.edit-button').click(function(){
                                                                                         <div class="col-sm-3 col-md-2 mb-2">
                                                                                             <div class="viewMorePage__thumbnail viewMorePage__thumbnail--commenter mx-auto" style="background-image:url(${reply.replier.memberPhotoUrl})"></div>
                                                                                         </div>
-                                                                                        <div class="col-12">
-                                                                                        <small class="comment-info flexContainer--row">
-                                                                                            <span class="font-italic mr-1">${reply.replier.memberUsername}</span>
-                                                                                            <span class="font-italic">${formatDate(reply.postedOn)}</span>
-                                                                                        </small>
-                                                                                        <div class="col-11 pl-0">${reply.content}</div>
+                                                                                        <div class="col-12 flexContainer--col">
+                                                                                            <small class="comment-info flexContainer--row">
+                                                                                                <span class="font-italic mr-1">${reply.replier.memberUsername}</span>
+                                                                                                <span class="font-italic">${formatDate(reply.postedOn)}</span>
+                                                                                            </small>
+                                                                                            <div class="col-11 pl-0">${reply.content}</div>
+                                                                                        </div>
                                                                                     </div>`)
                                                                           .join(' ');
 
@@ -580,18 +581,19 @@ $('.edit-button').click(function(){
                                                                       `<div class="buttonLink buttonLink--noCap buttonLink--small buttonLink--grey" data-toggle="collapse" href="#showCommentReply${item._id}">${item.replies.length} replies</div>
                                                                       <div class="collapse" id="showCommentReply${item._id}">
                                                                           <div class="card card-body flexContainer--col bg__grey--light">
-                                                                              <div>${replies}</div>
-                                                                              <div class="flexContainer--row">
-                                                                                  <div class="col-sm-3 col-md-2 mb-2">
-                                                                                  <div class="viewMorePage__thumbnail viewMorePage__thumbnail--commenter mx-auto" style="background-image:url(${(JSON.parse(sessionStorage.getItem('currentUser'))).photoUrl})"></div>
-                                                                              </div>
-                                                                              <div class="flexContainer--col col-10 flexContainer--col--right viewMorePage-postComment">
-                                                                                  <textarea id="viewMorePage-postReplyInput${item._id}" class="col-12" rows="2" cols="100"></textarea>
-                                                                                  <div id="viewMorePage-postReplyButton${item._id}" class="viewMorePage-postReplyButton button button--small button--noCap mt-2">
-                                                                                      Reply
+                                                                                  <div class="flexContainer--col">${replies}</div>
+                                                                                  <div class="flexContainer--col">
+                                                                                      <div class="flexContainer--row">
+                                                                                          <div class="col-sm-3 col-md-2 mb-2">
+                                                                                            <div class="viewMorePage__thumbnail viewMorePage__thumbnail--commenter mx-auto" style="background-image:url(${(JSON.parse(sessionStorage.getItem('currentUser'))).photoUrl})"></div>
+                                                                                          </div>
+                                                                                          <div class="flexContainer--col col-10 flexContainer--col--right viewMorePage-postComment">
+                                                                                              <textarea id="viewMorePage-postReplyInput${item._id}" class="col-12" rows="2" cols="100"></textarea>
+                                                                                              <div id="viewMorePage-postReplyButton${item._id}" class="viewMorePage-postReplyButton button button--small button--noCap mt-2">Reply</div>
+                                                                                          </div>
+                                                                                      </div>
                                                                                   </div>
                                                                               </div>
-                                                                              </div>  
                                                                           </div>
                                                                       </div>`;
 
