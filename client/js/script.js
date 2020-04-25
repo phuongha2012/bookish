@@ -572,7 +572,7 @@ $('.edit-button').click(function(){
                                                                                   </div>
                                                                                   <div class="flexContainer--col col-10 flexContainer--col--right viewMorePage-postComment">
                                                                                       <textarea id="viewMorePage-postReplyInput${item._id}" class="col-12" rows="2" cols="100"></textarea>
-                                                                                      <div id="viewMorePage-postReplyButton${item._id}" class="button button--small button--noCap mt-2">Reply</div>
+                                                                                      <div id="viewMorePage-postReplyButton${item._id}" class="viewMorePage-postReplyButton button button--small button--noCap mt-2">Reply</div>
                                                                                   </div>
                                                                               </div>
                                                                         </div>
@@ -587,7 +587,7 @@ $('.edit-button').click(function(){
                                                                               </div>
                                                                               <div class="flexContainer--col col-10 flexContainer--col--right viewMorePage-postComment">
                                                                                   <textarea id="viewMorePage-postReplyInput${item._id}" class="col-12" rows="2" cols="100"></textarea>
-                                                                                  <div id="viewMorePage-postReplyButton${item._id}" class="button button--small button--noCap mt-2">
+                                                                                  <div id="viewMorePage-postReplyButton${item._id}" class="viewMorePage-postReplyButton button button--small button--noCap mt-2">
                                                                                       Reply
                                                                                   </div>
                                                                               </div>
@@ -610,7 +610,7 @@ $('.edit-button').click(function(){
                                                                     <div>${item.content}</div>
                                                                 </div>
                                                             </div>
-                                                            <div class="flexContainer--col col-sm-12 col-md-10 ml-auto">${replyInputWrapper}</div>
+                                                            <div class="replyInputWrapper flexContainer--col col-sm-12 col-md-10 ml-auto">${replyInputWrapper}</div>
                                                         </div>`;
                                               } else if (item.commenter.memberUsername !== currentUsername) {
                                                 return `<div class="flexContainer--col col-sm-12 col-lg-12 col-md-10 my-3">
@@ -628,7 +628,7 @@ $('.edit-button').click(function(){
                                                             </div>
                                                             
                                                             
-                                                            <div class="flexContainer--col col-sm-12 col-md-10 ml-auto">${replyInputWrapper}</div>
+                                                            <div class="replyInputWrapper flexContainer--col col-sm-12 col-md-10 ml-auto">${replyInputWrapper}</div>
                                                         </div>`;
                                               }})
                                       .join(' ');
@@ -690,10 +690,10 @@ $('.edit-button').click(function(){
                                                       <br/>
 
                                                       <!-- Detail section -->
-                                                      <div class="flexContainer--row mt-5">
+                                                      <div class="flexContainer--row flexContainer--row--top mt-5">
 
                                                           <!-- Accordion section -->
-                                                          <div id="accordion" class="col-sm-12 col-md-5">
+                                                          <div id="accordion" class="col-sm-12 col-md-5 pt-5">
                                                             <!-- Accordion - Product details -->
                                                             <div class="mb-3"> 
                                                               <button class="button button--bordered button--accordion" data-toggle="collapse" data-target="#viewMorePage__productDetails" aria-expanded="true" aria-controls="viewMorePage__productDetails">
@@ -790,9 +790,23 @@ $('.edit-button').click(function(){
     });
 
     let viewMorePageNode = document.getElementById('viewMorePage');
+    console.log(viewMorePageNode);
 
     if (viewMorePageNode.contains(document.getElementById('viewMorePage-postCommentButton'))) {
         document.getElementById('viewMorePage-postCommentButton').addEventListener('click', postComment);
+    }
+
+    let replyInputWrappers = document.getElementsByClassName('replyInputWrapper');
+
+    for (let i = 0; i < replyInputWrappers.length; i++) {
+      replyInputWrappers[i].addEventListener('click', function(e) {
+        console.log('replyInputWrapper clicked');
+        let regex = /^viewMorePage-postReplyButton/g;
+        if (regex.test(e.target.id)) {
+            let commentId = e.target.id.slice(28);
+            postReply(commentId);
+        }
+      })
     }
 
   }
@@ -853,6 +867,49 @@ $('.edit-button').click(function(){
     }
 
     document.getElementById('viewMorePage-comments').innerHTML += commentHtml;
+  }
+
+  function postReply(commentId) {
+    let _content = $('textarea#viewMorePage-postReplyInput' + commentId).val();
+    let _memberId = (JSON.parse(sessionStorage.getItem('currentUser')))._id;
+    let _memberUsername = (JSON.parse(sessionStorage.getItem('currentUser'))).username;
+    let _memberPhotoUrl = (JSON.parse(sessionStorage.getItem('currentUser'))).photoUrl; 
+    console.log(_content, _memberId, _memberUsername, _memberPhotoUrl);
+
+    $.ajax({
+      url: `${url}/comments/${commentId}/reply`,
+      type: 'PATCH',
+      data: {
+        content: _content,
+        memberId: _memberId,
+        memberUsername: _memberUsername,
+        memberPhotoUrl: _memberPhotoUrl
+      },
+      success: function(reply) {
+        console.log(reply);
+        $('textarea#viewMorePage-postReplyInput' + commentId).val('');
+        // addComment(comment);
+      },
+      error: function(err) {
+        console.log(err);
+      }
+    })
+  }
+
+  function addReply(reply) {
+    let replyHTML = `
+                    <div class="flexContainer--row col-sm-12 col-md-12 my-3">
+                        <div class="col-sm-3 col-md-2 mb-2">
+                            <div class="viewMorePage__thumbnail viewMorePage__thumbnail--commenter mx-auto" style="background-image:url(${(JSON.parse(sessionStorage.getItem('currentUser'))).photoUrl})"></div>
+                        </div>
+                        <div class="col-12">
+                        <small class="comment-info flexContainer--row">
+                            <span class="font-italic mr-1">${reply.replier.memberUsername}</span>
+                            <span class="font-italic">${formatDate(reply.postedOn)}</span>
+                        </small>
+                        <div class="col-11 pl-0">${reply.content}</div>
+                    </div>`;
+    document.getElementById().innerHTML += replyHTML;
   }
 
   // Helper to return readable date
