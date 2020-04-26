@@ -82,22 +82,6 @@ module.exports = (app) => {
                 .catch(err => res.send(err));
     })
 
-    // Find and return a product
-    app.get('/products/:id', (req, res) => {
-        let _projectID = req.params.id;
-
-        Product.findById(_projectID, 
-                            (err, result) => { 
-                                if(results.length > 0) {
-                                    res.send(result);
-                                } else {
-                                    res.send('No product found!')
-                                }
-                            
-                            })
-    })
-
-
     // Find and return all projects that belong to a user
     app.get('/products/fromseller/:memberId', (req, res) => {
         let _seller = req.params.memberId;
@@ -128,11 +112,11 @@ module.exports = (app) => {
         res.send(query);
     });
 
-    // Return one project with corresponding author information
+    // Return one project with corresponding seller information
     app.get('/products/:id', async (req, res) => {
-        let artId = req.params.id;
-        let query = await Producr.aggregate([
-                                                { $match: { _id: mongoose.Types.ObjectId(artId) }},
+        let id = req.params.id;
+        let query = await Product.aggregate([
+                                                { $match: { _id: mongoose.Types.ObjectId(id) }},
                                                 { $lookup: {
                                                             from: "members",
                                                             localField: "seller",
@@ -143,10 +127,12 @@ module.exports = (app) => {
                                                 { $lookup: {
                                                             from: "comments",
                                                             localField: "_id",
-                                                            foreignField: "portfolioID",
+                                                            foreignField: "productId",
                                                             as: "comments"
                                                 }}
         ]);
+
+        console.log(query.comments);
 
         res.send(query);
     });

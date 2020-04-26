@@ -8,6 +8,7 @@ const memberSchema = new Schema({
   password : String,
   about : String,
   photoUrl: String,
+  joinedDate: Date,
   address : {
       street: String,
       city: String,

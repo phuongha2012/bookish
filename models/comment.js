@@ -7,21 +7,28 @@ const commentSchema = new mongoose.Schema({
         type: Schema.Types.ObjectId,
         ref: 'Product'
     },
-    memberId: {
-        type: Schema.Types.ObjectId,
-        ref: 'Member'
-    },
-    memberUsername: String,
     postedOn: Date,
     content: String,
+    commenter: {
+        memberId: {
+            type: Schema.Types.ObjectId,
+            ref: 'Member'
+        },
+        memberUsername: String,
+        memberPhotoUrl: String
+    },
     replies: [
         {
             content: String,
             postedOn: Date,
-            memberId: {
-                type: Schema.Types.ObjectId,
-                ref: 'Member'
-            }
+            replier: {
+                memberId: {
+                    type: Schema.Types.ObjectId,
+                    ref: 'Member'
+                },
+                memberUsername: String,
+                memberPhotoUrl: String
+            },
         }
     ]
 });
