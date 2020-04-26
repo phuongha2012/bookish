@@ -532,18 +532,15 @@ $('.edit-button').click(function(){
 
   // Generate viewMorePage HTML and attach to #viewMorePage div
   function generateViewMoreHTML(product) {
-
     let shippingOptions;
     let commentsHTML;
     let addCommentHTML;
     let currentUser = (JSON.parse(sessionStorage.getItem('currentUser')));
 
-    console.log(currentUser);
-
     // Map product's shipping options into HTML
     shippingOptions = product.shipping.map(item => `<li>${item}</li>`).join(' ');
 
-    // Map all comments into HTML
+    // Map all product's comments into HTML
     commentsHTML = product.comments.map(function(item) {
                                               // Map comment's replies to HTML                               
                                               let replies = item.replies.map(reply => `
@@ -561,6 +558,7 @@ $('.edit-button').click(function(){
                                                                                     </div>`)
                                                                           .join(' ');
 
+                                              // Conditionally display comment input box based on member auth status
                                               let replyInputBox = currentUser ? `<div class="flexContainer--row">
                                                                                     <div class="col-sm-3 col-md-2 mb-2">
                                                                                         <div class="viewMorePage__thumbnail viewMorePage__thumbnail--commenter mx-auto" style="background-image:url(${(JSON.parse(sessionStorage.getItem('currentUser'))).photoUrl})"></div>
@@ -570,7 +568,8 @@ $('.edit-button').click(function(){
                                                                                         <div id="viewMorePage-postReplyButton${item._id}" class="viewMorePage-postReplyButton button button--small button--noCap mt-2">Reply</div>
                                                                                     </div>
                                                                                 </div>` : `<small class="col-10  ml-auto">Please log in to post a reply</small>`
-                                                       
+                                              
+                                              // Conditionally display reply input box based on member auth status
                                               let replyInputWrapper = (item.replies.length === 0) ? 
                                                                       `
                                                                       <div class="buttonLink buttonLink--noCap buttonLink--small buttonLink--grey" data-toggle="collapse" href="#showCommentReply${item._id}">Reply</div>
@@ -623,7 +622,7 @@ $('.edit-button').click(function(){
                                     </div>` : `
                                     <small class="text-center mb-5 mt-5">Please log in to add comment</small>`;
 
-    // Conditionally render watchListHTML
+    // Conditionally render add/ remove watchlist buttons
     let watchListHTML;
     
     if (currentUser) {
@@ -769,20 +768,19 @@ $('.edit-button').click(function(){
 
 
     // If product is in current user watchlist, display inWatchlist icon
-
     if(currentUser && currentUser.watchlist.includes(product._id)) {
       $('#inWatchlist').css('display', 'inline-block');
     }
 
-    // Initialise inWatlist tooltip
+    // Initialise inWatchlist tooltip
     $('.inWatchListIcon').popover();
     
-    // Initialise log in tool tip in viewmore page
+    // Initialise login required tool tip
     $('.addToWatchButton').popover();
 
-    $('#addToWatchButton' + product._id).on('click', addToWatchlist);
-
     // Add a product to watchlist, only if user is already logged in
+    $('#addToWatchButton' + product._id).on('click', addToWatchlist);
+    
     function addToWatchlist() {
         if (!currentUser) {
             $('.addToWatchButton').popover('show');
@@ -799,6 +797,7 @@ $('.edit-button').click(function(){
                   sessionStorage.setItem('currentUser', JSON.stringify(updatedUser));
                   $('#inWatchlist').show();
                   $('#watchListWrapper').html(`<a id="removeFromWatchButton${product._id}" class="buttonLink buttonLink--noCap buttonLink--grey buttonLink--small">Remove from watchlist</a>`);
+                  $('#removeFromWatchButton' + product._id).on('click', removeFromWatchlist);
                   Swal.fire({
                     title: 'Watchlist updated!',
                     text: 'This product has been added to your watchlist',
@@ -824,10 +823,10 @@ $('.edit-button').click(function(){
               productId: product._id
         },
         success: function(updatedUser) {
-          console.log('remove succeed');
           sessionStorage.setItem('currentUser', JSON.stringify(updatedUser));
           $('#inWatchlist').hide();
           $('#watchListWrapper').html(`<a id="addToWatchButton${product._id}" tabindex="0" class="buttonLink buttonLink--noCap buttonLink--grey buttonLink--small addToWatchButton popOver" role="button" data-toggle="popover" data-trigger="focus" data-content="Please sign up or log in to add this book to your watchlist">Add to Watchlist</a>`);  
+          $('#addToWatchButton' + product._id).on('click', addToWatchlist);
         }
       })
     }
@@ -840,7 +839,6 @@ $('.edit-button').click(function(){
     });
 
     let viewMorePageNode = document.getElementById('viewMorePage');
-    console.log(viewMorePageNode);
 
     if (viewMorePageNode.contains(document.getElementById('viewMorePage-postCommentButton'))) {
         document.getElementById('viewMorePage-postCommentButton').addEventListener('click', postComment);
@@ -1039,21 +1037,21 @@ $('.edit-button').click(function(){
 
 
   // ===================================================================================
-  // ============================= MY PORFOLIO PAGE ====================================
+  // ============================= MANAGE ACCOUNT PAGE ====================================
 
 
 
-  // USER ACCOUNT SUMMARY SECTION/ MY PORFOLIO PAGE
+  // USER ACCOUNT SUMMARY SECTION/ MANAGE ACCOUNT PAGE
 
 
   // Get user account summary from backend
   function getMyAccountInfo() {
-    let currentUserId = sessionStorage.getItem('memberId');
+    let currentUserId = JSON.parse(sessionStorage.getItem('currentUser'))._id;
 
     if (!currentUserId) { return; }
 
     $.ajax({
-      url: `${url}/myAccountInfo/${currentUserId}`,
+      url: `${url}/members/${currentUserId}`,
       type: 'GET',
       dataType: 'json',
       success: function(result) {
@@ -1223,7 +1221,7 @@ $('.edit-button').click(function(){
 
 
 
-  // MY PROJECTS SECTION/ MY PORFOLIO PAGE
+  // MY PROJECTS SECTION/ MANAGE ACCOUNT PAGE
 
 
   // DISPLAY CURRENT USER'S ALL PROJECTS
