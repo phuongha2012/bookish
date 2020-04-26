@@ -52,7 +52,7 @@ $(document).ready(function(){
     $('#viewMorePage').hide();
     $('#loginPage').hide();
     $('#signUpPage').hide();
-    $('#projectPage').hide();
+    $('#projectPage').show();
     $('#uploadPortfolioPage').hide();
     $('#updatePortfolioPage').hide();
   } else {
@@ -66,7 +66,7 @@ $(document).ready(function(){
     $('#viewMorePage').hide();
     $('#loginPage').hide();
     $('#signUpPage').hide();
-    $('#projectPage').hide();
+    $('#projectPage').show();
     $('#uploadPortfolioPage').hide();
     $('#updatePortfolioPage').hide();
   }
@@ -281,7 +281,6 @@ $('.edit-button').click(function(){
         });
         }  else {
           sessionStorage.setItem('currentUser', JSON.stringify(response));
-          showMemberName(username);
           $('#logoutBtn').show();
           $('#myPortfolioBtn').show();
           $('#authBtnGroup-question').hide();
@@ -299,11 +298,6 @@ $('.edit-button').click(function(){
     });
   });
 
-  // show members name ===========================================================
-  // Yanas code
-  function showMemberName(name){
-    document.getElementById('memberName').innerHTML =  '<h1 class="d-block text-center mt-4 mb-5">' + name + '\'s Account </h1>';
-  }
 
   // add portfolio form ===============================================================
   // Yanas code
@@ -567,7 +561,7 @@ $('.edit-button').click(function(){
                                                                                         <textarea id="viewMorePage-postReplyInput${item._id}" class="col-12" rows="2" cols="100"></textarea>
                                                                                         <div id="viewMorePage-postReplyButton${item._id}" class="viewMorePage-postReplyButton button button--small button--noCap mt-2">Reply</div>
                                                                                     </div>
-                                                                                </div>` : `<small class="col-10  ml-auto">Please log in to post a reply</small>`
+                                                                                </div>` : `<small class="col-10  ml-auto">Please log in to post a reply</small>`;
                                               
                                               // Conditionally display reply input box based on member auth status
                                               let replyInputWrapper = (item.replies.length === 0) ? 
@@ -808,7 +802,7 @@ $('.edit-button').click(function(){
             error: function(err) {
               console.log(err);
             }
-          })
+          });
         }
     }
 
@@ -828,7 +822,7 @@ $('.edit-button').click(function(){
           $('#watchListWrapper').html(`<a id="addToWatchButton${product._id}" tabindex="0" class="buttonLink buttonLink--noCap buttonLink--grey buttonLink--small addToWatchButton popOver" role="button" data-toggle="popover" data-trigger="focus" data-content="Please sign up or log in to add this book to your watchlist">Add to Watchlist</a>`);  
           $('#addToWatchButton' + product._id).on('click', addToWatchlist);
         }
-      })
+      });
     }
 
     // If Back button is clicked, go back to landingPage
@@ -847,15 +841,17 @@ $('.edit-button').click(function(){
     let replyInputWrappers = document.getElementsByClassName('replyInputWrapper');
 
     for (let i = 0; i < replyInputWrappers.length; i++) {
-      replyInputWrappers[i].addEventListener('click', function(e) {
-        let regex = /^viewMorePage-postReplyButton/g;
+      replyInputWrappers[i].addEventListener('click', checkIfReplyClicked);
+    }
+
+    // Check if viewMorePage-postReplyButton is clicked, execute postReply function
+    function checkIfReplyClicked(e) {
+      let regex = /^viewMorePage-postReplyButton/g;
         if (regex.test(e.target.id)) {
             let commentId = e.target.id.slice(28);
             postReply(commentId);
         }
-      });
     }
-
   }
 
   // Submit comment to backend and add new comment to comment list
@@ -936,13 +932,16 @@ $('.edit-button').click(function(){
     let replyInputWrappers = document.getElementsByClassName('replyInputWrapper');
 
     for (let i = 0; i < replyInputWrappers.length; i++) {
-      replyInputWrappers[i].addEventListener('click', function(e) {
-        let regex = /^viewMorePage-postReplyButton/g;
+      replyInputWrappers[i].addEventListener('click', checkIfReplyClicked);
+    }
+
+    // Check if viewMorePage-postReplyButton is clicked, execute postReply function
+    function checkIfReplyClicked(e) {
+      let regex = /^viewMorePage-postReplyButton/g;
         if (regex.test(e.target.id)) {
             let commentId = e.target.id.slice(28);
             postReply(commentId);
         }
-      });
     }
   }
 

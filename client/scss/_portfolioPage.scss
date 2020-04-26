@@ -1,5 +1,3 @@
-// Yanas code
-
 .container-form{
   background-color: white;
   height: 100vh;
@@ -104,4 +102,34 @@
   margin: auto;
 }
 
-// Hayley's code ends
+#accountPage__banner {
+  height: 10vh;
+  background-color: $colour-pearl;
+}
+
+.accountPage__memberPhoto {
+  text-align: center;
+  width: 150px;
+  height: 150px;
+  background-image: url(https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRxJ2rtq21DSYBbu4HF67OXVu8K-22eaB6MKtqidM2JMBw7tkyy&usqp=CAU);
+  border-radius: 50%;
+  background-size: cover;
+  background-position: center;
+  margin-top: -80px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+// #updateMemberBtn, #updateCardBtn {
+//   margin-left: 75%;
+// }
+
+.cardThumbnail {
+  width: 50px;
+  height: auto;
+}
+
+.accountPage__cardWrapper {
+  padding-left: 45px;
+  padding-right: 0px;;
+}

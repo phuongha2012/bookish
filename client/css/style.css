@@ -71,6 +71,12 @@ h6 {
 .flexContainer--row--top {
   align-items: flex-start;
 }
+.flexContainer--row--space-evenly {
+  justify-content: space-evenly;
+}
+.flexContainer--row--space-between {
+  justify-content: space-between;
+}
 
 .flexContainer--col {
   display: flex;
@@ -82,12 +88,6 @@ h6 {
 }
 .flexContainer--col--right {
   align-items: flex-end;
-}
-
-.flexContainer-flexStart {
-  align-items: flex-start;
-  display: flex;
-  flex-direction: row;
 }
 
 .container-wrapper {
@@ -337,6 +337,34 @@ footer {
 
 .portfolioPage-cardTitle {
   margin: auto;
+}
+
+#accountPage__banner {
+  height: 10vh;
+  background-color: #f5f1ed;
+}
+
+.accountPage__memberPhoto {
+  text-align: center;
+  width: 150px;
+  height: 150px;
+  background-image: url(https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRxJ2rtq21DSYBbu4HF67OXVu8K-22eaB6MKtqidM2JMBw7tkyy&usqp=CAU);
+  border-radius: 50%;
+  background-size: cover;
+  background-position: center;
+  margin-top: -80px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.cardThumbnail {
+  width: 50px;
+  height: auto;
+}
+
+.accountPage__cardWrapper {
+  padding-left: 45px;
+  padding-right: 0px;
 }
 
 .landingPage-banner {

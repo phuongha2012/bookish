@@ -86,12 +86,60 @@
               <div class="container">
 
                   <!-- MyAccount summary -->
-                      <div id="memberName"></div>
-                  <div class="mb-5 mt-3 py-5 px-5 border-gray  col-lg-9 col-md-12 col-sm-12 mx-auto">
+                  <div id="accountPage__banner"></div>
+                  <div class="mb-5 col-sm-12 col-lg-9 mx-auto">
                       <div id="memberAccount">
                           <div class="loader mt-5 mb-5"></div>
+                          <div class="flexContainer--col btBorder pb-3">
+                            <div class="accountPage__memberPhoto">
+                            </div>
+                            <div class="flexContainer--row flexContainer--row--space-between col-sm-12 mx-auto mt-5">
+                              <div class="flexContainer--col col-7">
+                                <div class="flexContainer--row mb-3">
+                                  <div class="col-4 text-left">Username:</div>
+                                  <div class="col-8 text-left">Suzie</div>
+                                </div>
+                                <div class="flexContainer--row mb-3">
+                                  <div class="col-4 text-left">Email:</div>
+                                  <div class="col-8 text-left">suzie@gmail.com</div>
+                                </div>
+                                <div class="flexContainer--row mb-3">
+                                  <div class="col-4 text-left">Member since:</div>
+                                  <div class="col-8 text-left">August 16th 2017</div>
+                                </div>
+                              </div>
+                              <div class="flexContainer--col col-5">
+                                <div class="flexContainer--row flexContainer--row--top mb-3">
+                                  <div class="mr-3">Shipping address:</div>
+                                  <div class="flexContainer--col">
+                                    <p>2 Waterloo Street</p>
+                                    <p>Hutt Central</p>
+                                    <p>Lower Hutt 5010</p>
+                                  </div>
+                                </div>
+                              </div>
+                            </div> 
+                            <div>
+                              <button id="updateMemberBtn" name="updateMemberBtn" class="button float-right">Edit</button>
+                            </div> 
+                          </div>
                       </div>
-                      <button id="updateMemberBtn" name="updateMemberBtn" class="button float-right ">Edit</button>
+                      <div class="flexContainer--col mt-5 accountPage__cardWrapper btBorder col-sm-12 pb-3">
+                        <div class="mb-3">Payment method:</div>
+                        <div class="flexContainer--row flexContainer--row--top">
+                          <div>
+                            <img src="https://xquizit.co.nz/wp-content/uploads/2016/05/Master-Card-icon.png" class="cardThumbnail mr-3" alt="mastercard logo">
+                          </div>
+                          <div class="flexContainer--col">
+                            <spam><strong>MasterCard</strong> ending in 6159</spam>
+                            <span>Expires: 12/2017</span>
+                          </div>
+                          
+                        </div>
+                        <div>
+                          <button id="updateCardBtn" name="updateCardBtn" class="button float-right mt-3">Edit</button>
+                        </div>
+                      </div>
                   </div>
 
                   <!-- Upload a new project -->
@@ -106,7 +154,6 @@
                   <div id="myProjectCards">
                     <div class="loader mt-5 mb-5"></div>
                   </div>
-
               </div>
           </div>
 

@@ -6,6 +6,14 @@
     &--top {
         align-items: flex-start;
     }
+
+    &--space-evenly {
+        justify-content: space-evenly;
+    }
+
+    &--space-between {
+        justify-content: space-between;
+    }
 }
 
 .flexContainer--col {
@@ -20,12 +28,6 @@
    &--right {
     align-items: flex-end;
    }
-}
-
-.flexContainer-flexStart {
-    align-items: flex-start;
-    display: flex;
-    flex-direction: row;
 }
 
 .container-wrapper {
