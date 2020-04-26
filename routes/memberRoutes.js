@@ -84,16 +84,26 @@ module.exports = (app) => {
                         (err, result) => { res.send(result); })
     })
 
-    // Add a product to watchlist
+    // Add a product to member's watchlist
     app.patch('/members/:id/watchlist/add/', (req, res) => {
-        const _id = req.params.id;
+        const _memberId = req.params.id;
 
         let productId = req.body.productId;
-        console.log(productId);
 
-        Member.findByIdAndUpdate(_id, { $push: { watchlist: productId }})
+        Member.findByIdAndUpdate(_memberId, { $push: { watchlist: productId }})
                 .then(result => res.send(result))
-                .catch(err => res.send("Error adding product to watchlist"))
+                .catch(err => res.send("Error adding product to watchlist: " + err))
+    })
+
+    // Remove a product from member's watchlist
+    app.patch('/members/:id/watchlist/remove/', (req, res) => {
+        const _memberId = req.params.id;
+
+        let productId = req.body.productId;
+
+        Member.findByIdAndUpdate(_memberId, { $pull: { watchlist: productId }})
+                .then(result => res.send('result'))
+                .catch(err => res.send("Error removing product to watchlist: " + err))
     })
 
 }

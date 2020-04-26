@@ -767,6 +767,13 @@ $('.edit-button').click(function(){
 
     $('html, body').animate({ scrollTop: 0 }, 'fast');
 
+
+    // If product is in current user watchlist, display inWatchlist icon
+
+    if(currentUser && currentUser.watchlist.includes(product._id)) {
+      $('#inWatchlist').css('display', 'inline-block');
+    }
+
     // Initialise inWatlist tooltip
     $('.inWatchListIcon').popover();
     
@@ -775,7 +782,7 @@ $('.edit-button').click(function(){
 
     $('#addToWatchButton' + product._id).on('click', addToWatchlist);
 
-    // Add a product to watchlist if user is already logged in
+    // Add a product to watchlist, only if user is already logged in
     function addToWatchlist() {
         if (!currentUser) {
             $('.addToWatchButton').popover('show');
@@ -804,6 +811,25 @@ $('.edit-button').click(function(){
             }
           })
         }
+    }
+
+    // Remove a product to watchlist
+    $('#removeFromWatchButton' + product._id).on('click', removeFromWatchlist);
+
+    function removeFromWatchlist() {
+      $.ajax({
+        url: `${url}/members/${currentUser._id}/watchlist/remove/`,
+        type: 'PATCH',
+        data: {
+              productId: product._id
+        },
+        success: function(updatedUser) {
+          console.log('remove succeed');
+          sessionStorage.setItem('currentUser', JSON.stringify(updatedUser));
+          $('#inWatchlist').hide();
+          $('#watchListWrapper').html(`<a id="addToWatchButton${product._id}" tabindex="0" class="buttonLink buttonLink--noCap buttonLink--grey buttonLink--small addToWatchButton popOver" role="button" data-toggle="popover" data-trigger="focus" data-content="Please sign up or log in to add this book to your watchlist">Add to Watchlist</a>`);  
+        }
+      })
     }
 
     // If Back button is clicked, go back to landingPage
