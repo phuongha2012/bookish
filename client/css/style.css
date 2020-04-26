@@ -240,10 +240,6 @@ footer {
   background-color: #f0f1f052;
 }
 
-.popOver + .tooltip {
-  color: #e9524d;
-}
-
 .container-form {
   background-color: white;
   height: 100vh;
@@ -470,6 +466,16 @@ footer {
 
 .viewMorePage__accordion--content {
   max-width: 400px;
+}
+
+#inWatchlist {
+  display: none;
+}
+
+.inWatchlist__icon {
+  width: 25px;
+  height: 25px;
+  fill: #e9524d;
 }
 
 #signUpPage {

@@ -538,6 +538,8 @@ $('.edit-button').click(function(){
     let addCommentHTML;
     let currentUser = (JSON.parse(sessionStorage.getItem('currentUser')));
 
+    console.log(currentUser);
+
     // Map product's shipping options into HTML
     shippingOptions = product.shipping.map(item => `<li>${item}</li>`).join(' ');
 
@@ -621,6 +623,19 @@ $('.edit-button').click(function(){
                                     </div>` : `
                                     <small class="text-center mb-5 mt-5">Please log in to add comment</small>`;
 
+    // Conditionally render watchListHTML
+    let watchListHTML;
+    
+    if (currentUser) {
+      if ((currentUser.watchlist.length > 0) && currentUser.watchlist.includes(product._id)) {
+        watchListHTML = `<a id="removeFromWatchButton${product._id}" class="buttonLink buttonLink--noCap buttonLink--grey buttonLink--small">Remove from watchlist</a>`;
+      } else {
+        watchListHTML = `<a id="addToWatchButton${product._id}" tabindex="0" class="buttonLink buttonLink--noCap buttonLink--grey buttonLink--small addToWatchButton popOver" role="button" data-toggle="popover" data-trigger="focus" data-content="Please sign up or log in to add this book to your watchlist">Add to Watchlist</a>`;
+      }
+    } else {
+        watchListHTML = `<a id="addToWatchButton${product._id}" tabindex="0" class="buttonLink buttonLink--noCap buttonLink--grey buttonLink--small addToWatchButton popOver" role="button" data-toggle="popover" data-trigger="focus" data-content="Please sign up or log in to add this book to your watchlist">Add to Watchlist</a>`;
+    }
+
     // Generate viewMorePgae HTML and attach to #viewMorePage
     document.getElementById('viewMorePage').innerHTML = `
                                                       <!-- General description section -->
@@ -637,14 +652,23 @@ $('.edit-button').click(function(){
                                                               <img src="${product.photoUrl}" alt="Book image" class="viewMorePage__mainPhoto">
                                                           </div>
                                                           <div class="flexContainer--col col-sm-12 col-md-7">
-                                                              <h2>${product.title}</h2>
+                                                              <div class="flexContainer--row">
+                                                                  <h2 class="mr-3">${product.title}</h2>
+                                                                  <a id="inWatchlist" tabindex="0" class="buttonLink buttonLink--noCap buttonLink--grey buttonLink--small inWatchListIcon" role="button" data-toggle="popover" data-trigger="hover" data-content="This book is currently in your watchlist">
+                                                                      <svg class="inWatchlist__icon">
+                                                                          <use xlink:href="images/icons.svg#icon-binoculars"></use>
+                                                                      </svg>
+                                                                  </a>
+                                                              </div>
                                                               <h3 class="color-grey mb-5">&dollar;${product.price}</h3>
                                                               <p class="mb-5">
                                                                   ${product.description}
                                                               </p>
                                                               <div class="flexContainer--row float-right mb-5">
                                                                   <div class="button button--bordered mr-3">Buy Now</div>
-                                                                  <a id="addToWatchButton${product._id}" tabindex="0" class="buttonLink buttonLink--noCap buttonLink--grey buttonLink--small addToWatchButton popOver" role="button" data-toggle="popover" data-trigger="focus" data-content="Please sign up or log in to add this book to your watchlist">Add to Watchlist</a>
+                                                                  <div id="watchListWrapper">
+                                                                    ${watchListHTML}
+                                                                  </div>
                                                               </div>
                                                               <div class="flexContainer--row mb-2">
                                                                   <small class="capitalised color-black mr-1">Condition:</small>
@@ -742,18 +766,45 @@ $('.edit-button').click(function(){
                                                       </div>`;
 
     $('html, body').animate({ scrollTop: 0 }, 'fast');
+
+    // Initialise inWatlist tooltip
+    $('.inWatchListIcon').popover();
     
+    // Initialise log in tool tip in viewmore page
     $('.addToWatchButton').popover();
 
-    $('#addToWatchButton' + product._id).on('click', function() {
-      if (!currentUser) {
-          $('.addToWatchButton').popover('show');
-      }
-      else {
-        $('.addToWatchButton').popover('hide');
-        console.log('Added to watch list');
-      }
-    })
+    $('#addToWatchButton' + product._id).on('click', addToWatchlist);
+
+    // Add a product to watchlist if user is already logged in
+    function addToWatchlist() {
+        if (!currentUser) {
+            $('.addToWatchButton').popover('show');
+        }
+        else {
+          $('.addToWatchButton').popover('hide');
+          $.ajax({
+            url: `${url}/members/${currentUser._id}/watchlist/add`,
+            type: 'PATCH',
+            data: {
+                  productId: product._id
+            },
+            success: function(updatedUser) {
+                  sessionStorage.setItem('currentUser', JSON.stringify(updatedUser));
+                  $('#inWatchlist').show();
+                  $('#watchListWrapper').html(`<a id="removeFromWatchButton${product._id}" class="buttonLink buttonLink--noCap buttonLink--grey buttonLink--small">Remove from watchlist</a>`);
+                  Swal.fire({
+                    title: 'Watchlist updated!',
+                    text: 'This product has been added to your watchlist',
+                    icon: 'success',
+                    confirmButtonText: 'OK'
+                });
+            },
+            error: function(err) {
+              console.log(err);
+            }
+          })
+        }
+    }
 
     // If Back button is clicked, go back to landingPage
     document.getElementById('backToLanding').addEventListener('click', function() {

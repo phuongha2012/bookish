@@ -38,3 +38,15 @@
 .viewMorePage__accordion--content {
     max-width: 400px;
 }
+
+#inWatchlist {
+    display: none;
+}
+
+.inWatchlist__icon {
+    width: 25px;
+    height: 25px;
+    fill: $colour-watermelon;
+}
+
+
