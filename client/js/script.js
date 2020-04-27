@@ -986,22 +986,6 @@ $('.edit-button').click(function(){
     });
   }
 
-  function addReply(reply) {
-    let replyHTML = `
-                    <div class="flexContainer--row col-sm-12 col-md-12 my-3">
-                        <div class="col-sm-3 col-md-2 mb-2">
-                            <div class="viewMorePage__thumbnail viewMorePage__thumbnail--commenter mx-auto" style="background-image:url(${(JSON.parse(sessionStorage.getItem('currentUser'))).photoUrl})"></div>
-                        </div>
-                        <div class="col-12">
-                        <small class="comment-info flexContainer--row">
-                            <span class="font-italic mr-1">${reply.replier.memberUsername}</span>
-                            <span class="font-italic">${formatDate(reply.postedOn)}</span>
-                        </small>
-                        <div class="col-11 pl-0">${reply.content}</div>
-                    </div>`;
-    document.getElementById().innerHTML += replyHTML;
-  }
-
   // Helper to return readable date
   function formatDate(datestring) {
     const months = ["January", "February", "March", "April", "May", "June", "July",
@@ -1064,35 +1048,45 @@ $('.edit-button').click(function(){
 
   // Generate HTML template from account summary and add to #memberAccount div
   function generateAccountSummaryHTML(account) {
-    let _description = account.about ? account.about : "";
-    let _website = account.website ? account.website : "";
-    let _location = account.location ? account.location : "";
-
+    document.getElementById('accountPage__memberPhoto').style.backgroundImage = `url(${account.photoUrl})`;
     document.getElementById('memberAccount').innerHTML =
-            `<div class="flexContainer-flexStart mb-1">
-                <strong class="userInfoField">Username:</strong>
-                <div>${account.username}</div>
-            </div>
-            <div class="flexContainer-flexStart mb-1">
-                <strong class="userInfoField">Email:</strong>
-                <div>${account.email}</div>
-            </div>
-            <div class="flexContainer-flexStart mb-1">
-                <strong class="userInfoField">About:</strong>
-                <div>${_description}</div>
-            </div>
-            <div class="flexContainer-flexStart mb-1">
-                <strong class="userInfoField">Location:</strong>
-                <div>${_location}</div>
-            </div>
-            <div class="flexContainer-flexStart mb-1">
-                <strong class="userInfoField">Website:</strong>
-                <a>${_website}</a>
-            </div>`;
+          `<div class="flexContainer--col btBorder pb-3">
+            <div class="flexContainer--row flexContainer--row--space-between col-sm-12 mx-auto mt-5">
+              <div class="flexContainer--col col-7">
+                <div class="flexContainer--row mb-3">
+                  <div class="col-4 text-left">Username:</div>
+                  <div class="col-8 text-left">${account.username}</div>
+                </div>
+                <div class="flexContainer--row mb-3">
+                  <div class="col-4 text-left">Email:</div>
+                  <div class="col-8 text-left">${account.email}</div>
+                </div>
+                <div class="flexContainer--row mb-3">
+                  <div class="col-4 text-left">Member since:</div>
+                  <div class="col-8 text-left">${(formatDate(account.joinedDate)).slice(3, 16)}</div>
+                </div>
+              </div>
+              <div class="flexContainer--col col-5">
+                <div class="flexContainer--row flexContainer--row--top mb-3">
+                  <div class="mr-3">Shipping address:</div>
+                  <div class="flexContainer--col">
+                    <p>${account.address.street}</p>
+                    <p>${account.address.suburb}</p>
+                    <p>${account.address.city} ${account.address.zip}</p>
+                  </div>
+                </div>
+              </div>
+            </div> 
+            <div>
+              <button id="updateMemberBtn" name="updateMemberBtn" class="button float-right">Edit</button>
+            </div> 
+          </div>`;
+    
+    // Show edit user form if Edit user button is clicked
+    document.getElementById('updateMemberBtn').addEventListener('click', showEditUserForm);
   }
 
-  // Show edit user form if Edit user button is clicked
-  document.getElementById('updateMemberBtn').addEventListener('click', showEditUserForm);
+  
 
   function showEditUserForm() {
     $('#updateMemberBtn').hide();
@@ -1104,6 +1098,34 @@ $('.edit-button').click(function(){
   function makeEditUserForm() {
     document.getElementById('memberAccount').innerHTML =
                                                         `<form id="editUserForm">
+                                                            <div class=flexContainer--row flexContainer--row--space-between col-sm-12 mx-auto mt-5">
+                                                                <div class="flexContainer--col col-7">
+                                                                  <div class="flexContainer--row mb-3">
+                                                                      <div class="col-4 text-left">Username:</div>
+                                                                      <div class="col-8 text-left">Charlotte</div>
+                                                                  </div>
+                                                                  <div class="form-group row pl-15">
+                                                                      <label for="editUserForm__email" class="col-4 text-left">
+                                                                          Email:
+                                                                      </label>
+                                                                      <input type="email" class="form-control col-8 text-left" id="editUserForm__email">
+                                                                  </div>
+                                                                  <div class="flexContainer--row mb-3">
+                                                                    <div class="col-4 text-left">Member since:</div>
+                                                                    <div class="col-8 text-left">August 15 2015</div>
+                                                                  </div>
+                                                                </div>
+                                                                <div class="flexContainer--col col-5">
+                                                                    <div class="flexContainer--row flexContainer--row--top mb-3">
+                                                                        <div class="mr-3">Shipping address:</div>
+                                                                        <div class="flexContainer--col">
+                                                                            <input type="text" class="form-control" id="exampleInputPassword1" placeholder="street address">
+                                                                            <input type="text" class="form-control" id="exampleInputPassword1" placeholder="suburb">
+                                                                            <input type="text" class="form-control" id="exampleInputPassword1" placeholder="city">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
                                                             <div class="form-group row">
                                                                 <label for="editUserForm__username" class="col-md-3">
                                                                     Username:

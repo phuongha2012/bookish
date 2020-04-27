@@ -11,6 +11,7 @@ const memberSchema = new Schema({
   joinedDate: Date,
   address : {
       street: String,
+      suburb: String,
       city: String,
       zip: Number
   },
