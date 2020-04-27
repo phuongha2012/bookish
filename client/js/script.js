@@ -1178,10 +1178,8 @@ $('.edit-button').click(function(){
             zip: _zip
       },
       success: function(updatedMember) {
-        console.log(updatedMember);
             generateAccountSummaryHTML(updatedMember);
             sessionStorage.setItem('currentUser', JSON.stringify(updatedMember));
-            console.log(sessionStorage);
             $('#updateMemberBtn').show();
       },
       error: function(err) {

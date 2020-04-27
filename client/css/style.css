@@ -24,6 +24,10 @@
   color: #e9524d;
 }
 
+.color-white--grey {
+  color: #f1f1f1;
+}
+
 body {
   color: #828282;
   font-family: 'Roboto', sans-serif;
@@ -248,6 +252,13 @@ footer {
   background-color: #f0f1f052;
 }
 
+.icon {
+  width: 25px;
+  height: 25px;
+  fill: #f1f1f1;
+  opacity: 0.95;
+}
+
 .container-form {
   background-color: white;
   height: 100vh;
@@ -362,6 +373,22 @@ footer {
   margin-top: -80px;
   margin-left: auto;
   margin-right: auto;
+  position: relative;
+  overflow: hidden;
+}
+#accountPage__memberPhoto:hover #accountPage__memberPhotoUpdateBtn {
+  visibility: visible;
+}
+
+#accountPage__memberPhotoUpdateBtn {
+  position: absolute;
+  bottom: 0;
+  top: auto;
+  width: 100%;
+  height: 45%;
+  background-color: #37465d;
+  opacity: 0.8;
+  visibility: hidden;
 }
 
 .cardThumbnail {
@@ -371,7 +398,7 @@ footer {
 
 .accountPage__cardWrapper {
   padding-left: 45px;
-  padding-right: 0px;
+  padding-right: 0;
 }
 
 .landingPage-banner {
