@@ -145,3 +145,48 @@
   padding-left: 45px;
   padding-right: 0;
 }
+
+input[type="file"] {
+  display: none;
+}
+
+.editProfilePhotoForm__fileLabel {
+  display: inline-block;
+  cursor: pointer;
+  border-right: 1px $colour-pearl solid;
+  height: 100%;
+  width: 100%;
+  position: relative;
+
+  &--inner {
+    position: absolute;
+    top: 40%;
+    left: 20%;
+  }
+}
+
+#editProfilePhotoFormWrapper {
+  height: 150px;
+  border: 1px $colour-pearl solid;
+}
+
+.editProfilePhotoFormContainer {
+  height: 100%;
+
+  & > div {
+    height: 100%;
+  }
+}
+
+.editProfilePhotoForm__photoUrlWrapper {
+  position: relative;
+
+  & > input {
+    position: absolute;
+    top: 35%;
+    margin-left: 10%;
+  }
+}
+
+
+

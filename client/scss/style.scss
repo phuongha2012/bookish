@@ -55,18 +55,25 @@ body {
     font-family: 'Roboto', sans-serif;
     font-size: 17px;
     line-height: 28px;
+    font-weight: 300;
+}
+
+h1 {
+    font-weight: 300;
 }
 
 h2 {
     color: black;
     font-family: 'Crimson Text', sans-serif;
     font-size: 50px;
+    font-weight: 300;
     line-height: 60px;
 }
 
 h3 {
     color: black;
     font-family: 'Crimson Text', sans-serif;
+    font-weight: 300;
     font-size: 35px;
     line-height: 40px;
 }
@@ -74,6 +81,7 @@ h3 {
 h5 {
     color: black;
     font-family: 'Crimson Text', sans-serif;
+    font-weight: 300;
     font-size: 25px;
     line-height: 35px;
 }
@@ -81,12 +89,21 @@ h5 {
 h6 {
     color: $colour-grey;
     font-family: 'Roboto', sans-serif;
+    font-weight: 300;
     font-size: 20px;
     line-height: 28px;
 }
 
 .capitalised {
     text-transform: uppercase;
+}
+
+.bold {
+    font-weight: 500;
+}
+
+small {
+    font-weight: 300;
 }
 
 

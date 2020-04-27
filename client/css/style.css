@@ -33,18 +33,25 @@ body {
   font-family: 'Roboto', sans-serif;
   font-size: 17px;
   line-height: 28px;
+  font-weight: 300;
+}
+
+h1 {
+  font-weight: 300;
 }
 
 h2 {
   color: black;
   font-family: 'Crimson Text', sans-serif;
   font-size: 50px;
+  font-weight: 300;
   line-height: 60px;
 }
 
 h3 {
   color: black;
   font-family: 'Crimson Text', sans-serif;
+  font-weight: 300;
   font-size: 35px;
   line-height: 40px;
 }
@@ -52,6 +59,7 @@ h3 {
 h5 {
   color: black;
   font-family: 'Crimson Text', sans-serif;
+  font-weight: 300;
   font-size: 25px;
   line-height: 35px;
 }
@@ -59,12 +67,21 @@ h5 {
 h6 {
   color: #828282;
   font-family: 'Roboto', sans-serif;
+  font-weight: 300;
   font-size: 20px;
   line-height: 28px;
 }
 
 .capitalised {
   text-transform: uppercase;
+}
+
+.bold {
+  font-weight: 500;
+}
+
+small {
+  font-weight: 300;
 }
 
 .flexContainer--row {
@@ -399,6 +416,45 @@ footer {
 .accountPage__cardWrapper {
   padding-left: 45px;
   padding-right: 0;
+}
+
+input[type="file"] {
+  display: none;
+}
+
+.editProfilePhotoForm__fileLabel {
+  display: inline-block;
+  cursor: pointer;
+  border-right: 1px #f5f1ed solid;
+  height: 100%;
+  width: 100%;
+  position: relative;
+}
+.editProfilePhotoForm__fileLabel--inner {
+  position: absolute;
+  top: 40%;
+  left: 20%;
+}
+
+#editProfilePhotoFormWrapper {
+  height: 150px;
+  border: 1px #f5f1ed solid;
+}
+
+.editProfilePhotoFormContainer {
+  height: 100%;
+}
+.editProfilePhotoFormContainer > div {
+  height: 100%;
+}
+
+.editProfilePhotoForm__photoUrlWrapper {
+  position: relative;
+}
+.editProfilePhotoForm__photoUrlWrapper > input {
+  position: absolute;
+  top: 35%;
+  margin-left: 10%;
 }
 
 .landingPage-banner {

@@ -1084,6 +1084,20 @@ $('.edit-button').click(function(){
     
     // Show edit user form if Edit user button is clicked
     document.getElementById('updateMemberBtn').addEventListener('click', showEditUserForm);
+
+    document.getElementById('accountPage__memberPhotoUpdateBtn').addEventListener('click', showEditProfilePhotoForm);
+
+    function showEditProfilePhotoForm() {
+      document.getElementById('editProfilePhotoFormWrapper').innerHTML = 
+      `
+      <form id="editProfilePhotoForm">
+        <div class="form-group">
+          <label for="exampleFormControlFile1">Choose a photo</label>
+          <input type="file" class="form-control-file" id="editProfilePhotoForm__file">
+        </div>
+      </form>
+      `;
+    }
   }
 
   
