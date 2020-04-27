@@ -1098,11 +1098,11 @@ $('.edit-button').click(function(){
   function makeEditUserForm() {
     document.getElementById('memberAccount').innerHTML =
                                                         `<form id="editUserForm">
-                                                            <div class=flexContainer--row flexContainer--row--space-between col-sm-12 mx-auto mt-5">
-                                                                <div class="flexContainer--col col-7">
+                                                            <div class="flexContainer--row flexContainer--row--space-between col-sm-12 mx-auto mt-5">
+                                                                <div class="flexContainer--col col-5">
                                                                   <div class="flexContainer--row mb-3">
                                                                       <div class="col-4 text-left">Username:</div>
-                                                                      <div class="col-8 text-left">Charlotte</div>
+                                                                      <div class="col-8 text-left">${JSON.parse(sessionStorage.getItem('currentUser')).username}</div>
                                                                   </div>
                                                                   <div class="form-group row pl-15">
                                                                       <label for="editUserForm__email" class="col-4 text-left">
@@ -1112,56 +1112,32 @@ $('.edit-button').click(function(){
                                                                   </div>
                                                                   <div class="flexContainer--row mb-3">
                                                                     <div class="col-4 text-left">Member since:</div>
-                                                                    <div class="col-8 text-left">August 15 2015</div>
+                                                                    <div class="col-8 text-left">${(formatDate(JSON.parse(sessionStorage.getItem('currentUser')).joinedDate)).slice(3, 16)}</div>
                                                                   </div>
                                                                 </div>
-                                                                <div class="flexContainer--col col-5">
+                                                                <div class="flexContainer--col col-6 ml-auto">
                                                                     <div class="flexContainer--row flexContainer--row--top mb-3">
                                                                         <div class="mr-3">Shipping address:</div>
-                                                                        <div class="flexContainer--col">
-                                                                            <input type="text" class="form-control" id="exampleInputPassword1" placeholder="street address">
-                                                                            <input type="text" class="form-control" id="exampleInputPassword1" placeholder="suburb">
-                                                                            <input type="text" class="form-control" id="exampleInputPassword1" placeholder="city">
+                                                                        <div class="flexContainer--col col-8">
+                                                                            <input type="text" class="form-control mb-18" id="editUserForm__street" placeholder="street address">
+                                                                            <input type="text" class="form-control mb-18" id="editUserForm__suburb" placeholder="suburb">
+                                                                            <div class="row flexContainer--row pl-15">
+                                                                                <input type="text" class="form-control col-6 mb-18" id="editUserForm__city" placeholder="city">
+                                                                                <input type="text" class="form-control col-5 mb-18 ml-3" id="editUserForm__postcode" placeholder="postcode">
+                                                                            </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <div class="form-group row">
-                                                                <label for="editUserForm__username" class="col-md-3">
-                                                                    Username:
-                                                                </label>
-                                                                <input type="text" class="form-control col-md-9" id="editUserForm__username">
+                                                            <div class="flexContainer--row float-right">
+                                                                <span id="cancelEditUserForm" class="buttonLink buttonLink--noCap mb-5 mr-3">
+                                                                    Cancel
+                                                                </span>
+                                                                <button id="saveUserInfo" type="submit" class="button float-right mb-5">
+                                                                    Save
+                                                                </button>
                                                             </div>
-                                                            <div class="form-group row">
-                                                                <label for="editUserForm__email" class="col-md-3">
-                                                                    Email:
-                                                                </label>
-                                                                <input type="email" class="form-control col-md-9" id="editUserForm__email">
-                                                            </div>
-                                                            <div class="form-group row">
-                                                                <label for="editUserForm__description" class="col-md-3">
-                                                                    Description:
-                                                                </label>
-                                                                <textarea type="text" class="form-control col-md-9" id="editUserForm__description" rows="4"></textarea>
-                                                            </div>
-                                                            <div class="form-group row">
-                                                                <label for="editUserForm__location" class="col-md-3">
-                                                                    Location:
-                                                                </label>
-                                                                <input type="text" class="form-control col-md-9" id="editUserForm__location">
-                                                            </div>
-                                                            <div class="form-group row">
-                                                                <label for="editUserForm__website" class="col-md-3">
-                                                                    Website:
-                                                                </label>
-                                                                <input id="editUserForm__website" type="text" class="form-control col-md-9">
-                                                            </div>
-                                                            <button id="cancelEditUserForm" class="btn btn-danger   float-left mb-5">
-                                                                Cancel
-                                                            </button>
-                                                            <button id="saveUserInfo" type="submit" class="float-right mb-5 btn btn-dark  ">
-                                                                Save
-                                                            </button>
+                                                            
                                                         </form>`;
 
     document.getElementById('editUserForm').addEventListener('submit', updateUser);
@@ -1170,48 +1146,42 @@ $('.edit-button').click(function(){
 
   // Prefill edit user form's value with current user info from backend
   function populateEditUserForm() {
-    let currentUserId = sessionStorage.getItem('memberId');
+    let currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
 
-    $.ajax({
-      url: `${url}/myAccountInfo/${currentUserId}`,
-      type: 'GET',
-      dataType: 'json',
-      success: function(result) {
-            $('#editUserForm__username').val(result.username);
-            $('#editUserForm__email').val(result.email);
-            $('#editUserForm__description').val(result.about);
-            $('#editUserForm__website').val(result.website);
-            $('#editUserForm__location').val(result.location);
-      },
-      error: function(error) {
-            console.log(error);
-      }
-    });
+    $('#editUserForm__email').val(currentUser.email);
+    $('#editUserForm__street').val(currentUser.address.street);
+    $('#editUserForm__suburb').val(currentUser.address.suburb);
+    $('#editUserForm__city').val(currentUser.address.city);
+    $('#editUserForm__postcode').val(currentUser.address.zip);
   }
 
   // Submit updated user info to backend on edit user form submit
   function updateUser(e) {
     e.preventDefault();
+    let currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
 
-    let _id = sessionStorage.getItem('memberId');
-    let _username = $('#editUserForm__username').val();
+    let _id = currentUser._id;
     let _email = $('#editUserForm__email').val();
-    let _about = $('#editUserForm__description').val();
-    let _location = $('#editUserForm__location').val();
-    let _website = $('#editUserForm__website').val();
+    let _street = $('#editUserForm__street').val();
+    let _suburb = $('#editUserForm__suburb').val();
+    let _city = $('#editUserForm__city').val();
+    let _zip = $('#editUserForm__postcode').val();
 
     $.ajax({
-      url: `${url}/updateMember/${_id}`,
+      url: `${url}/members/${_id}/update`,
       type: 'PATCH',
       data: {
-            username: _username,
             email: _email,
-            about: _about,
-            location: _location,
-            website: _website
+            street: _street,
+            suburb: _suburb,
+            city: _city,
+            zip: _zip
       },
       success: function(updatedMember) {
+        console.log(updatedMember);
             generateAccountSummaryHTML(updatedMember);
+            sessionStorage.setItem('currentUser', JSON.stringify(updatedMember));
+            console.log(sessionStorage);
             $('#updateMemberBtn').show();
       },
       error: function(err) {
@@ -1222,21 +1192,9 @@ $('.edit-button').click(function(){
 
   // If edit user form is cancelled, replace form with account summary in #memberAccount div
   function generateAccountSummaryHTMLFromStorage() {
-    let description = (sessionStorage.getItem('about') !== "undefined") ? sessionStorage.getItem('about') : "";
-    let website = (sessionStorage.getItem('website') !== "undefined") ? sessionStorage.getItem('website') : "";
-    let location = (sessionStorage.getItem('location') !== "undefined") ? sessionStorage.getItem('location') : "";
-    let username = sessionStorage.getItem('username');
-    let email = sessionStorage.getItem('email');
+    let currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
 
-    let account = {
-                about: description,
-                website: website,
-                location: location,
-                username: username,
-                email: email
-    };
-
-    generateAccountSummaryHTML(account);
+    generateAccountSummaryHTML(currentUser);
     $('#updateMemberBtn').show();
   }
 

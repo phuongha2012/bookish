@@ -58,12 +58,13 @@ module.exports = (app) => {
     app.patch('/members/:id/update', (req, res) => {
         const _id = req.params.id;
         const updatedMember = {
-                                username: req.body.username,
                                 email: req.body.email,
-                                about: req.body.about,
-                                photoUrl: req.body.photoUrl,
-                                address: req.body.address,
-                                card : req.body.card
+                                address: {
+                                    street: req.body.street,
+                                    suburb: req.body.suburb,
+                                    city: req.body.city,
+                                    zip: req.body.zip
+                                }
         }
 
         Member.findByIdAndUpdate(_id, 
