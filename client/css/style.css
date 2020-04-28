@@ -72,6 +72,14 @@ h6 {
   line-height: 28px;
 }
 
+input {
+  font-weight: 300;
+}
+
+.form-control .form-control-file {
+  font-weight: 300;
+}
+
 .capitalised {
   text-transform: uppercase;
 }
@@ -416,8 +424,7 @@ footer {
 }
 
 .accountPage__cardWrapper {
-  padding-left: 45px;
-  padding-right: 0;
+  padding-left: 60px;
 }
 
 #editProfilePhotoFormWrapper {
@@ -461,6 +468,21 @@ footer {
   position: absolute;
   top: 96%;
   left: 6%;
+}
+
+.accountPage__activityBtn {
+  width: 100%;
+}
+.accountPage__activityBtn--focused {
+  background-color: #37465d;
+  color: white;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1), 0 3px 10px 0 rgba(0, 0, 0, 0.05);
+}
+
+#myProductsDeck {
+  min-height: 600px;
+  border: 1px #f5f1ed solid;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1), 0 3px 10px 0 rgba(0, 0, 0, 0.05);
 }
 
 .landingPage-banner {

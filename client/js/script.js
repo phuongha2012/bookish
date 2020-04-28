@@ -1034,7 +1034,8 @@ $('.edit-button').click(function(){
       type: 'GET',
       dataType: 'json',
       success: function(result) {
-            generateAccountSummaryHTML(result);
+        console.log(result);
+            generateAccountSummaryHTML(result[0]);
       },
       error: function(error) {
             console.log(error);
@@ -1045,7 +1046,7 @@ $('.edit-button').click(function(){
   // Generate HTML template from account summary and add to #memberAccount div
   function generateAccountSummaryHTML(account) {
     document.getElementById('accountPage__memberPhoto').style.backgroundImage = `url(${account.photoUrl})`;
-    document.getElementById('memberAccount').innerHTML =
+    document.getElementById('memberAccount').innerHTML +=
           `<div class="flexContainer--col btBorder pb-3">
             <div class="flexContainer--row flexContainer--row--space-between col-sm-12 mx-auto mt-5">
               <div class="flexContainer--col col-7">
@@ -1253,7 +1254,7 @@ $('.edit-button').click(function(){
       type: 'GET',
       success: function(results) {
             if (results === "No portfolio by this user found") {
-              document.getElementById('myProjectCards').innerHTML =
+              document.getElementById('myProductsDeck').innerHTML =
                   `<div class="noPortfolio text-center">You have not uploaded a project yet</div>`;
               return;
             }
@@ -1266,9 +1267,9 @@ $('.edit-button').click(function(){
     });
   }
 
-  // Map portfolios result into portfolio cards and attach to #myProjectCards div
+  // Map portfolios result into portfolio cards and attach to #myProductsDeck div
   function makePortfolioCards(arr) {
-    document.getElementById('myProjectCards').innerHTML = arr.map(item =>
+    document.getElementById('myProductsDeck').innerHTML = arr.map(item =>
                                                                         `<div class="card
                                                                                     portfolioCard
                                                                                     border-bottom">
@@ -1482,7 +1483,25 @@ $('.edit-button').click(function(){
     addListenersToCardButtons();
   }
 
-  // ============================== Hayley's code ends =================================
-  // ===================================================================================
+  // Change accountPage__activityBtn background color after the button is click
+  let activitiyButtons = document.getElementsByClassName('accountPage__activityBtn');
+
+  for (let i = 0; i < activitiyButtons.length; i++) {
+    activitiyButtons[i].addEventListener('click', changeBgColor.bind(activitiyButtons[i]));
+  }
+
+  function changeBgColor() {
+
+    // Remove bgColor of previously clicked button
+    let activitiyButtons = document.getElementsByClassName('accountPage__activityBtn');
+    for (let i = 0; i < activitiyButtons.length; i++) {
+      activitiyButtons[i].classList.remove('accountPage__activityBtn--focused');
+    }
+
+    // Add bgColor to recently clicked button
+    $(this).addClass('accountPage__activityBtn--focused');
+  }
+
+
 
 }); // Document ready ends

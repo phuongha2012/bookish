@@ -105,11 +105,40 @@ module.exports = (app) => {
     })
 
     // Find and return a user's account information
-    app.get('/members/:id', (req, res) => {
+    app.get('/members/:id', async (req, res) => {
         let _memberId = req.params.id;
 
-        Member.findById(_memberId, 
-                        (err, result) => { res.send(result); })
+        let query = await Member.aggregate([
+                                            { $match: { _id: mongoose.Types.ObjectId(_memberId) } },
+                                            { $lookup: {
+                                                        from: 'products',
+                                                        localField: 'purchased',
+                                                        foreignField: '_id',
+                                                        as: 'purchasedProducts'
+                                            }},
+                                            { $lookup: {
+                                                        from: 'products',
+                                                        localField: 'sold',
+                                                        foreignField: '_id',
+                                                        as: 'soldProducts'
+                                            }},
+                                            { $lookup: {
+                                                        from: 'products',
+                                                        localField: 'watchlist',
+                                                        foreignField: '_id',
+                                                        as: 'watchProducts'
+                                            }},
+                                            { $lookup: {
+                                                        from: 'products',
+                                                        localField: 'selling',
+                                                        foreignField: '_id',
+                                                        as: 'sellingProducts'
+                                            }}
+        ]).catch(err => console.log(err));
+
+        console.log(query);
+
+        res.send(query);    
     })
 
     // Add a product to member's watchlist

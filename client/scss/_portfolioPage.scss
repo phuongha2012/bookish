@@ -144,8 +144,7 @@
 }
 
 .accountPage__cardWrapper {
-  padding-left: 45px;
-  padding-right: 0;
+  padding-left: 60px;
 }
 
 #editProfilePhotoFormWrapper {
@@ -193,5 +192,20 @@
   left: 6%;
 }
 
+.accountPage__activityBtn {
+  width: 100%;
+
+  &--focused {
+    background-color: $colour-aegean;
+    color: white;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1), 0 3px 10px 0 rgba(0, 0, 0, 0.05);
+  }
+}
+
+#myProductsDeck {
+  min-height: 600px;
+  border: 1px $colour-pearl solid;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1), 0 3px 10px 0 rgba(0, 0, 0, 0.05);
+}
 
 

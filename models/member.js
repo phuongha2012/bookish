@@ -31,7 +31,11 @@ const memberSchema = new Schema({
   watchlist: [{
       type: Schema.Types.ObjectId,
       ref: 'Product'
-  }]
+  }],
+  selling: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Product'
+}]
 });
 
 module.exports = mongoose.model('Member', memberSchema);

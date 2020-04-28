@@ -85,7 +85,7 @@
           <div id="projectPage">
               <div class="container">
 
-                  <!-- MyAccount summary -->
+                  <!-- Profile photo section -->
                   <div id="accountPage__banner"></div>
                   <div id="accountPage__memberPhoto" style="background-image: url(images/noavatar.png);">
                     <div id="accountPage__memberPhotoUpdateBtn">
@@ -95,6 +95,8 @@
                       <p class="color-white--grey">Update</p>
                     </div>
                   </div>
+
+                  <!-- Edit profile photo form -->
                   <div id="editProfilePhotoFormWrapper" class="mb-5 col-sm-12 col-lg-8 mx-auto">
                     <form id="editProfilePhotoForm" enctype="multipart/form-data">
                       <div class="flexContainer--row form-row editProfilePhotoFormContainer mb-3">
@@ -112,42 +114,17 @@
                       </div>
                     </form>
                   </div>
+
+                  <!-- Member account summary section -->
                   <div class="mb-5 col-sm-12 mx-auto">
+                      
+                    <!-- Account summary -->
                       <div id="memberAccount" class="col-12">
                           <div class="loader mt-5 mb-5"></div>
-                          <div class="flexContainer--col col-12 btBorder pb-3">
-                            <div class="flexContainer--row flexContainer--row--space-between col-sm-12 mx-auto mt-5">
-                              <div class="flexContainer--col col-7">
-                                <div class="flexContainer--row mb-3">
-                                  <div class="col-4 text-left">Username:</div>
-                                  <div class="col-8 text-left">Suzie</div>
-                                </div>
-                                <div class="flexContainer--row mb-3">
-                                  <div class="col-4 text-left">Email:</div>
-                                  <div class="col-8 text-left">suzie@gmail.com</div>
-                                </div>
-                                <div class="flexContainer--row mb-3">
-                                  <div class="col-4 text-left">Member since:</div>
-                                  <div class="col-8 text-left">August 16th 2017</div>
-                                </div>
-                              </div>
-                              <div class="flexContainer--col col-5">
-                                <div class="flexContainer--row flexContainer--row--top mb-3">
-                                  <div class="mr-3">Shipping address:</div>
-                                  <div class="flexContainer--col">
-                                    <p>2 Waterloo Street</p>
-                                    <p>Hutt Central</p>
-                                    <p>Lower Hutt 5010</p>
-                                  </div>
-                                </div>
-                              </div>
-                            </div> 
-                            <div>
-                              <button id="updateMemberBtn" name="updateMemberBtn" class="button float-right">Edit</button>
-                            </div> 
-                          </div>
                       </div>
-                      <div class="flexContainer--col mt-5 accountPage__cardWrapper btBorder col-sm-12 pb-3">
+
+                      <!-- Saved payment method -->
+                      <div class="flexContainer--col mt-5 accountPage__cardWrapper col-sm-12 pb-3">
                         <div class="mb-3">Payment method:</div>
                         <div class="flexContainer--row flexContainer--row--top">
                           <div>
@@ -164,18 +141,32 @@
                       </div>
                   </div>
 
+                  <!-- Member's activities section -->
+                  <div class="flexContainer--row flexContainer--row--top col-12 mt-5">
+                    <div class="flexContainer--col col-3">
+                      <div class="button accountPage__activityBtn">Watchlist</div>
+                      <div class="button accountPage__activityBtn">On sale</div>
+                      <div class="button accountPage__activityBtn">Sold</div>
+                      <div class="button accountPage__activityBtn">Purchased</div>
+                    </div>
+                    <div class="col-9">
+                      <!-- <h2 class="text-center mb-5">Items</h2> -->
+                      <div id="myProductsDeck">
+                        <div class="loader mt-5 mb-5"></div>
+                      </div>
+                    </div>
+                  </div>
+
+
                   <!-- Upload a new project -->
-                  <h2 class="text-center mb-5">New Project</h2>
+                  <!-- <h2 class="text-center mb-5">New Project</h2>
                   <div class="mb-5 mt-3 pb-4 border-blue  col-lg-10 col-md-10 col-sm-10 mx-auto text-center">
                       <img src="images/upload-icon.png" alt="Upload project icon" class="mx-auto border-0 pb-4"><br>
                       <button id="addPortfolio" name="addPortfolio" type="submit" class="button">Upload Project</button>
-                  </div>
+                  </div> -->
 
                   <!-- All my uploaded projects -->
-                  <h2 class="text-center mb-5">My Portfolio</h2>
-                  <div id="myProjectCards">
-                    <div class="loader mt-5 mb-5"></div>
-                  </div>
+                  
               </div>
           </div>
 
@@ -325,13 +316,13 @@
                           <!-- Username -->
                           <div class="form-group col-lg-6 col-md-6 col-sm-12 mx-auto">
                               <label for="inputUsernameLogin" class="h3-label"> Username </label>
-                              <input type="text" id="inputUsernameLogin" name="loginUsername" placeholder="Username" class="form-control rounded">
+                              <input type="text" id="inputUsernameLogin" name="loginUsername" class="form-control rounded">
                           </div>
 
                           <!-- Password -->
                           <div class="form-group col-lg-6 col-md-6 col-sm-12 mx-auto">
                               <label for="inputPasswordLogin" class="h3-label"> Password </label>
-                              <input type="password" id="inputPasswordLogin" name="loginPassword" placeholder="Password" class="form-control rounded">
+                              <input type="password" id="inputPasswordLogin" name="loginPassword" class="form-control rounded">
                           </div>
 
                           <!-- Login button -->
