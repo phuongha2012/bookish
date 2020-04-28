@@ -135,9 +135,21 @@ module.exports = (app) => {
     })
 
     // Change profile photo
-    app.post('/members/:id/photo/update/', upload.single('profilePhoto'), (req, res, next) => {
-        console.log(req);
-        console.log(req.file);
+    app.patch('/members/:id/photo/update/', upload.single('profilePhoto'), (req, res, next) => {
+        const _memberId = req.params.id;
+
+        let newPhoto = req.file ? req.file.path : req.body.profilePhotoUrl;
+
+        let updatedInfo = { photoUrl: newPhoto };
+
+        Member.findByIdAndUpdate(_memberId, 
+                                            { $set: updatedInfo },
+                                            { useFindAndModify: false, upsert: true, new: true },
+                                            ( err, result ) => {
+                                                                if (err) res.send(err);
+                                                                res.send(result);
+                                            })
+                .catch(err => console.log(err));
     })
 
 }

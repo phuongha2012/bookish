@@ -1101,41 +1101,43 @@ $('.edit-button').click(function(){
 
     function updateProfilePhoto(e) {
       e.preventDefault();
-
-      console.log('updateProfilePhoto called');
       let currentUserId = JSON.parse(sessionStorage.getItem('currentUser'))._id;
-      // manual
-      // let fileInput = document.getElementById('editProfilePhotoForm__file');
-      // let file = fileInput.files[0];
-      // let data = new FormData();
-      // data.append('profilePhoto', file);
-      // console.log(data);
 
-      // magic
-      // remember name attribute
+      // build FormData object
+      // remember name attribute in inputs to avoid empty obj
       let form = $('#editProfilePhotoForm')[0];
-      let data = new FormData(form);
-
-      for (var [key, value] of data.entries()) { 
-        console.log(key, value);
-       }
+      let formdata = new FormData(form);
 
       $.ajax({
-        type: 'POST',
+        type: 'PATCH',
         enctype: 'multipart/form-data',
         url: `${url}/members/${currentUserId}/photo/update/`,
-        data: data,
+        data: formdata,
         processData: false,
         contentType: false,
-        success: function(data) {
-          console.log(data);
+        success: function(result) {
+          // clear form inputs
+          document.getElementById("editProfilePhotoForm__file").value = "";
+          document.getElementById("editProfilePhotoForm__photoUrl").value = "";
+
+          // render new profile photo
+          document.getElementById('accountPage__memberPhoto').style.backgroundImage = `url(${result.photoUrl})`;
+          sessionStorage.setItem('currentUser', JSON.stringify(result));
+          hideEditProfilePhotoForm();
         },
         error: function(err) {
           console.log(err);
         }
       });
-    }
+    } 
   }
+
+  // function resetFormData(form) {
+  //   for (let key of form.entries()) { 
+  //     key.value = null;
+  //     console.log(key, key.value);
+  //    }
+  // }
 
   function showEditUserForm() {
     $('#updateMemberBtn').hide();
