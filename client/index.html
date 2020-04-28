@@ -96,18 +96,11 @@
                     </div>
                   </div>
                   <div id="editProfilePhotoFormWrapper" class="mb-5 col-sm-12 col-lg-8 mx-auto">
-                    <form id="editProfilePhotoForm">
+                    <form id="editProfilePhotoForm" enctype="multipart/form-data">
                       <div class="flexContainer--row form-row editProfilePhotoFormContainer mb-3">
-                        <div class="form-group col-6">
-                          <label for="editProfilePhotoForm__file" class="editProfilePhotoForm__fileLabel">
-                            <input type="file" class="form-control-file" id="editProfilePhotoForm__file">
-                            <div class="flexContainer--row editProfilePhotoForm__fileLabel--inner">
-                              <svg class="icon mr-3">
-                                <use xlink:href="images/icons.svg#icon-upload2"></use>
-                              </svg>
-                              <span class="bold">Upload a photo</span>
-                            </div>
-                          </label>
+                        <div class="form-group col-6 editProfilePhotoForm__fileWrapper">
+                          <input type="file" 
+                          name="profilePhoto" class="form-control-file" id="editProfilePhotoForm__file">
                         </div>
                         <div class="col-5 editProfilePhotoForm__photoUrlWrapper">
                           <input type="text" class="form-control" id="editProfilePhotoForm__photoUrl" placeholder="Or enter photo's url">

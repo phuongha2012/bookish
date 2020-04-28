@@ -30,6 +30,7 @@ app.use((req, res, next) => {
 });
 
 app.use(express.static('client'));
+app.use('/uploads', express.static('uploads'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(cors());

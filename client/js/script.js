@@ -1098,14 +1098,44 @@ $('.edit-button').click(function(){
     }
 
     document.getElementById('editProfilePhotoForm').addEventListener('submit', updateProfilePhoto);
-  }
 
-  function updateProfilePhoto(e) {
-    e.preventDefault();
-    console.log('updateProfilePhoto called');
-  }
+    function updateProfilePhoto(e) {
+      e.preventDefault();
 
-  
+      console.log('updateProfilePhoto called');
+      let currentUserId = JSON.parse(sessionStorage.getItem('currentUser'))._id;
+      // manual
+      // let fileInput = document.getElementById('editProfilePhotoForm__file');
+      // let file = fileInput.files[0];
+      // let data = new FormData();
+      // data.append('profilePhoto', file);
+      // console.log(data);
+
+      // magic
+      // remember name attribute
+      let form = $('#editProfilePhotoForm')[0];
+      let data = new FormData(form);
+
+      for (var [key, value] of data.entries()) { 
+        console.log(key, value);
+       }
+
+      $.ajax({
+        type: 'POST',
+        enctype: 'multipart/form-data',
+        url: `${url}/members/${currentUserId}/photo/update/`,
+        data: data,
+        processData: false,
+        contentType: false,
+        success: function(data) {
+          console.log(data);
+        },
+        error: function(err) {
+          console.log(err);
+        }
+      });
+    }
+  }
 
   function showEditUserForm() {
     $('#updateMemberBtn').hide();
