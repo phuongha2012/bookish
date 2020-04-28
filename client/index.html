@@ -87,7 +87,7 @@
 
                   <!-- MyAccount summary -->
                   <div id="accountPage__banner"></div>
-                  <div id="accountPage__memberPhoto">
+                  <div id="accountPage__memberPhoto" style="background-image: url(images/noavatar.png);">
                     <div id="accountPage__memberPhotoUpdateBtn">
                       <svg class="icon">
                           <use xlink:href="images/icons.svg#icon-camera"></use>
@@ -100,6 +100,7 @@
                       <div class="flexContainer--row form-row editProfilePhotoFormContainer mb-3">
                         <div class="form-group col-6 editProfilePhotoForm__fileWrapper">
                           <input type="file" name="profilePhoto" class="form-control-file" id="editProfilePhotoForm__file">
+                          <small class="form__infoText">PNG/JPG files under 500Mb and no space in name</small>
                         </div>
                         <div class="col-5 editProfilePhotoForm__photoUrlWrapper">
                           <input type="text" class="form-control" name="profilePhotoUrl" id="editProfilePhotoForm__photoUrl" placeholder="Or enter photo's url">

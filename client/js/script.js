@@ -1,6 +1,5 @@
 $(document).ready(function(){
 
-  console.log('hello');
   $('html, body').animate({ scrollTop: 0 }, 'fast');
   sessionStorage.clear();
   let url;
@@ -12,7 +11,6 @@ $(document).ready(function(){
     dataType: 'json',
     success: function(config) {
       url = config.SERVER_URL + ":" + config.SERVER_PORT;
-      console.log(url);
       generateLandingPageCards();
     },
     error: function() {
@@ -398,7 +396,6 @@ $('.edit-button').click(function(){
       type: 'GET',
       dataType: 'json',
       success: function(products) {
-        console.log(products);
             makeProductCards(products);
       },
       error: function(error) {
@@ -509,7 +506,6 @@ $('.edit-button').click(function(){
             $("#projectPage").hide();
             $("#landingPage").hide();
 
-            console.log(product[0].comments);
             if (product[0].comments.length === 0) {
                 document.getElementById('viewMorePage-comments').innerHTML =
                                                                             `<div id="noCommentNote"
@@ -1131,13 +1127,6 @@ $('.edit-button').click(function(){
       });
     } 
   }
-
-  // function resetFormData(form) {
-  //   for (let key of form.entries()) { 
-  //     key.value = null;
-  //     console.log(key, key.value);
-  //    }
-  // }
 
   function showEditUserForm() {
     $('#updateMemberBtn').hide();
