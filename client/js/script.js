@@ -1088,16 +1088,21 @@ $('.edit-button').click(function(){
     document.getElementById('accountPage__memberPhotoUpdateBtn').addEventListener('click', showEditProfilePhotoForm);
 
     function showEditProfilePhotoForm() {
-      document.getElementById('editProfilePhotoFormWrapper').innerHTML = 
-      `
-      <form id="editProfilePhotoForm">
-        <div class="form-group">
-          <label for="exampleFormControlFile1">Choose a photo</label>
-          <input type="file" class="form-control-file" id="editProfilePhotoForm__file">
-        </div>
-      </form>
-      `;
+      document.getElementById('editProfilePhotoFormWrapper').style.display = "block";
     }
+
+    document.getElementById('cancelEditProfilePhotoForm').addEventListener('click', hideEditProfilePhotoForm);
+
+    function hideEditProfilePhotoForm() {
+      document.getElementById('editProfilePhotoFormWrapper').style.display = "none";
+    }
+
+    document.getElementById('editProfilePhotoForm').addEventListener('submit', updateProfilePhoto);
+  }
+
+  function updateProfilePhoto(e) {
+    e.preventDefault();
+    console.log('updateProfilePhoto called');
   }
 
   

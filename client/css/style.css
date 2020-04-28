@@ -437,14 +437,19 @@ input[type="file"] {
 }
 
 #editProfilePhotoFormWrapper {
-  height: 150px;
+  height: 180px;
   border: 1px #f5f1ed solid;
+  display: none;
 }
 
 .editProfilePhotoFormContainer {
-  height: 100%;
+  height: 50%;
 }
 .editProfilePhotoFormContainer > div {
+  height: 70%;
+}
+
+#editProfilePhotoForm {
   height: 100%;
 }
 

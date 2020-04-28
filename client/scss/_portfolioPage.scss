@@ -166,16 +166,21 @@ input[type="file"] {
 }
 
 #editProfilePhotoFormWrapper {
-  height: 150px;
+  height: 180px;
   border: 1px $colour-pearl solid;
+  display: none;
 }
 
 .editProfilePhotoFormContainer {
-  height: 100%;
+  height: 50%;
 
   & > div {
-    height: 100%;
+    height: 70%;
   }
+}
+
+#editProfilePhotoForm {
+  height: 100%;
 }
 
 .editProfilePhotoForm__photoUrlWrapper {

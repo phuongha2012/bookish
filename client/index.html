@@ -96,29 +96,33 @@
                     </div>
                   </div>
                   <div id="editProfilePhotoFormWrapper" class="mb-5 col-sm-12 col-lg-8 mx-auto">
-                    <div class="flexContainer--row form-row editProfilePhotoFormContainer">
-                      <div class="form-group col-6">
-                        <label for="editProfilePhotoForm__file" class="editProfilePhotoForm__fileLabel">
-                          <input type="file" class="form-control-file" id="editProfilePhotoForm__file">
-                          <div class="flexContainer--row editProfilePhotoForm__fileLabel--inner">
-                            <svg class="icon mr-3">
-                              <use xlink:href="images/icons.svg#icon-upload2"></use>
-                            </svg>
-                            <span class="bold">Upload a photo</span>
-                          </div>
-                        </label>
-                      </div>
-                      <div class="col-5 editProfilePhotoForm__photoUrlWrapper">
-                        <input type="text" class="form-control" id="editProfilePhotoForm__photoUrl" placeholder="Or enter photo's url">
-                      </div>
-                    </div>
-                  </div>
-                  <div class="mb-5 col-sm-12 col-lg-12 mx-auto">
-                      <div id="memberAccount">
-                          <div class="loader mt-5 mb-5"></div>
-                          <div class="flexContainer--col btBorder pb-3">
-                            <div class="accountPage__memberPhoto">
+                    <form id="editProfilePhotoForm">
+                      <div class="flexContainer--row form-row editProfilePhotoFormContainer mb-3">
+                        <div class="form-group col-6">
+                          <label for="editProfilePhotoForm__file" class="editProfilePhotoForm__fileLabel">
+                            <input type="file" class="form-control-file" id="editProfilePhotoForm__file">
+                            <div class="flexContainer--row editProfilePhotoForm__fileLabel--inner">
+                              <svg class="icon mr-3">
+                                <use xlink:href="images/icons.svg#icon-upload2"></use>
+                              </svg>
+                              <span class="bold">Upload a photo</span>
                             </div>
+                          </label>
+                        </div>
+                        <div class="col-5 editProfilePhotoForm__photoUrlWrapper">
+                          <input type="text" class="form-control" id="editProfilePhotoForm__photoUrl" placeholder="Or enter photo's url">
+                        </div>
+                      </div>
+                      <div class="flexContainer--row float-right">
+                        <span id="cancelEditProfilePhotoForm" class="buttonLink buttonLink--noCap mr-3">Cancel</span>
+                        <button type="submit" class="button float-right">Save</button>
+                      </div>
+                    </form>
+                  </div>
+                  <div class="mb-5 col-sm-12 mx-auto">
+                      <div id="memberAccount" class="col-12">
+                          <div class="loader mt-5 mb-5"></div>
+                          <div class="flexContainer--col col-12 btBorder pb-3">
                             <div class="flexContainer--row flexContainer--row--space-between col-sm-12 mx-auto mt-5">
                               <div class="flexContainer--col col-7">
                                 <div class="flexContainer--row mb-3">
@@ -160,7 +164,6 @@
                             <spam><strong>MasterCard</strong> ending in 6159</spam>
                             <span>Expires: 12/2017</span>
                           </div>
-                          
                         </div>
                         <div>
                           <button id="updateCardBtn" name="updateCardBtn" class="button float-right mt-3">Edit</button>
