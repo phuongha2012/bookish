@@ -7,22 +7,31 @@ module.exports = (app) => {
 
     // List a product
     app.post('/products/add', upload.single('productPhoto'), (req, res) => {
-        console.log(req.body);
-        console.log(req.file);
-        // const product = new Product({
-        //                             _id : new mongoose.Types.ObjectId,
-        //                             title : req.body.title,
-        //                             author: req.body.author,
-        //                             description : req.body.description,
-        //                             photoUrl : req.body.photoUrl,
-        //                             category : req.body.category,
-        //                             price : req.body.price,
-        //                             condition : req.body.condition,
-        //                             listedCity : req.body.listedCity,
-        //                             format : req.body.format,
-        //                             shipping: req.body.shipping,
-        //                             seller : req.body.seller
-        // });
+        let imagePath = req.file ? req.file.path : req.body.productPhotoUrl;
+        let shippingMethods = [];
+        
+        if (req.body.pickup !== undefined) { shippingMethods.push(req.body.pickup) };
+        if (req.body.courier !== undefined) { shippingMethods.push(req.body.courier) };
+
+        console.log(shippingMethods);
+        console.log('seller', req.body.seller);
+
+        const product = new Product({
+                                    _id : new mongoose.Types.ObjectId,
+                                    title : req.body.title,
+                                    author: req.body.author,
+                                    description : req.body.description,
+                                    photoUrl : imagePath,
+                                    category : req.body.category,
+                                    price : req.body.price,
+                                    condition : req.body.condition,
+                                    listedCity : req.body.listedCity,
+                                    format : req.body.format,
+                                    shipping: shippingMethods,
+                                    seller : req.body.seller
+        });
+
+        console.log(product);
 
         // product.save()
         //         .then(result => res.send(result))

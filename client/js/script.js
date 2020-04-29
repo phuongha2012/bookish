@@ -307,7 +307,7 @@ $('.edit-button').click(function(){
     //   return;
     // }
     // let currentUserId = JSON.parse(sessionStorage.getItem('currentUser'))._id;
-    let currentUserId = '123';
+    let currentUserId = '5e9e1681cd0e0b0db66e164c';
 
     let form = $('#addProductForm')[0];
     console.log(form);
