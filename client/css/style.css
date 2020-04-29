@@ -310,26 +310,12 @@ footer {
   }
 }
 
-.bg-page {
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  height: 100vh;
-  overflow: hidden;
-  width: 100%;
-  z-index: -2;
-}
-
-.bg-upload {
-  background-image: url("../images/KateLeslie_HolidaySeries1.jpg");
-}
-
 .bg-register {
   background-image: url("../images/KateLeslie_HolidaySeries2.jpg");
 }
 
 .bg-update {
-  background-image: url("../images/casmir-YanaBrewster.jpg");
+  background-color: #e9524d;
 }
 
 .portfolioCard {
@@ -626,6 +612,40 @@ footer {
 
 #signUpPage {
   display: none;
+}
+
+#uploadProductPage {
+  background-color: #f1f1f1;
+}
+
+.addProductForm__photoContainer {
+  height: 100px;
+  padding: 1rem;
+  border: 1px #f1f1f1 solid;
+}
+
+a.dropdown-toggle {
+  cursor: pointer;
+}
+
+.dropdown-menu,
+.dropdown-menu > li > a {
+  color: #FFF;
+  background-color: #337AB7;
+}
+
+.dropdown-menu > li > a:hover {
+  color: #FFF;
+  background-color: #0065ac;
+}
+
+.dropdown.open .dropdown-toggle {
+  color: #000;
+}
+
+/* Clicked active link color */
+.activeTabLink a {
+  color: red !important;
 }
 
 /*# sourceMappingURL=style.css.map */

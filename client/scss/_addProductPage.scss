@@ -1,0 +1,31 @@
+#uploadProductPage {
+    background-color: $colour-white--grey;
+}
+
+.addProductForm__photoContainer {
+    height: 100px;
+    padding: 1rem;
+    border: 1px $colour-white--grey solid;
+}
+
+
+a.dropdown-toggle {
+    cursor: pointer;
+  }
+  .dropdown-menu,
+  .dropdown-menu>li>a {
+    color: #FFF;
+    background-color: #337AB7;
+  }
+  .dropdown-menu>li>a:hover {
+    color: #FFF;
+    background-color: #0065ac;
+  }
+  .dropdown.open .dropdown-toggle {
+    color: #000;
+  }
+  /* Clicked active link color */
+  
+  .activeTabLink a {
+    color: red !important;
+  }

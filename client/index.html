@@ -10,12 +10,11 @@
         <!-- <link href="css/style.min.css" rel="stylesheet"> -->
     </head>
     <body>
-          <!--  ======================= Hayley's code starts ==============================  -->
 
 
           <!--  ========================== APP HEADER ====================================  -->
 
-          <div class="header px-4 py-4">
+          <div class="header px-4 py-4 btBorder">
             <div id="logo" class="logo">
                 <a href="index.html"></a>
                 <svg class="logo__icon">
@@ -159,11 +158,11 @@
 
 
                   <!-- Upload a new project -->
-                  <!-- <h2 class="text-center mb-5">New Project</h2>
+                  <h2 class="text-center mb-5">New Project</h2>
                   <div class="mb-5 mt-3 pb-4 border-blue  col-lg-10 col-md-10 col-sm-10 mx-auto text-center">
                       <img src="images/upload-icon.png" alt="Upload project icon" class="mx-auto border-0 pb-4"><br>
                       <button id="addPortfolio" name="addPortfolio" type="submit" class="button">Upload Project</button>
-                  </div> -->
+                  </div>
 
                   <!-- All my uploaded projects -->
                   
@@ -171,48 +170,143 @@
           </div>
 
 
-          <!--  ===================== UPLOAD NEW PROJECT PAGE ============================  -->
+          <!--  ===================== UPLOAD NEW PRODUCT PAGE ============================  -->
 
-          <div id="uploadPortfolioPage" class="bg-page bg-upload">
-              <div class="container-form pb-3">
-                  <h1 class="text-center pt-3">Upload Project</h1>
-                  <form id="addPortfolioForm" class="mt-3 py-4 mb-5 px-3 border-blue  col-lg-8 col-md-12 col-sm-12 mx-auto">
-                      <!-- Project title -->
-                      <div class="form-group">
-                          <label class="h5-label" for="addPortfolioTitle">Title</label>
-                          <input id="addPortfolioTitle" type="text" class="form-control rounded" placeholder="Title" name="addPortfolioTitle">
+          <div id="uploadProductPage" class="bg-page bg-upload">
+              <div class="container-form px-5 py-5">
+                  <h1 class="text-center pt-3">Upload Product</h1>
+                  <form id="addProductForm" enctype="multipart/form-data" class="mt-3 py-4 mb-5 px-3 col-sm-12 mx-auto">
+                    <!-- title -->
+                    <div class="form-group">
+                        <label for="addProductForm__title">Title</label>
+                        <input id="addProductForm__title" type="text" class="form-control" name="title">
+                    </div>
+                    <div class="form-row">
+                      <!-- author -->
+                      <div class="form-group col-6">
+                        <label for="addProductForm__author">Author</label>
+                        <input id="addProductForm__author" type="text" class="form-control" name="author">
                       </div>
-                      <!-- Project description -->
-                      <div class="form-group">
-                          <label class="h5-label" for="addPortfolioDescription">Description</label>
-                          <textarea id="addPortfolioDescription" class="form-control rounded" placeholder="Description" name="addPortfolioDescription"></textarea>
-                      </div>
-                      <!-- Project image url -->
-                      <div class="form-group">
-                          <label class="h5-label" for="addPortfolioImage">Image URL</label>
-                          <input id="addPortfolioImage" type="text" class="form-control rounded" placeholder="Image URL" name="addPortfolioImage">
-                      </div>
-                      <!-- Project category select -->
-                      <div class="row mb-2">
-                          <div class="form-group col-6">
-                            <label class="h5-label" for="addPortfolioCategory">Category</label>
-                            <div class="input-group">
-                              <select id="addPortfolioCategory" name="addPortfolioCategory" form="addPortfolioForm" class="custom-select filterInputGroup rounded">
-                                <option value="Painting">Painting</option>
-                                <option value="Photography">Photography</option>
-                                <option value="Prints">Prints</option>
-                                <option value="Others">Others</option>
-                              </select>
-                            </div>
-                        </div>
-                        <!-- Project price -->
-                        <div class="form-group col-6">
-                            <label class="h5-label" for="addPortfolioPrice">Price($)</label>
-                            <input type="number" id="addPortfolioPrice" class="form-control rounded" placeholder="Price" name="addPortfolioPrice">
+                      <!-- category -->
+                      <div class="form-group col-6">
+                        <label class="h5-label" for="addProductForm__category">Category</label>
+                        <div class="input-group">
+                          <select id="addProductForm__category" name="category" form="addProductForm" class="custom-select rounded">
+                            <option value="Arts & Photography">Arts & Photography</option>
+                            <option value="Biography">Biography</option>
+                            <option value="Business">Business</option>
+                            <option value="Family">Family</option>
+                            <option value="Fiction">Fiction</option>
+                            <option value="Home & Garden">Home & Garden</option>
+                            <option value="Children">Children</option>
+                            <option value="Cookbooks">Cookbooks</option>
+                            <option value="Self Help">Self Help</option>
+                          </select>
                         </div>
                       </div>
-                    <button id="addPortfolioBtn" name="addPortfolioButton" type="submit" class="button   float-right ">Submit</button>
-                    <button name="addPortfolioButton" type="submit" class="button mb-3 button  float-left back-portfolio ">Cancel</button><br>
+                    </div>
+                    <!-- description -->
+                    <div class="form-group">
+                        <label for="addProductForm__description">Description</label>
+                        <textarea id="addProductForm__description" class="form-control rounded" name="description"></textarea>
+                    </div>
+
+                    <div class="form-row">
+                      <!-- format -->
+                      <div class="form-group col-6">
+                        <label class="h5-label" for="addProductForm__format">Format</label>
+                        <div class="input-group">
+                          <select id="addProductForm__format" name="format" form="addProductForm" class="custom-select rounded">
+                            <option value="Paperback">Paperback</option>
+                            <option value="Hardcover">Hardcover</option>
+                            <option value="Audio CD">Audio CD</option>
+                            <option value="Boardbook">Boardbook</option>
+                          </select>
+                        </div>
+                      </div>
+                      <!-- condition -->
+                      <div class="form-group col-6">
+                        <label class="h5-label" for="addProductForm__condition">Condition</label>
+                        <div class="input-group">
+                          <select id="addProductForm__condition" name="condition" form="addProductForm" class="custom-select rounded">
+                            <option value="New">New</option>
+                            <option value="Used, Like New">Used, Like New</option>
+                            <option value="Used, Good">Used, Good</option>
+                            <option value="Used, Acceptable">Used, Acceptable</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="form-row">
+                      <!-- city -->
+                      <div class="form-group col-6">
+                        <label class="h5-label" for="addProductForm__listedCity">Listed City</label>
+                        <div class="input-group">
+                          <select id="addProductForm__listedCity" name="listedCity" form="addProductForm" class="custom-select rounded">
+                            <option value="Auckland">Auckland</option>
+                            <option value="Christchurch">Christchurch</option>
+                            <option value="Wellington">Wellington</option>
+                            <option value="Hamilton">Hamilton</option>
+                            <option value="Tauranga">Tauranga</option>
+                            <option value="Lower Hutt">Lower Hutt</option>
+                            <option value="Dunedin">Dunedin</option>
+                            <option value="Palmerston North">Palmerston North</option>
+                            <option value="Napier">Napier</option>
+                            <option value="Porirua">Porirua</option>
+                            <option value="New Plymouth">New Plymouth</option>
+                            <option value="Rotorua">Rotorua</option>
+                            <option value="Whangarei">Whangarei</option>
+                            <option value="Nelson">Nelson</option>
+                            <option value="Invercargill">Invercargill</option>
+                            <option value="Hastings">Hastings</option>
+                            <option value="Gisborne">Gisborne</option>
+                            <option value="Upper Hutt">Upper Hutt</option>
+                          </select>
+                        </div>
+                      </div>
+
+                      <!-- price -->
+                      <div class="form-group col-6">
+                        <label class="h5-label" for="addProductForm__price">Price($)</label>
+                        <input type="number" id="addProductForm__price" class="form-control rounded" name="price">
+                      </div>
+                    </div>
+
+                    <!-- delivery options -->
+                    <div class="flexContainer--col mb-3 btBorder pb-2">
+                      <label>Delivery Options</label>
+                      <div class="flexContainer--row">
+                        <div class="form-check form-check-inline mr-5">
+                          <input class="form-check-input" type="radio" name="pickup" id="addProductForm__delivery--pickup" value="Allowed pickup">
+                          <label class="form-check-label" for="addProductForm__delivery--pickup">Allowed pickup</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                          <input class="form-check-input" type="radio" name="courier" id="addProductForm__delivery--courier" value="option2">
+                          <label class="form-check-label" for="addProductForm__delivery--courier">Post courier</label>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- photo -->
+                    <div class="flexContainer--col mb-3">
+                      <label>Product Photo</label>
+                      <div class="flexContainer--row form-row addProductForm__photoContainer mb-3">
+                        <div class="form-group col-6 editProfilePhotoForm__fileWrapper">
+                          <input type="file" name="productPhoto" class="form-control-file" id="addProductForm__file">
+                          <small class="form__infoText">PNG/JPG files under 500Mb and no space in name</small>
+                        </div>
+                        <div class="col-6 addProductForm__photoUrlWrapper">
+                          <input type="text" class="form-control" name="productPhotoUrl" id="addProductForm__photoUrl" placeholder="Or enter photo's url">
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- form buttons -->
+                    <div class="flexContainer--row float-right">
+                      <span id="canceladdProductForm" class="buttonLink buttonLink--noCap mr-3">Cancel</span>
+                      <button type="submit" class="button float-right">Save</button>
+                    </div>
                 </form>
               <!-- Add project form ends -->
             </div>
@@ -249,7 +343,7 @@
                         <div class="form-group col-6">
                             <label class="h5-label" for="updatePortfolioCategory">Category</label>
                             <div class="input-group">
-                                <select id="updatePortfolioCategory" name="updatePortfolioCategory" form="addPortfolioForm" class="custom-select filterInputGroup rounded">
+                                <select id="updatePortfolioCategory" name="updatePortfolioCategory" form="addProductForm" class="custom-select filterInputGroup rounded">
                                     <option value="Painting">Painting</option>
                                     <option value="Photography">Photography</option>
                                     <option value="Prints">Prints</option>
@@ -341,7 +435,7 @@
           <!--  ============================ APP FOOTER ================================  -->
 
 
-          <footer class="navbar bg-cyan d-none d-md-block">
+          <!-- <footer class="navbar bg-cyan d-none d-md-block">
             <div class="row mx-auto">
               <div class="col-12 col-lg-12 col-sm-12 mt-3">
                 <div class="text-center">
@@ -350,7 +444,7 @@
                 </div>
               </div>
             </div>
-          </footer>
+          </footer> -->
 
 
           <!--  ======================= Yana's code ends ==============================  -->

@@ -51,7 +51,7 @@ $(document).ready(function(){
     $('#loginPage').hide();
     $('#signUpPage').hide();
     $('#projectPage').show();
-    $('#uploadPortfolioPage').hide();
+    $('#uploadProductPage').hide();
     $('#updatePortfolioPage').hide();
   } else {
     $('#logoutBtn').hide();
@@ -65,7 +65,7 @@ $(document).ready(function(){
     $('#loginPage').hide();
     $('#signUpPage').hide();
     $('#projectPage').show();
-    $('#uploadPortfolioPage').hide();
+    $('#uploadProductPage').hide();
     $('#updatePortfolioPage').hide();
   }
 
@@ -77,7 +77,7 @@ $(document).ready(function(){
     $('#loginPage').hide();
     $('#signUpPage').hide();
     $('#projectPage').hide();
-    $('#uploadPortfolioPage').hide();
+    $('#uploadProductPage').hide();
     $('#updatePortfolioPage').hide();
   });
 
@@ -89,7 +89,7 @@ $(document).ready(function(){
     $('#viewMorePage').hide();
     $('#signUpPage').hide();
     $('#projectPage').hide();
-    $('#uploadPortfolioPage').hide();
+    $('#uploadProductPage').hide();
     $('#updatePortfolioPage').hide();
 
   });
@@ -102,7 +102,7 @@ $(document).ready(function(){
     $('#loginPage').hide();
     $('#landingPage').hide();
     $('#viewMorePage').hide();
-    $('#uploadPortfolioPage').hide();
+    $('#uploadProductPage').hide();
     $('#updatePortfolioPage').hide();
   });
 
@@ -116,7 +116,7 @@ $(document).ready(function(){
     $('#loginPage').hide();
     $('#landingPage').hide();
     $('#viewMorePage').hide();
-    $('#uploadPortfolioPage').hide();
+    $('#uploadProductPage').hide();
     $('#updatePortfolioPage').hide();
   });
 
@@ -124,7 +124,7 @@ $(document).ready(function(){
   $('#addPortfolio').click(function(){
       $('html, body').animate({ scrollTop: 0 }, 'fast');
     // pages
-    $('#uploadPortfolioPage').show();
+    $('#uploadProductPage').show();
     $('#projectPage').hide();
     $('#signUpPage').hide();
     $('#loginPage').hide();
@@ -138,7 +138,7 @@ $(document).ready(function(){
   $('.back-portfolio').click(function(){
     // pages
     $('#projectPage').show();
-    $('#uploadPortfolioPage').hide();
+    $('#uploadProductPage').hide();
     $('#signUpPage').hide();
     $('#loginPage').hide();
     $('#landingPage').hide();
@@ -150,7 +150,7 @@ $(document).ready(function(){
   $('#updateProject').click(function(){
 
     // pages
-    $('#uploadPortfolioPage').hide();
+    $('#uploadProductPage').hide();
     $('#projectPage').hide();
     $('#signUpPage').hide();
     $('#loginPage').hide();
@@ -162,7 +162,7 @@ $(document).ready(function(){
   // delete projects button to show delete project page
   $('#deleteProject').click(function(){
     // pages
-    $('#uploadPortfolioPage').hide();
+    $('#uploadProductPage').hide();
     $('#projectPage').hide();
     $('#signUpPage').hide();
     $('#loginPage').hide();
@@ -187,7 +187,7 @@ $('.edit-button').click(function(){
     $('#loginPage').hide();
     $('#signUpPage').hide();
     $('#projectPage').hide();
-    $('#uploadPortfolioPage').hide();
+    $('#uploadProductPage').hide();
     $('#updatePortfolio').hide();
     location.reload("#loginForm");
   });
@@ -300,7 +300,7 @@ $('.edit-button').click(function(){
   // add portfolio form ===============================================================
   // Yanas code
 
-  $('#addPortfolioForm').submit(function(){
+  $('#addProductForm').submit(function(){
     event.preventDefault();
     if( ! sessionStorage.memberId){
       alert('401, permission denied');
@@ -347,8 +347,8 @@ $('.edit-button').click(function(){
           $('#addPortfolioPrice').val();
           $('#addPortfolioMemberId').val();
 
-          $('#addPortfolioForm').trigger('reset');
-          $('#uploadPortfolioPage').hide();
+          $('#addProductForm').trigger('reset');
+          $('#uploadProductPage').hide();
           generateMyPortfolios();
           $('#projectPage').show();
           $('html, body').animate({ scrollTop: 50}, 'fast');
@@ -1046,7 +1046,7 @@ $('.edit-button').click(function(){
   // Generate HTML template from account summary and add to #memberAccount div
   function generateAccountSummaryHTML(account) {
     document.getElementById('accountPage__memberPhoto').style.backgroundImage = `url(${account.photoUrl})`;
-    document.getElementById('memberAccount').innerHTML +=
+    document.getElementById('memberAccount').innerHTML =
           `<div class="flexContainer--col btBorder pb-3">
             <div class="flexContainer--row flexContainer--row--space-between col-sm-12 mx-auto mt-5">
               <div class="flexContainer--col col-7">

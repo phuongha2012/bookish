@@ -20,21 +20,6 @@
 }
 }
 
-.bg-page
-{
-	background-position: center;
-	background-repeat: no-repeat;
-	background-size: cover;
-	height: 100vh;
-	overflow: hidden;
-	width: 100%;
-	z-index: -2;
-}
-// background image for upload project form
-.bg-upload
-{
-	background-image: url("../images/KateLeslie_HolidaySeries1.jpg");
-}
 // background image for sign up page
 .bg-register
 {
@@ -44,7 +29,7 @@
 // background image for update page
 .bg-update
 {
-	background-image: url("../images/casmir-YanaBrewster.jpg");
+	background-color: $colour-watermelon;
 }
 
 // Yanas code ends
