@@ -310,10 +310,8 @@ $('.edit-button').click(function(){
     let currentUserId = '5e9e1681cd0e0b0db66e164c';
 
     let form = $('#addProductForm')[0];
-    console.log(form);
     let formdata = new FormData(form);
     formdata.append('seller', currentUserId);
-    console.log(formdata);
 
     let title = $('#addPortfolioTitle').val();
     let description = $('#addPortfolioDescription').val();
@@ -353,11 +351,11 @@ $('.edit-button').click(function(){
           // $('#addPortfolioPrice').val();
           // $('#addPortfolioMemberId').val();
 
-          // $('#addProductForm').trigger('reset');
-          // $('#uploadProductPage').hide();
-          // generateMyPortfolios();
-          // $('#projectPage').show();
-          // $('html, body').animate({ scrollTop: 50}, 'fast');
+          $('#addProductForm').trigger('reset');
+          $('#uploadProductPage').hide();
+          generateMyPortfolios();
+          $('#projectPage').show();
+          $('html, body').animate({ scrollTop: 50}, 'fast');
           // } else {
           //   Swal.fire({
           //     title: 'Title Taken',

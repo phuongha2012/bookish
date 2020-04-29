@@ -13,9 +13,6 @@ module.exports = (app) => {
         if (req.body.pickup !== undefined) { shippingMethods.push(req.body.pickup) };
         if (req.body.courier !== undefined) { shippingMethods.push(req.body.courier) };
 
-        console.log(shippingMethods);
-        console.log('seller', req.body.seller);
-
         const product = new Product({
                                     _id : new mongoose.Types.ObjectId,
                                     title : req.body.title,
@@ -31,11 +28,9 @@ module.exports = (app) => {
                                     seller : req.body.seller
         });
 
-        console.log(product);
-
-        // product.save()
-        //         .then(result => res.send(result))
-        //         .catch(err => res.send(err));
+        product.save()
+                .then(result => res.send(result))
+                .catch(err => res.send(err));
     });
 
     // Delete a product
