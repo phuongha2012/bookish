@@ -1,29 +1,32 @@
 const mongoose = require('mongoose');
+const upload = require('../middlewares/multer');
 
 const Product = require('../models/product.js');
 
 module.exports = (app) => {
 
     // List a product
-    app.post('/products/add', (req, res) => {
-        const product = new Product({
-                                    _id : new mongoose.Types.ObjectId,
-                                    title : req.body.title,
-                                    author: req.body.author,
-                                    description : req.body.description,
-                                    photoUrl : req.body.photoUrl,
-                                    category : req.body.category,
-                                    price : req.body.price,
-                                    condition : req.body.condition,
-                                    listedCity : req.body.listedCity,
-                                    format : req.body.format,
-                                    shipping: req.body.shipping,
-                                    seller : req.body.seller
-        });
+    app.post('/products/add', upload.single('productPhoto'), (req, res) => {
+        console.log(req.body);
+        console.log(req.file);
+        // const product = new Product({
+        //                             _id : new mongoose.Types.ObjectId,
+        //                             title : req.body.title,
+        //                             author: req.body.author,
+        //                             description : req.body.description,
+        //                             photoUrl : req.body.photoUrl,
+        //                             category : req.body.category,
+        //                             price : req.body.price,
+        //                             condition : req.body.condition,
+        //                             listedCity : req.body.listedCity,
+        //                             format : req.body.format,
+        //                             shipping: req.body.shipping,
+        //                             seller : req.body.seller
+        // });
 
-        product.save()
-                .then(result => res.send(result))
-                .catch(err => res.send(err));
+        // product.save()
+        //         .then(result => res.send(result))
+        //         .catch(err => res.send(err));
     });
 
     // Delete a product

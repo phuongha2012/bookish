@@ -302,10 +302,19 @@ $('.edit-button').click(function(){
 
   $('#addProductForm').submit(function(){
     event.preventDefault();
-    if( ! sessionStorage.memberId){
-      alert('401, permission denied');
-      return;
-    }
+    // if( ! sessionStorage.memberId){
+    //   alert('401, permission denied');
+    //   return;
+    // }
+    // let currentUserId = JSON.parse(sessionStorage.getItem('currentUser'))._id;
+    let currentUserId = '123';
+
+    let form = $('#addProductForm')[0];
+    console.log(form);
+    let formdata = new FormData(form);
+    formdata.append('seller', currentUserId);
+    console.log(formdata);
+
     let title = $('#addPortfolioTitle').val();
     let description = $('#addPortfolioDescription').val();
     let image = $('#addPortfolioImage').val();
@@ -322,45 +331,42 @@ $('.edit-button').click(function(){
     });
     } else {
       $.ajax({
-        url :`${url}/addPortfolio`,
+        enctype: 'multipart/form-data',
+        url :`${url}/products/add`,
         type : 'POST',
-        data : {
-          title : title,
-          description : description,
-          image : image,
-          category : category,
-          price: price,
-          memberId : _memberId
-        },
-        success : function(portfolio){
-          if (portfolio !== 'Artwork already added') {
-            Swal.fire({
-              title: 'Artwork Uploaded',
-              text: 'You project has been added to your portfolio',
-              icon: 'success',
-              confirmButtonText: 'OK'
-          });
-          $('#addPortfolioTitle').val();
-          $('#addPortfolioDescription').val();
-          $('#addPortfolioImage').val();
-          $('#addPortfolioCategory').val();
-          $('#addPortfolioPrice').val();
-          $('#addPortfolioMemberId').val();
+        data : formdata,
+        processData: false,
+        contentType: false,
+        success : function(result){
+          console.log(result);
+          // if (portfolio !== 'Artwork already added') {
+          //   Swal.fire({
+          //     title: 'Artwork Uploaded',
+          //     text: 'You project has been added to your portfolio',
+          //     icon: 'success',
+          //     confirmButtonText: 'OK'
+          // });
+          // $('#addPortfolioTitle').val();
+          // $('#addPortfolioDescription').val();
+          // $('#addPortfolioImage').val();
+          // $('#addPortfolioCategory').val();
+          // $('#addPortfolioPrice').val();
+          // $('#addPortfolioMemberId').val();
 
-          $('#addProductForm').trigger('reset');
-          $('#uploadProductPage').hide();
-          generateMyPortfolios();
-          $('#projectPage').show();
-          $('html, body').animate({ scrollTop: 50}, 'fast');
-          } else {
-            Swal.fire({
-              title: 'Title Taken',
-              text: 'Title has been taken already, please try another one',
-              icon: 'warning',
-              confirmButtonText: 'OK'
-          });
+          // $('#addProductForm').trigger('reset');
+          // $('#uploadProductPage').hide();
+          // generateMyPortfolios();
+          // $('#projectPage').show();
+          // $('html, body').animate({ scrollTop: 50}, 'fast');
+          // } else {
+          //   Swal.fire({
+          //     title: 'Title Taken',
+          //     text: 'Title has been taken already, please try another one',
+          //     icon: 'warning',
+          //     confirmButtonText: 'OK'
+          // });
 
-          }
+          // }
 
         },   // success
         error:function(){
@@ -1104,6 +1110,7 @@ $('.edit-button').click(function(){
       // remember name attribute in inputs to avoid empty obj
       let form = $('#editProfilePhotoForm')[0];
       let formdata = new FormData(form);
+      console.log(formdata);
 
       $.ajax({
         type: 'PATCH',

@@ -1,32 +1,7 @@
 const mongoose = require('mongoose');
 const bcryptjs = require('bcryptjs');
-const multer = require('multer');
+const upload = require('../middlewares/multer');
 
-const storage = multer.diskStorage({
-    destination: function(req, file, cb) {
-        cb(null, './uploads/');
-    },
-    filename: function(req, file, cb) {
-        cb(null, new Date().toISOString() + file.originalname);
-    }
-});
-
-const fileFilter = (req, file, cb) => {
-    // reject a file
-    if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png') {
-    cb(null, true);
-    } else {
-    cb(null, false);
-    }
-};
-
-const upload = multer({
-    storage: storage,
-    limits: {
-        fileSize: 1024 * 500
-    },
-    fileFilter: fileFilter
-});
 
 const Member = require('../models/member.js');
 
