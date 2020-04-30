@@ -296,32 +296,24 @@ $('.edit-button').click(function(){
     });
   });
 
-
-  // add portfolio form ===============================================================
-  // Yanas code
-
+  // Add a product for sell
   $('#addProductForm').submit(function(){
     event.preventDefault();
-    // if( ! sessionStorage.memberId){
-    //   alert('401, permission denied');
-    //   return;
-    // }
-    // let currentUserId = JSON.parse(sessionStorage.getItem('currentUser'))._id;
 
-    // At least 1 delivery option must be chosen
-    let deliveryOpt1 = $('#addProductForm__delivery--pickup').val();
-    let deliveryOpt2= $('#addProductForm__delivery--courier').val();
+    //at least 1 delivery option must be chosen
+    let deliveryOpt1Checked = $('#addProductForm__delivery--pickup').prop('checked');
+    let deliveryOpt2Checked= $('#addProductForm__delivery--courier').prop('checked');
 
-    if (deliveryOpt1 === '') {
-      if (deliveryOpt2 === '') {
+    if (!deliveryOpt1Checked) {
+      if (!deliveryOpt2Checked) {
         $('#addProductForm__missingDelivery').css('display', 'block');
         return;
       }
     }
 
-    // At least 1 delivery option must be chosen
-    let photoInput1 = $('#addProductForm__file');
-    let photoInput2 = $('#addProductForm__photoUrl');
+    //at least 1 delivery option must be chosen
+    let photoInput1 = $('#addProductForm__file').val();
+    let photoInput2 = $('#addProductForm__photoUrl').val();
 
     if (photoInput1 === '') {
       if (photoInput2 === '') {
@@ -329,29 +321,14 @@ $('.edit-button').click(function(){
         return;
       }
     }
-
     
-    let currentUserId = '5e9e1681cd0e0b0db66e164c';
+    let currentUserId = JSON.parse(sessionStorage.getItem('currentUser'))._id;
 
+    // construct formdata object
     let form = $('#addProductForm')[0];
     let formdata = new FormData(form);
     formdata.append('seller', currentUserId);
 
-    let title = $('#addPortfolioTitle').val();
-    let description = $('#addPortfolioDescription').val();
-    let image = $('#addPortfolioImage').val();
-    let category = $('#addPortfolioCategory').val();
-    let price = $('#addPortfolioPrice').val();
-    let _memberId = sessionStorage.getItem('memberId');
-
-    if (title == '' || description == '' || image == '' || category == '' || price == ''){
-      Swal.fire({
-        title: 'Empty Input Field',
-        text: 'Please fill in all input fields',
-        icon: 'warning',
-        confirmButtonText: 'OK'
-    });
-    } else {
       $.ajax({
         enctype: 'multipart/form-data',
         url :`${url}/products/add`,
@@ -360,57 +337,18 @@ $('.edit-button').click(function(){
         processData: false,
         contentType: false,
         success : function(result){
-          console.log(result);
-          // if (portfolio !== 'Artwork already added') {
-          //   Swal.fire({
-          //     title: 'Artwork Uploaded',
-          //     text: 'You project has been added to your portfolio',
-          //     icon: 'success',
-          //     confirmButtonText: 'OK'
-          // });
-          // $('#addPortfolioTitle').val();
-          // $('#addPortfolioDescription').val();
-          // $('#addPortfolioImage').val();
-          // $('#addPortfolioCategory').val();
-          // $('#addPortfolioPrice').val();
-          // $('#addPortfolioMemberId').val();
-
           $('#addProductForm').trigger('reset');
           $('#uploadProductPage').hide();
           generateMyPortfolios();
           $('#projectPage').show();
           $('html, body').animate({ scrollTop: 50}, 'fast');
-          // } else {
-          //   Swal.fire({
-          //     title: 'Title Taken',
-          //     text: 'Title has been taken already, please try another one',
-          //     icon: 'warning',
-          //     confirmButtonText: 'OK'
-          // });
-
-          // }
-
-        },   // success
+        }, 
         error:function(){
-          // console.log('error: cannot call api');
-        }  //error
-      }); //ajax
-    } //else
-  }); // submit add portfolio
+          console.log('error: cannot call api');
+        }
+      });
 
-
-  // Yanas code ENDS
-
-
-
-
-  // ===================================================================================
-  // =========================== Hayley's code starts ==================================
-  // ===================================================================================
-
-
-
-
+  });
 
   // ===================================================================================
   // =============================== LANDING PAGE ======================================
@@ -1132,7 +1070,6 @@ $('.edit-button').click(function(){
       // remember name attribute in inputs to avoid empty obj
       let form = $('#editProfilePhotoForm')[0];
       let formdata = new FormData(form);
-      console.log(formdata);
 
       $.ajax({
         type: 'PATCH',
