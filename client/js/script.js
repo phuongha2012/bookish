@@ -590,7 +590,7 @@ $('.edit-button').click(function(){
     // Generate viewMorePgae HTML and attach to #viewMorePage
     document.getElementById('viewMorePage').innerHTML = `
                                                       <!-- General description section -->
-                                                      <div class="flexContainer--row mb-5">
+                                                      <div class="flexContainer--row flexContainer--row--top my-5">
                                                           <div class="flexContainer--col col-sm-12 col-md-5">
                                                               <div class="col-sm-12 col-md-6 flexContainer--row mb-5">
                                                                   <svg class="backIcon mr-2">

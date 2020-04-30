@@ -21,20 +21,14 @@
 }
 
 // background image for sign up page
-.bg-register
-{
-	background-image: url("../images/KateLeslie_HolidaySeries2.jpg");
+.bg-register {
+	background-color: $colour-rouge;
 }
 
 // background image for update page
-.bg-update
-{
+.bg-update {
 	background-color: $colour-watermelon;
 }
-
-// Yanas code ends
-
-// Hayley's code
 
 .portfolioCard {
   border: none;

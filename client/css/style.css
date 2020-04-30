@@ -4,6 +4,10 @@
   padding: 0;
 }
 
+html {
+  height: 100%;
+}
+
 .color-pearl {
   color: #f5f1ed;
 }
@@ -34,6 +38,7 @@ body {
   font-size: 17px;
   line-height: 28px;
   font-weight: 300;
+  height: 100%;
 }
 
 h1 {
@@ -311,7 +316,7 @@ footer {
 }
 
 .bg-register {
-  background-image: url("../images/KateLeslie_HolidaySeries2.jpg");
+  background-color: #dd3c42;
 }
 
 .bg-update {
