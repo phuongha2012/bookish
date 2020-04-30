@@ -106,8 +106,8 @@ module.exports = (app) => {
                                             }},
                                             { $lookup: {
                                                         from: 'products',
-                                                        localField: 'selling',
-                                                        foreignField: '_id',
+                                                        localField: '_id',
+                                                        foreignField: 'seller',
                                                         as: 'sellingProducts'
                                             }}
         ]).catch(err => console.log(err));

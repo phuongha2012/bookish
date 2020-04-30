@@ -108,7 +108,7 @@ $(document).ready(function(){
 
   // my portfolio button to show my portfolio page
   $('#myPortfolioBtn').click(function(){
-    generateMyPortfolios();
+    generatePersonalList('watchProducts');
     getMyAccountInfo();
     // pages
     $('#projectPage').show();
@@ -332,7 +332,7 @@ $('.edit-button').click(function(){
         success : function(result){
           $('#addProductForm').trigger('reset');
           $('#uploadProductPage').hide();
-          generateMyPortfolios();
+          generatePersonalList('sellingProducts');
           $('#projectPage').show();
           $('html, body').animate({ scrollTop: 50}, 'fast');
         }, 
@@ -382,7 +382,10 @@ $('.edit-button').click(function(){
                                                                     </div>`
                                                                   ).join(' ');
 
-    
+    handleProductCardViewMoreButton();
+  }
+
+  function handleProductCardViewMoreButton() {
     // Show viewMoreLink when price section is hovered
     let toggleSections = document.getElementsByClassName('productCard-toggleSection');
 
@@ -453,6 +456,7 @@ $('.edit-button').click(function(){
   // Get info of the artwork being clicked on from backend
   function getArtworkInfo(e) {
     let id = e.target.id;
+    console.log(id);
 
     $.ajax({
       url: `${url}/products/${id}`,
@@ -495,7 +499,7 @@ $('.edit-button').click(function(){
                                               let replies = item.replies.map(reply => `
                                                                                     <div class="flexContainer--row col-sm-12 col-md-12 my-3">
                                                                                         <div class="col-sm-3 col-md-2 mb-2">
-                                                                                            <div class="viewMorePage__thumbnail viewMorePage__thumbnail--commenter mx-auto" style="background-image:url(${reply.replier.memberPhotoUrl})"></div>
+                                                                                            <div class="viewMorePage__thumbnail viewMorePage__thumbnail--commenter mx-auto" style="background-image:url(${reply.replier.memberPhotoUrl ? reply.replier.memberPhotoUrl : `../images/noavatar.png`})"></div>
                                                                                         </div>
                                                                                         <div class="col-12 flexContainer--col">
                                                                                             <small class="comment-info flexContainer--row">
@@ -510,7 +514,7 @@ $('.edit-button').click(function(){
                                               // Conditionally display comment input box based on member auth status
                                               let replyInputBox = currentUser ? `<div class="flexContainer--row">
                                                                                     <div class="col-sm-3 col-md-2 mb-2">
-                                                                                        <div class="viewMorePage__thumbnail viewMorePage__thumbnail--commenter mx-auto" style="background-image:url(${(JSON.parse(sessionStorage.getItem('currentUser'))).photoUrl})"></div>
+                                                                                        <div class="viewMorePage__thumbnail viewMorePage__thumbnail--commenter mx-auto" style="background-image:url(${(JSON.parse(sessionStorage.getItem('currentUser'))).photoUrl ? (JSON.parse(sessionStorage.getItem('currentUser'))).photoUrl : `../images/noavatar.png`})"></div>
                                                                                     </div>
                                                                                     <div class="flexContainer--col col-10 flexContainer--col--right viewMorePage-postComment">
                                                                                         <textarea id="viewMorePage-postReplyInput${item._id}" class="col-12" rows="2" cols="100"></textarea>
@@ -545,7 +549,7 @@ $('.edit-button').click(function(){
                                                 return `<div class="flexContainer--col col-sm-12 col-lg-12 col-md-10 my-3">
                                                             <div class="flexContainer--row">
                                                                 <div class="col-sm-3 col-md-2 mb-2">
-                                                                    <div class="viewMorePage__thumbnail viewMorePage__thumbnail--commenter mx-auto" style="background-image:url(${item.commenter.memberPhotoUrl})"></div>
+                                                                    <div class="viewMorePage__thumbnail viewMorePage__thumbnail--commenter mx-auto" style="background-image:url(${item.commenter.memberPhotoUrl ? item.commenter.memberPhotoUrl : `../images/noavatar.png`})"></div>
                                                                 </div>
                                                                 <div class="col-sm-9 col-md-10">
                                                                     <small class="comment-info flexContainer--row">
@@ -561,7 +565,7 @@ $('.edit-button').click(function(){
 
     // Conditionally render addComment HTML base on user's login status
     addCommentHTML = currentUser ? `<div class="col-sm-3 col-md-2 mb-2">
-                                        <div class="viewMorePage__thumbnail viewMorePage__thumbnail--commenter mx-auto" style="background-image:url(${(JSON.parse(sessionStorage.getItem('currentUser'))).photoUrl})"></div>
+                                        <div class="viewMorePage__thumbnail viewMorePage__thumbnail--commenter mx-auto" style="background-image:url(${(JSON.parse(sessionStorage.getItem('currentUser'))).photoUrl ? (JSON.parse(sessionStorage.getItem('currentUser'))).photoUrl : `../images/noavatar.png`})"></div>
                                     </div>
                                     <div class="flexContainer--col flexContainer--col--right viewMorePage-postComment">
                                         <textarea id="viewMorePage-postComment" class="col-12" rows="3" cols="100"></textarea>
@@ -996,8 +1000,9 @@ $('.edit-button').click(function(){
       type: 'GET',
       dataType: 'json',
       success: function(result) {
-        console.log(result);
             generateAccountSummaryHTML(result[0]);
+            generatePersonalList('watchProducts');
+            document.getElementById('accountPage__watchlistButton').classList.add('accountPage__activityBtn--focused');
       },
       error: function(error) {
             console.log(error);
@@ -1211,29 +1216,30 @@ $('.edit-button').click(function(){
     $('#updateMemberBtn').show();
   }
 
-
-
   // MY PROJECTS SECTION/ MANAGE ACCOUNT PAGE
 
 
   // DISPLAY CURRENT USER'S ALL PROJECTS
 
   // Get all portfolios of the currently logged in user from backend
-  function generateMyPortfolios() {
-    let currentUserId = sessionStorage.getItem('memberId');
+  function generatePersonalList(listType) {
+    let currentUserId = JSON.parse(sessionStorage.getItem('currentUser'))._id;
     if (!currentUserId) { return; }
 
+    console.log(listType);
+
     $.ajax({
-      url: `${url}/myPortfolios/${currentUserId}`,
+      url: `${url}/members/${currentUserId}`,
       type: 'GET',
       success: function(results) {
-            if (results === "No portfolio by this user found") {
+        console.log(results[0][listType]);
+        
+            if (results[0][listType].length === 0) {
               document.getElementById('myProductsDeck').innerHTML =
-                  `<div class="noPortfolio text-center">You have not uploaded a project yet</div>`;
+                  `<div class="noPortfolio text-center">There is currently no item in your ${getListName(listType)}</div>`;
               return;
             }
-
-            makePortfolioCards(results);
+            makeProductsCards(results[0][listType]);
       },
       error: function(error) {
             console.log(error);
@@ -1241,58 +1247,59 @@ $('.edit-button').click(function(){
     });
   }
 
-  // Map portfolios result into portfolio cards and attach to #myProductsDeck div
-  function makePortfolioCards(arr) {
-    document.getElementById('myProductsDeck').innerHTML = arr.map(item =>
-                                                                        `<div class="card
-                                                                                    portfolioCard
-                                                                                    border-bottom">
-                                                                            <div style="background-image:url(${item.image})"
-                                                                                class="portfolioPage-image"></div>
-                                                                            <h5 class="portfolioPage-cardTitle
-                                                                                      card-text mb-3">
-                                                                                      ${item.title}</h5>
-                                                                            <div id="portfolioCard__buttonWrapper${item._id}"
-                                                                                class="row mb-2">
-                                                                                <div class="col-sm-12
-                                                                                            col-md-4
-                                                                                            col-lg-4">
-                                                                                    <div id="${item._id}"
-                                                                                        class="button
-                                                                                                viewMoreButton
-                                                                                                
-                                                                                                mb-3">
-                                                                                                View</div>
-                                                                                </div>
-                                                                                <div class="col-sm-12
-                                                                                            col-md-4
-                                                                                            col-lg-4">
-                                                                                    <div id="edit${item._id}"
-                                                                                        class="editButton
-                                                                                                btn-dark
-                                                                                                
-                                                                                                
-                                                                                                py-2
-                                                                                                px-2
-                                                                                                mb-3">
-                                                                                                Edit</div>
-                                                                                </div>
-                                                                                <div class="col-sm-12
-                                                                                            col-md-4
-                                                                                            col-lg-4">
-                                                                                    <div id="delete${item._id}"
-                                                                                        class="deleteButton
-                                                                                                btn-red 
-                                                                                                px-3 py-2
-                                                                                                mb-3
-                                                                                                
-                                                                                                float-lg-right">
-                                                                                                Delete</div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>`)
-                                                              .join(' ');
+  // helper function to get user-friendly list name
+  function getListName(listType) {
+    let displayedListType; 
+    switch (listType) {
+      case 'purchasedProducts':
+        displayedListType = 'purchased list';
+        break;
+      case 'soldProducts':
+        displayedListType = 'sold list';
+        break;
+      case 'sellingProducts':
+        displayedListType = "selling list";
+        break;
+      case 'watchProducts':
+        displayedListType = 'watchlist';
+        break;
+    }
+    return displayedListType;
+  }
 
+  // Map portfolios result into portfolio cards and attach to #myProductsDeck div
+  function makeProductsCards(arr, arrType) {
+
+    // template for selling and watchlist products with activity buttons
+//     let activeProductsCard = `
+//     <div class="card border-bottom flexContainer--row">
+//     <div class="productCard__imageContainer">
+//         <div style="background-image:url(${item.photoUrl})"></div>
+//     </div>
+//     <div class="flexContainer--col">
+//         <div class="flexContainer--row">
+//             <div class="productCard__titleContainer">
+//                 <h5>${item.title}</h5>
+//             </div>
+//             <div class="productCard__priceContainer">
+//                 <h5>${item.price}</h5>
+//             </div>
+//         </div>
+//         <div>Sold on 27 May 2020</div>
+//     </div>
+// </div>
+//     `;
+    document.getElementById('myProductsDeck').innerHTML = arr.map(product => 
+    `<div class="card mb-4 col-sm-12 col-md-4">
+                                                                      <img src="${product.photoUrl}" alt="Avatar" class="mb-5">
+                                                                      <div class="mx-1 my-1">
+                                                                          <h5 class="productCard-title text-center">${product.title}</h5>
+                                                                          <div id="${product._id}" class="viewMoreButton button text-center mx-auto">View</div>
+                                                                      </div>
+                                                                    </div>
+    `).join(' ');
+
+    
     addListenersToCardButtons();
   }
 
@@ -1373,7 +1380,7 @@ $('.edit-button').click(function(){
             sessionStorage.removeItem('projectOnEdit');
             $('#updatePortfolioForm').trigger('reset');
             $('#updatePortfolioPage').hide();
-            generateMyPortfolios();
+            generatePersonalList();
             $('#projectPage').show();
             $('html, body').animate({ scrollTop: 0 }, 'fast');
       },
@@ -1420,7 +1427,7 @@ $('.edit-button').click(function(){
       type: 'DELETE',
       success: function(message) {
             sessionStorage.removeItem('projectOnDelete');
-            generateMyPortfolios();
+            generatePersonalList();
       },
       error: function(err) {
             console.log(err);
@@ -1474,6 +1481,8 @@ $('.edit-button').click(function(){
 
     // Add bgColor to recently clicked button
     $(this).addClass('accountPage__activityBtn--focused');
+
+    generatePersonalList($(this).attr('data-value'));
   }
 
 
