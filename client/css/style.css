@@ -453,7 +453,6 @@ footer {
 .form__infoText {
   position: absolute;
   top: 96%;
-  left: 6%;
 }
 
 .accountPage__activityBtn {
@@ -619,9 +618,23 @@ footer {
 }
 
 .addProductForm__photoContainer {
-  height: 100px;
+  height: 130px;
   padding: 1rem;
   border: 1px #f1f1f1 solid;
+  position: relative;
+}
+.addProductForm__photoContainer > div {
+  position: relative;
+}
+.addProductForm__photoContainer > div:first-of-type {
+  top: 15%;
+}
+.addProductForm__photoContainer > div:nth-of-type(2) {
+  top: 90%;
+}
+
+#addProductForm__missingDelivery, #addProductForm__missingPhoto {
+  display: none;
 }
 
 /*# sourceMappingURL=style.css.map */

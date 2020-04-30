@@ -307,6 +307,30 @@ $('.edit-button').click(function(){
     //   return;
     // }
     // let currentUserId = JSON.parse(sessionStorage.getItem('currentUser'))._id;
+
+    // At least 1 delivery option must be chosen
+    let deliveryOpt1 = $('#addProductForm__delivery--pickup').val();
+    let deliveryOpt2= $('#addProductForm__delivery--courier').val();
+
+    if (deliveryOpt1 === '') {
+      if (deliveryOpt2 === '') {
+        $('#addProductForm__missingDelivery').css('display', 'block');
+        return;
+      }
+    }
+
+    // At least 1 delivery option must be chosen
+    let photoInput1 = $('#addProductForm__file');
+    let photoInput2 = $('#addProductForm__photoUrl');
+
+    if (photoInput1 === '') {
+      if (photoInput2 === '') {
+        $('#addProductForm__missingPhoto').css('display', 'block');
+        return;
+      }
+    }
+
+    
     let currentUserId = '5e9e1681cd0e0b0db66e164c';
 
     let form = $('#addProductForm')[0];

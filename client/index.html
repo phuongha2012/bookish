@@ -179,19 +179,19 @@
                     <!-- title -->
                     <div class="form-group">
                         <label for="addProductForm__title">Title</label>
-                        <input id="addProductForm__title" type="text" class="form-control" name="title">
+                        <input id="addProductForm__title" type="text" class="form-control" name="title" required>
                     </div>
                     <div class="form-row">
                       <!-- author -->
                       <div class="form-group col-6">
                         <label for="addProductForm__author">Author</label>
-                        <input id="addProductForm__author" type="text" class="form-control" name="author">
+                        <input id="addProductForm__author" type="text" class="form-control" name="author" required>
                       </div>
                       <!-- category -->
                       <div class="form-group col-6">
                         <label class="h5-label" for="addProductForm__category">Category</label>
                         <div class="input-group">
-                          <select id="addProductForm__category" name="category" form="addProductForm" class="custom-select rounded">
+                          <select id="addProductForm__category" name="category" form="addProductForm" class="custom-select rounded" required>
                             <option value="Arts & Photography">Arts & Photography</option>
                             <option value="Biography">Biography</option>
                             <option value="Business">Business</option>
@@ -208,7 +208,7 @@
                     <!-- description -->
                     <div class="form-group">
                         <label for="addProductForm__description">Description</label>
-                        <textarea id="addProductForm__description" class="form-control rounded" name="description"></textarea>
+                        <textarea id="addProductForm__description" class="form-control rounded" name="description" required></textarea>
                     </div>
 
                     <div class="form-row">
@@ -243,7 +243,7 @@
                       <div class="form-group col-6">
                         <label class="h5-label" for="addProductForm__listedCity">Listed City</label>
                         <div class="input-group">
-                          <select id="addProductForm__listedCity" name="listedCity" form="addProductForm" class="custom-select rounded">
+                          <select id="addProductForm__listedCity" name="listedCity" form="addProductForm" class="custom-select rounded" required>
                             <option value="Auckland">Auckland</option>
                             <option value="Christchurch">Christchurch</option>
                             <option value="Wellington">Wellington</option>
@@ -269,7 +269,7 @@
                       <!-- price -->
                       <div class="form-group col-6">
                         <label class="h5-label" for="addProductForm__price">Price($)</label>
-                        <input type="number" id="addProductForm__price" class="form-control rounded" name="price">
+                        <input type="number" id="addProductForm__price" class="form-control rounded" name="price" required>
                       </div>
                     </div>
 
@@ -286,19 +286,23 @@
                           <label class="form-check-label" for="addProductForm__delivery--courier">Post courier</label>
                         </div>
                       </div>
+                      <small id="addProductForm__missingDelivery" class="text-danger">Please select at least one delivery option</small>
                     </div>
 
                     <!-- photo -->
                     <div class="flexContainer--col mb-3">
                       <label>Product Photo</label>
-                      <div class="flexContainer--row form-row addProductForm__photoContainer mb-3">
-                        <div class="form-group col-6 editProfilePhotoForm__fileWrapper">
-                          <input type="file" name="productPhoto" class="form-control-file" id="addProductForm__file">
-                          <small class="form__infoText">PNG/JPG files under 500Mb and no space in name</small>
+                      <div class="flexContainer--col  addProductForm__photoContainer">
+                        <div class="flexContainer--row form-row mb-3">
+                          <div class="form-group col-6 editProfilePhotoForm__fileWrapper">
+                            <input type="file" name="productPhoto" class="form-control-file" id="addProductForm__file">
+                            <small class="form__infoText">PNG/JPG files under 500Mb and no space in name</small>
+                          </div>
+                          <div class="col-6 addProductForm__photoUrlWrapper">
+                            <input type="text" class="form-control" name="productPhotoUrl" id="addProductForm__photoUrl" placeholder="Or enter photo's url">
+                          </div>
                         </div>
-                        <div class="col-6 addProductForm__photoUrlWrapper">
-                          <input type="text" class="form-control" name="productPhotoUrl" id="addProductForm__photoUrl" placeholder="Or enter photo's url">
-                        </div>
+                        <small id="addProductForm__missingPhoto" class="text-danger">Please add a product photo!</small>
                       </div>
                     </div>
 
