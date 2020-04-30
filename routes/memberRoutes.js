@@ -24,7 +24,8 @@ module.exports = (app) => {
                                             about : req.body.about,
                                             photoUrl: req.body.photoUrl,
                                             address: req.body.address,
-                                            card : req.body.card
+                                            card : req.body.card,
+                                            joinedDate: new Date()
                                         });
         
                 member.save()

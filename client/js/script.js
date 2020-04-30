@@ -1,7 +1,7 @@
 $(document).ready(function(){
 
   $('html, body').animate({ scrollTop: 0 }, 'fast');
-  sessionStorage.clear();
+  // sessionStorage.clear();
   let url;
 
   // Get server config data
@@ -50,7 +50,7 @@ $(document).ready(function(){
     $('#viewMorePage').hide();
     $('#loginPage').hide();
     $('#signUpPage').hide();
-    $('#projectPage').show();
+    $('#projectPage').hide();
     $('#uploadProductPage').hide();
     $('#updatePortfolioPage').hide();
   } else {
@@ -64,7 +64,7 @@ $(document).ready(function(){
     $('#viewMorePage').hide();
     $('#loginPage').hide();
     $('#signUpPage').hide();
-    $('#projectPage').show();
+    $('#projectPage').hide();
     $('#uploadProductPage').hide();
     $('#updatePortfolioPage').hide();
   }
@@ -178,9 +178,7 @@ $('.edit-button').click(function(){
 });
 
 
-  // Logout member ===============================================================
-  // Yanas code
-
+  // Logout member 
   $('#logoutBtn').click(function(){
     sessionStorage.clear();
     $('#landingPage').show();
@@ -192,17 +190,14 @@ $('.edit-button').click(function(){
     location.reload("#loginForm");
   });
 
-  // register member ===============================================================
-  // Yanas code
-
-  // register user
+  // Register user
   $('#registerForm').submit(function(){
     event.preventDefault();
     let username = $('#registerUsername').val();
     let email = $('#registerEmail').val();
     let password = $('#registerPassword').val();
     $.ajax({
-      url :`${url}/registerMember`,
+      url :`${url}/members/add`,
       type :'POST',
       data:{
         username : username,
@@ -236,13 +231,11 @@ $('.edit-button').click(function(){
       error:function(err){
         console.log(err);
       }//error
+    });
+  });
 
-    });//ajax
-  });//submit function for register form
 
-  // login member ===============================================================
-  // Yanas code
-
+  // login member 
   $('#loginForm').submit(function(){
     event.preventDefault();
     let username = $('#inputUsernameLogin').val();
@@ -376,7 +369,7 @@ $('.edit-button').click(function(){
                                                                   `<div class="card mb-4 col-sm-12 col-md-3">
                                                                       <img src="${product.photoUrl}" alt="Avatar" class="viewMoreButton mb-5">
                                                                       <div class="mx-1 my-1">
-                                                                          <h5 class="text-center mb-2">${product.title}</h5>
+                                                                          <h5 class="productCard-title text-center">${product.title}</h5>
                                                                           <div class="productCard-columnWrap">
                                                                               <small class="mb-1">${product.format}</small>
                                                                               <small>${product.condition}</small>
@@ -591,6 +584,9 @@ $('.edit-button').click(function(){
         watchListHTML = `<a id="addToWatchButton${product._id}" tabindex="0" class="buttonLink buttonLink--noCap buttonLink--grey buttonLink--small addToWatchButton popOver" role="button" data-toggle="popover" data-trigger="focus" data-content="Please sign up or log in to add this book to your watchlist">Add to Watchlist</a>`;
     }
 
+    // Set product's seller's joinedDate fallback
+    let joinedDate = (product.sellerInfo.joinedDate.length === 29) ? (formatDate(product.sellerInfo.joinedDate)).slice(3, 16) : formatDate(product.sellerInfo.joinedDate);
+
     // Generate viewMorePgae HTML and attach to #viewMorePage
     document.getElementById('viewMorePage').innerHTML = `
                                                       <!-- General description section -->
@@ -693,7 +689,7 @@ $('.edit-button').click(function(){
                                                                       </div>
                                                                       <div class="flexContainer--row">
                                                                           <small class="color-black mr-1">Member Since:</small>
-                                                                          <small>17th June 2015</small>
+                                                                          <small>${joinedDate}</small>
                                                                       </div>
                                                                   </div>
                                                                 </div>
@@ -1011,7 +1007,19 @@ $('.edit-button').click(function(){
 
   // Generate HTML template from account summary and add to #memberAccount div
   function generateAccountSummaryHTML(account) {
-    document.getElementById('accountPage__memberPhoto').style.backgroundImage = `url(${account.photoUrl})`;
+    //address display fallback if address is not provided
+    let street = account.address ? account.address.street : 'N/A';
+    let suburb = account.address ? account.address.suburb : 'N/A';
+    let city = account.address ? account.address.city : 'N/A';
+    let zip = account.address ? account.address.zip : 'N/A';
+
+    // joined date display fallback
+    let joinedDate = (account.joinedDate.length === 29) ? (formatDate(account.joinedDate)).slice(3, 16) : formatDate(account.joinedDate);
+
+    // profilePhoto fallback
+    let photoUrl = account.photoUrl ? account.photoUrl : '../images/noavatar.png';
+
+    document.getElementById('accountPage__memberPhoto').style.backgroundImage = `url(${photoUrl})`;
     document.getElementById('memberAccount').innerHTML =
           `<div class="flexContainer--col btBorder pb-3">
             <div class="flexContainer--row flexContainer--row--space-between col-sm-12 mx-auto mt-5">
@@ -1026,16 +1034,16 @@ $('.edit-button').click(function(){
                 </div>
                 <div class="flexContainer--row mb-3">
                   <div class="col-4 text-left">Member since:</div>
-                  <div class="col-8 text-left">${(formatDate(account.joinedDate)).slice(3, 16)}</div>
+                  <div class="col-8 text-left">${joinedDate}</div>
                 </div>
               </div>
               <div class="flexContainer--col col-5">
                 <div class="flexContainer--row flexContainer--row--top mb-3">
                   <div class="mr-3">Shipping address:</div>
                   <div class="flexContainer--col">
-                    <p>${account.address.street}</p>
-                    <p>${account.address.suburb}</p>
-                    <p>${account.address.city} ${account.address.zip}</p>
+                    <p>${street}</p>
+                    <p>${suburb}</p>
+                    <p>${city} ${zip}</p>
                   </div>
                 </div>
               </div>
