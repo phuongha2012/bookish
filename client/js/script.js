@@ -1,7 +1,7 @@
 $(document).ready(function(){
 
   $('html, body').animate({ scrollTop: 0 }, 'fast');
-  // sessionStorage.clear();
+  sessionStorage.clear();
   let url;
 
   // Get server config data
@@ -52,7 +52,7 @@ $(document).ready(function(){
     $('#signUpPage').hide();
     $('#projectPage').hide();
     $('#uploadProductPage').hide();
-    $('#updatePortfolioPage').hide();
+    $('#updateProductPage').hide();
   } else {
     $('#logoutBtn').hide();
     $('#myPortfolioBtn').hide();
@@ -66,7 +66,7 @@ $(document).ready(function(){
     $('#signUpPage').hide();
     $('#projectPage').hide();
     $('#uploadProductPage').hide();
-    $('#updatePortfolioPage').hide();
+    $('#updateProductPage').hide();
   }
 
   //Home button to show landing page
@@ -78,7 +78,7 @@ $(document).ready(function(){
     $('#signUpPage').hide();
     $('#projectPage').hide();
     $('#uploadProductPage').hide();
-    $('#updatePortfolioPage').hide();
+    $('#updateProductPage').hide();
   });
 
   //Login button to show login page
@@ -90,7 +90,7 @@ $(document).ready(function(){
     $('#signUpPage').hide();
     $('#projectPage').hide();
     $('#uploadProductPage').hide();
-    $('#updatePortfolioPage').hide();
+    $('#updateProductPage').hide();
 
   });
 
@@ -103,13 +103,13 @@ $(document).ready(function(){
     $('#landingPage').hide();
     $('#viewMorePage').hide();
     $('#uploadProductPage').hide();
-    $('#updatePortfolioPage').hide();
+    $('#updateProductPage').hide();
   });
 
   // my portfolio button to show my portfolio page
   $('#myPortfolioBtn').click(function(){
-    generatePersonalList('watchProducts');
     getMyAccountInfo();
+    generatePersonalList('watchProducts');
     // pages
     $('#projectPage').show();
     $('#signUpPage').hide();
@@ -117,7 +117,7 @@ $(document).ready(function(){
     $('#landingPage').hide();
     $('#viewMorePage').hide();
     $('#uploadProductPage').hide();
-    $('#updatePortfolioPage').hide();
+    $('#updateProductPage').hide();
   });
 
   //upload projects button to show upload project page
@@ -130,7 +130,7 @@ $(document).ready(function(){
     $('#loginPage').hide();
     $('#landingPage').hide();
     $('#viewMorePage').hide();
-    $('#updatePortfolioPage').hide();
+    $('#updateProductPage').hide();
 
   });
 
@@ -143,7 +143,7 @@ $(document).ready(function(){
     $('#loginPage').hide();
     $('#landingPage').hide();
     $('#viewMorePage').hide();
-    $('#updatePortfolioPage').hide();
+    $('#updateProductPage').hide();
   });
 
   //update projects button to show update project page
@@ -156,7 +156,7 @@ $(document).ready(function(){
     $('#loginPage').hide();
     $('#landingPage').hide();
     $('#viewMorePage').hide();
-    $('#updatePortfolioPage').show();
+    $('#updateProductPage').show();
   });
 
   // delete projects button to show delete project page
@@ -168,7 +168,7 @@ $(document).ready(function(){
     $('#loginPage').hide();
     $('#landingPage').hide();
     $('#viewMorePage').hide();
-    $('#updatePortfolioPage').hide();
+    $('#updateProductPage').hide();
   });
 
 // edit button to scroll up on update page
@@ -270,7 +270,7 @@ $('.edit-button').click(function(){
             icon: 'error',
             confirmButtonText: 'OK'
         });
-        }  else {
+        } else {
           sessionStorage.setItem('currentUser', JSON.stringify(response));
           $('#logoutBtn').show();
           $('#myPortfolioBtn').show();
@@ -280,7 +280,6 @@ $('.edit-button').click(function(){
           $('#landingPage').show();
           $('#loginPage').hide();
           $('html, body').animate({ scrollTop: 0 }, 'fast');
-          console.log(sessionStorage);
         }
       },//success
       error: function() {
@@ -1001,6 +1000,7 @@ $('.edit-button').click(function(){
       type: 'GET',
       dataType: 'json',
       success: function(result) {
+            sessionStorage.setItem('currentUser', JSON.stringify(result[0]));
             generateAccountSummaryHTML(result[0]);
             generatePersonalList('watchProducts');
             document.getElementById('accountPage__watchlistButton').classList.add('accountPage__activityBtn--focused');
@@ -1225,16 +1225,16 @@ $('.edit-button').click(function(){
   // Get all portfolios of the currently logged in user from backend
   function generatePersonalList(listType) {
     let currentUserId = JSON.parse(sessionStorage.getItem('currentUser'))._id;
+    console.log(currentUserId);
     if (!currentUserId) { return; }
 
-    console.log(listType);
+    console.log('generatePersonalList is called for ', listType);
 
     $.ajax({
       url: `${url}/members/${currentUserId}`,
       type: 'GET',
       success: function(results) {
         console.log(results[0][listType]);
-        
             if (results[0][listType].length === 0) {
               document.getElementById('myProductsDeck').innerHTML =
                   `<div class="noPortfolio text-center">There is currently no item in your ${getListName(listType)}</div>`;
@@ -1361,11 +1361,17 @@ $('.edit-button').click(function(){
 
   // If editProject buttons clicked, prefill UpdateProjectForm in index.html with projectOnEdit's info from backend
   function prefillUpdateProjectForm(e) {
-    const _id = (e.target.id).slice(4);
+    const _id = (e.target.id).slice(10);
     sessionStorage.setItem('projectOnEdit', _id);
+    let currentUser = (JSON.parse(sessionStorage.getItem('currentUser')));
+    console.log(currentUser);
+    
+    let projectOnEdit = currentUser.sellingProducts.find(product => product._id === _id);
+    console.log(projectOnEdit);
+
 
     $.ajax({
-      url: `${url}/findProject/${_id}`,
+      url: `${url}/products/${_id}`,
       type: 'GET',
       dataType: 'json',
       success: function(project) {
@@ -1378,7 +1384,7 @@ $('.edit-button').click(function(){
             $('#updatePortfolioPrice').val(project.price);
 
             $('#projectPage').hide();
-            $('#updatePortfolioPage').show();
+            $('#updateProductPage').show();
       },
       error: function(error) {
             console.log(error);
@@ -1410,7 +1416,7 @@ $('.edit-button').click(function(){
       success: function(data) {
             sessionStorage.removeItem('projectOnEdit');
             $('#updatePortfolioForm').trigger('reset');
-            $('#updatePortfolioPage').hide();
+            $('#updateProductPage').hide();
             generatePersonalList();
             $('#projectPage').show();
             $('html, body').animate({ scrollTop: 0 }, 'fast');
@@ -1513,6 +1519,7 @@ $('.edit-button').click(function(){
     // Add bgColor to recently clicked button
     $(this).addClass('accountPage__activityBtn--focused');
 
+    console.log($(this).attr('data-value'));
     generatePersonalList($(this).attr('data-value'));
   }
 

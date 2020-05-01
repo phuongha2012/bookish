@@ -319,30 +319,174 @@
 
           <!--  ===================== UPDATE A PROJECT PAGE ============================  -->
 
-          <div id="updatePortfolioPage" class="bg-page bg-update">
+          
+          <div id="updateProductPage" class="bg-page bg-upload">
+            <div class="container-form px-5 py-5">
+                <h1 class="text-center pt-3">Upload Product</h1>
+                <form id="updateProductForm" enctype="multipart/form-data" class="mt-3 py-4 mb-5 px-3 col-sm-12 mx-auto">
+                  <!-- title -->
+                  <div class="form-group">
+                      <label for="updateProductForm__title">Title</label>
+                      <input id="updateProductForm__title" type="text" class="form-control" name="title" required>
+                  </div>
+                  <div class="form-row">
+                    <!-- author -->
+                    <div class="form-group col-6">
+                      <label for="updateProductForm__author">Author</label>
+                      <input id="updateProductForm__author" type="text" class="form-control" name="author" required>
+                    </div>
+                    <!-- category -->
+                    <div class="form-group col-6">
+                      <label class="h5-label" for="updateProductForm__category">Category</label>
+                      <div class="input-group">
+                        <select id="updateProductForm__category" name="category" form="updateProductForm" class="custom-select rounded" required>
+                          <option value="Arts & Photography">Arts & Photography</option>
+                          <option value="Biography">Biography</option>
+                          <option value="Business">Business</option>
+                          <option value="Family">Family</option>
+                          <option value="Fiction">Fiction</option>
+                          <option value="Home & Garden">Home & Garden</option>
+                          <option value="Children">Children</option>
+                          <option value="Cookbooks">Cookbooks</option>
+                          <option value="Self Help">Self Help</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- description -->
+                  <div class="form-group">
+                      <label for="updateProductForm__description">Description</label>
+                      <textarea id="updateProductForm__description" class="form-control rounded" name="description" required></textarea>
+                  </div>
+
+                  <div class="form-row">
+                    <!-- format -->
+                    <div class="form-group col-6">
+                      <label class="h5-label" for="updateProductForm__format">Format</label>
+                      <div class="input-group">
+                        <select id="updateProductForm__format" name="format" form="updateProductForm" class="custom-select rounded">
+                          <option value="Paperback">Paperback</option>
+                          <option value="Hardcover">Hardcover</option>
+                          <option value="Audio CD">Audio CD</option>
+                          <option value="Boardbook">Boardbook</option>
+                        </select>
+                      </div>
+                    </div>
+                    <!-- condition -->
+                    <div class="form-group col-6">
+                      <label class="h5-label" for="updateProductForm__condition">Condition</label>
+                      <div class="input-group">
+                        <select id="updateProductForm__condition" name="condition" form="updateProductForm" class="custom-select rounded">
+                          <option value="New">New</option>
+                          <option value="Used, Like New">Used, Like New</option>
+                          <option value="Used, Good">Used, Good</option>
+                          <option value="Used, Acceptable">Used, Acceptable</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-row">
+                    <!-- city -->
+                    <div class="form-group col-6">
+                      <label class="h5-label" for="updateProductForm__listedCity">Listed City</label>
+                      <div class="input-group">
+                        <select id="updateProductForm__listedCity" name="listedCity" form="updateProductForm" class="custom-select rounded" required>
+                          <option value="Auckland">Auckland</option>
+                          <option value="Christchurch">Christchurch</option>
+                          <option value="Wellington">Wellington</option>
+                          <option value="Hamilton">Hamilton</option>
+                          <option value="Tauranga">Tauranga</option>
+                          <option value="Lower Hutt">Lower Hutt</option>
+                          <option value="Dunedin">Dunedin</option>
+                          <option value="Palmerston North">Palmerston North</option>
+                          <option value="Napier">Napier</option>
+                          <option value="Porirua">Porirua</option>
+                          <option value="New Plymouth">New Plymouth</option>
+                          <option value="Rotorua">Rotorua</option>
+                          <option value="Whangarei">Whangarei</option>
+                          <option value="Nelson">Nelson</option>
+                          <option value="Invercargill">Invercargill</option>
+                          <option value="Hastings">Hastings</option>
+                          <option value="Gisborne">Gisborne</option>
+                          <option value="Upper Hutt">Upper Hutt</option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <!-- price -->
+                    <div class="form-group col-6">
+                      <label class="h5-label" for="updateProductForm__price">Price($)</label>
+                      <input type="number" id="updateProductForm__price" class="form-control rounded" name="price" required>
+                    </div>
+                  </div>
+
+                  <!-- delivery options -->
+                  <div class="flexContainer--col mb-3 btBorder pb-2">
+                    <label>Delivery Options</label>
+                    <div class="flexContainer--row">
+                      <div class="form-check form-check-inline mr-5">
+                        <input class="form-check-input" type="radio" name="pickup" id="updateProductForm__delivery--pickup" value="Allowed pickup">
+                        <label class="form-check-label" for="updateProductForm__delivery--pickup">Allowed pickup</label>
+                      </div>
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="courier" id="updateProductForm__delivery--courier" value="Post Courier">
+                        <label class="form-check-label" for="updateProductForm__delivery--courier">Post courier</label>
+                      </div>
+                    </div>
+                    <small id="updateProductForm__missingDelivery" class="text-danger">Please select at least one delivery option</small>
+                  </div>
+
+                  <!-- photo -->
+                  <div class="flexContainer--col mb-3">
+                    <label>Product Photo</label>
+                    <div class="flexContainer--col  updateProductForm__photoContainer">
+                      <div class="flexContainer--row form-row mb-3">
+                        <div class="form-group col-6 editProfilePhotoForm__fileWrapper">
+                          <input type="file" name="productPhoto" class="form-control-file" id="updateProductForm__file">
+                          <small class="form__infoText">PNG/JPG files under 500Mb and no space in name</small>
+                        </div>
+                        <div class="col-6 updateProductForm__photoUrlWrapper">
+                          <input type="text" class="form-control" name="productPhotoUrl" id="updateProductForm__photoUrl" placeholder="Or enter photo's url">
+                        </div>
+                      </div>
+                      <small id="updateProductForm__missingPhoto" class="text-danger">Please add a product photo!</small>
+                    </div>
+                  </div>
+
+                  <!-- form buttons -->
+                  <div class="flexContainer--row float-right">
+                    <span id="cancelupdateProductForm" class="buttonLink buttonLink--noCap mr-3">Cancel</span>
+                    <button type="submit" class="button float-right">Save</button>
+                  </div>
+              </form>
+            <!-- Add project form ends -->
+          </div>
+        </div> <!-- Add project page ends -->
+        
+          <!-- <div id="updateProductPage" class="bg-page bg-update">
               <div class="container-form pb-3">
                   <h1 class="text-center pt-3">Update Project</h1>
                   <form id="updatePortfolioForm" class="mt-3 py-4 mb-5 px-3 border-blue  col-lg-8 col-md-12 col-sm-12 mx-auto">
 
-                      <!-- Title -->
+                   
                       <div class="form-group">
                           <label class="h5-label" for="updatePortfolioTitle">Title</label>
                           <input type="text" id="updatePortfolioTitle" class="form-control rounded" placeholder="Title" name="updatePortfolioTitle" required>
                       </div>
 
-                      <!-- Description -->
                       <div class="form-group">
                           <label class="h5-label" for="updatePortfolioDescription">Description</label>
                           <textarea id="updatePortfolioDescription" class="form-control rounded" placeholder="Description" name="updatePortfolioDescription" required></textarea>
                       </div>
 
-                      <!-- Image -->
+               
                       <div class="form-group">
                           <label class="h5-label" for="updatePortfolioImage">Image URL</label>
                           <input type="text" id="updatePortfolioImage" class="form-control rounded" placeholder="Image URL" name="updatePortfolioImage" required>
                       </div>
 
-                      <!-- Category -->
+                    
                       <div class="row mb-2">
                         <div class="form-group col-6">
                             <label class="h5-label" for="updatePortfolioCategory">Category</label>
@@ -355,7 +499,7 @@
                                 </select>
                             </div>
                         </div>
-                        <!-- Price -->
+               
                         <div class="form-group col-6">
                             <label class="h5-label" for="updatePortfolioPrice">Price($)</label>
                             <input type="number" id="updatePortfolioPrice" class="form-control rounded" placeholder="Price" name="updatePortfolioPrice" required>
@@ -364,9 +508,9 @@
                     <button id="updatePortfolioBtn" name="updatePortfolioButton" type="submit" class="button   float-right ">Submit</button>
                     <button name="updatePortfolioButton" type="submit" class="button float-left back-portfolio ">Cancel</button><br>
                 </form>
-              <!-- Update project form ends -->
+         
               </div>
-          </div> <!-- Update project page ends -->
+          </div> -->
 
 
           <!--  ===================== REGISTRATION PAGE ============================  -->
