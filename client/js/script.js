@@ -34,7 +34,6 @@ $(document).ready(function(){
   });
 
   // Show and hide pages ===============================================================
-  // Yanas code
 
   //check if there is any session sessionStorage
   if (sessionStorage.username) {
@@ -340,6 +339,12 @@ $('.edit-button').click(function(){
         }
       });
 
+  });
+
+  document.getElementById('canceladdProductForm').addEventListener('click', function() {
+    $('#addProductForm').trigger('reset');
+    $('#uploadProductPage').hide();
+    $('#projectPage').show();
   });
 
   // ===================================================================================
@@ -1013,6 +1018,7 @@ $('.edit-button').click(function(){
 
   // Generate HTML template from account summary and add to #memberAccount div
   function generateAccountSummaryHTML(account) {
+
     //address display fallback if address is not provided
     let street = account.address ? account.address.street : 'N/A';
     let suburb = account.address ? account.address.suburb : 'N/A';
@@ -1027,37 +1033,37 @@ $('.edit-button').click(function(){
 
     document.getElementById('accountPage__memberPhoto').style.backgroundImage = `url(${photoUrl})`;
     document.getElementById('memberAccount').innerHTML =
-          `<div class="flexContainer--col btBorder pb-3">
-            <div class="flexContainer--row flexContainer--row--space-between col-sm-12 mx-auto mt-5">
-              <div class="flexContainer--col col-7">
-                <div class="flexContainer--row mb-3">
-                  <div class="col-4 text-left">Username:</div>
-                  <div class="col-8 text-left">${account.username}</div>
-                </div>
-                <div class="flexContainer--row mb-3">
-                  <div class="col-4 text-left">Email:</div>
-                  <div class="col-8 text-left">${account.email}</div>
-                </div>
-                <div class="flexContainer--row mb-3">
-                  <div class="col-4 text-left">Member since:</div>
-                  <div class="col-8 text-left">${joinedDate}</div>
-                </div>
-              </div>
-              <div class="flexContainer--col col-5">
-                <div class="flexContainer--row flexContainer--row--top mb-3">
-                  <div class="mr-3">Shipping address:</div>
-                  <div class="flexContainer--col">
-                    <p>${street}</p>
-                    <p>${suburb}</p>
-                    <p>${city} ${zip}</p>
-                  </div>
-                </div>
-              </div>
-            </div> 
-            <div>
-              <button id="updateMemberBtn" name="updateMemberBtn" class="button float-right">Edit</button>
-            </div> 
-          </div>`;
+                                                          `<div class="flexContainer--col btBorder pb-3">
+                                                            <div class="flexContainer--row flexContainer--row--space-between col-sm-12 mx-auto mt-5">
+                                                              <div class="flexContainer--col col-7">
+                                                                <div class="flexContainer--row mb-3">
+                                                                  <div class="col-4 text-left">Username:</div>
+                                                                  <div class="col-8 text-left">${account.username}</div>
+                                                                </div>
+                                                                <div class="flexContainer--row mb-3">
+                                                                  <div class="col-4 text-left">Email:</div>
+                                                                  <div class="col-8 text-left">${account.email}</div>
+                                                                </div>
+                                                                <div class="flexContainer--row mb-3">
+                                                                  <div class="col-4 text-left">Member since:</div>
+                                                                  <div class="col-8 text-left">${joinedDate}</div>
+                                                                </div>
+                                                              </div>
+                                                              <div class="flexContainer--col col-5">
+                                                                <div class="flexContainer--row flexContainer--row--top mb-3">
+                                                                  <div class="mr-3">Shipping address:</div>
+                                                                  <div class="flexContainer--col">
+                                                                    <p>${street}</p>
+                                                                    <p>${suburb}</p>
+                                                                    <p>${city} ${zip}</p>
+                                                                  </div>
+                                                                </div>
+                                                              </div>
+                                                            </div> 
+                                                            <div>
+                                                              <button id="updateMemberBtn" name="updateMemberBtn" class="button float-right">Edit</button>
+                                                            </div> 
+                                                          </div>`;
     
     // Show edit user form if Edit user button is clicked
     document.getElementById('updateMemberBtn').addEventListener('click', showEditUserForm);
@@ -1225,32 +1231,28 @@ $('.edit-button').click(function(){
   // Get all portfolios of the currently logged in user from backend
   function generatePersonalList(listType) {
     let currentUserId = JSON.parse(sessionStorage.getItem('currentUser'))._id;
-    console.log(currentUserId);
     if (!currentUserId) { return; }
-
-    console.log('generatePersonalList is called for ', listType);
 
     $.ajax({
       url: `${url}/members/${currentUserId}`,
       type: 'GET',
       success: function(results) {
-        console.log(results[0][listType]);
-            if (results[0][listType].length === 0) {
-              document.getElementById('myProductsDeck').innerHTML =
-                  `<div class="noPortfolio text-center">There is currently no item in your ${getListName(listType)}</div>`;
-              return;
-            }
-            makeProductsCards(results[0][listType], listType);
+                                  if (results[0][listType].length === 0) {
+                                    document.getElementById('myProductsDeck').innerHTML =
+                                        `<div class="noPortfolio text-center">There is currently no item in your ${getListName(listType)}</div>`;
+                                    return;
+                                  }
+                                  makeProductsCards(results[0][listType], listType);
       },
-      error: function(error) {
-            console.log(error);
-      }
+      error: function(error) { console.log(error); }
     });
   }
 
   // helper function to get user-friendly list name
   function getListName(listType) {
+
     let displayedListType; 
+
     switch (listType) {
       case 'purchasedProducts':
         displayedListType = 'purchased list';
@@ -1265,31 +1267,13 @@ $('.edit-button').click(function(){
         displayedListType = 'watchlist';
         break;
     }
+
     return displayedListType;
+
   }
 
   // Map portfolios result into portfolio cards and attach to #myProductsDeck div
   function makeProductsCards(arr, arrType) {
-
-    // template for selling and watchlist products with activity buttons
-//     let activeProductsCard = `
-//     <div class="card border-bottom flexContainer--row">
-//     <div class="productCard__imageContainer">
-//         <div style="background-image:url(${item.photoUrl})"></div>
-//     </div>
-//     <div class="flexContainer--col">
-//         <div class="flexContainer--row">
-//             <div class="productCard__titleContainer">
-//                 <h5>${item.title}</h5>
-//             </div>
-//             <div class="productCard__priceContainer">
-//                 <h5>${item.price}</h5>
-//             </div>
-//         </div>
-//         <div>Sold on 27 May 2020</div>
-//     </div>
-// </div>
-//     `;
 
     if (arrType === 'watchProducts') {
       document.getElementById('myProductsDeck').innerHTML = arr.map(product => 
@@ -1329,7 +1313,6 @@ $('.edit-button').click(function(){
                                                                 .join(' ');
     }
     
-
     
     addListenersToCardButtons();
   }
@@ -1364,32 +1347,49 @@ $('.edit-button').click(function(){
     const _id = (e.target.id).slice(10);
     sessionStorage.setItem('projectOnEdit', _id);
     let currentUser = (JSON.parse(sessionStorage.getItem('currentUser')));
-    console.log(currentUser);
     
     let projectOnEdit = currentUser.sellingProducts.find(product => product._id === _id);
-    console.log(projectOnEdit);
 
+    //pre-fill editProjectForm with project details
+    $('#updateProductForm__title').val(projectOnEdit.title);
+    $('#updateProductForm__author').val(projectOnEdit.author);
+    $('#updateProductForm__category').val(projectOnEdit.category);
+    $('#updateProductForm__description').val(projectOnEdit.description);
+    $('#updateProductForm__format').val(projectOnEdit.format);
+    $('#updateProductForm__condition').val(projectOnEdit.condition);
+    $('#updateProductForm__listedCity').val(projectOnEdit.listedCity);
+    $('#updateProductForm__price').val(projectOnEdit.price);
 
-    $.ajax({
-      url: `${url}/products/${_id}`,
-      type: 'GET',
-      dataType: 'json',
-      success: function(project) {
+    // pre-select shipping checkbox
+    if (projectOnEdit.shipping.includes('Allowed pickup')) {
+      $('#updateProductForm__delivery--pickup').attr('checked', true);
+    }
 
-            //pre-fill editProjectForm with project details
-            $('#updatePortfolioTitle').val(project.title);
-            $('#updatePortfolioDescription').val(project.description);
-            $('#updatePortfolioImage').val(project.image);
-            $('#updatePortfolioCategory').val(project.category);
-            $('#updatePortfolioPrice').val(project.price);
+    if (projectOnEdit.shipping.includes('Post Courier')) {
+      $('#updateProductForm__delivery--courier').attr('checked', true);
+    }
 
-            $('#projectPage').hide();
-            $('#updateProductPage').show();
-      },
-      error: function(error) {
-            console.log(error);
+    //at least 1 delivery option must be chosen
+    let deliveryOpt1Checked = $('#updateProductForm__delivery--pickup').prop('checked');
+    let deliveryOpt2Checked = $('#updateProductForm__delivery--courier').prop('checked');
+
+    if (!deliveryOpt1Checked) {
+      if (!deliveryOpt2Checked) {
+        $('#updateProductForm__missingDelivery').css('display', 'block');
+        return;
       }
-    });
+    }
+
+    // display reminder that user have uploaded a photo
+    if (projectOnEdit.photoUrl.slice(0, 7) !== 'uploads') {
+      $('#updateProductForm__photoUrl').val(projectOnEdit.photoUrl);
+    } else {
+      $('#updateProductForm__uploadedPhoto').css('display', 'block');
+    }
+
+    $('#projectPage').hide();
+    $('#updateProductPage').show();
+
   }
 
   // Submit edited porfolio to backend and re-generate My portfolio section
@@ -1425,6 +1425,12 @@ $('.edit-button').click(function(){
             console.log('error: cannot call api');
       }
     });
+  });
+
+  document.getElementById('cancelUpdateProductForm').addEventListener('click', function() {
+    $('#updateProductForm').trigger('reset');
+    $('#updateProductPage').hide();
+    $('#projectPage').show();
   });
 
 

@@ -655,7 +655,13 @@ footer {
   top: 90%;
 }
 
-#addProductForm__missingDelivery, #addProductForm__missingPhoto {
+#addProductForm__missingDelivery,
+#addProductForm__missingPhoto {
+  display: none;
+}
+
+#updateProductForm__missingDelivery,
+#updateProductForm__uploadedPhoto {
   display: none;
 }
 
