@@ -85,6 +85,21 @@
   &--accordion {
     width: 400px;
   }
+
+  &--iconButton {
+    padding-left: 5px;
+    padding-right: 5px;
+    line-height: 40px;
+    height: 40px;
+
+    &:hover {
+      background-color: white;
+
+      & > svg {
+        fill: $colour-grey;
+      }
+    }
+  }
 }
 
 .buttonLink {

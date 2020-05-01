@@ -1239,7 +1239,7 @@ $('.edit-button').click(function(){
                   `<div class="noPortfolio text-center">There is currently no item in your ${getListName(listType)}</div>`;
               return;
             }
-            makeProductsCards(results[0][listType]);
+            makeProductsCards(results[0][listType], listType);
       },
       error: function(error) {
             console.log(error);
@@ -1289,15 +1289,45 @@ $('.edit-button').click(function(){
 //     </div>
 // </div>
 //     `;
-    document.getElementById('myProductsDeck').innerHTML = arr.map(product => 
-    `<div class="card mb-4 col-sm-12 col-md-4">
-                                                                      <img src="${product.photoUrl}" alt="Avatar" class="mb-5">
-                                                                      <div class="mx-1 my-1">
-                                                                          <h5 class="productCard-title text-center">${product.title}</h5>
-                                                                          <div id="${product._id}" class="viewMoreButton button text-center mx-auto">View</div>
-                                                                      </div>
-                                                                    </div>
-    `).join(' ');
+
+    if (arrType === 'watchProducts') {
+      document.getElementById('myProductsDeck').innerHTML = arr.map(product => 
+                                                                    `<div class="card mb-4 col-sm-12 col-md-4">
+                                                                        <img src="${product.photoUrl}" alt="Avatar" class="mb-3">
+                                                                        <div class="mx-1 my-1">
+                                                                            <h5 class="productCard-title text-center">${product.title}</h5>
+                                                                            <div id="${product._id}" class="viewMoreButton button text-center mx-auto">View</div>
+                                                                        </div>
+                                                                      </div>`)
+                                                                .join(' ');
+    } else if (arrType === 'sellingProducts') {
+      document.getElementById('myProductsDeck').innerHTML = arr.map(product => 
+        `<div class="card mb-4 col-sm-12 col-md-4">
+            <img src="${product.photoUrl}" alt="Avatar" class="mb-3">
+            <div class="mx-1 my-1">
+                <h5 class="productCard-title text-center">${product.title}</h5>
+                <div class="flexContainer--row">
+                  <div id="deleteButton${product._id}" class="deleteButton button button--iconButton text-center mx-auto">
+                    <svg class="icon">
+                        <use xlink:href="images/icons.svg#icon-delete"></use>
+                    </svg>
+                  </div>
+                  <div id="editButton${product._id}" class="editButton button button--iconButton text-center mx-auto">
+                    <svg class="icon">
+                        <use xlink:href="images/icons.svg#icon-edit"></use>
+                    </svg>
+                  </div>
+                  <div id="${product._id}" class="viewMoreButton button button--iconButton text-center mx-auto">
+                    <svg class="icon">
+                        <use xlink:href="images/icons.svg#icon-view"></use>
+                    </svg>
+                  </div>
+                </div>  
+            </div>
+          </div>`)
+    .join(' ');
+    }
+    
 
     
     addListenersToCardButtons();
