@@ -109,7 +109,6 @@ $(document).ready(function(){
   // my portfolio button to show my portfolio page
   $('#myPortfolioBtn').click(function(){
     getMyAccountInfo();
-    generatePersonalList('watchProducts');
     // pages
     $('#projectPage').show();
     $('#signUpPage').hide();
@@ -1238,11 +1237,18 @@ $('.edit-button').click(function(){
       url: `${url}/members/${currentUserId}`,
       type: 'GET',
       success: function(results) {
+                                  removeUploadProductSection();
+
+                                  if (listType === 'sellingProducts') {
+                                    addUploadProductSection();
+                                  }
+
                                   if (results[0][listType].length === 0) {
                                     document.getElementById('myProductsDeck').innerHTML =
-                                        `<div class="noPortfolio text-center">There is currently no item in your ${getListName(listType)}</div>`;
+                                        `<div class="noPortfolio text-center mt-5 pt-5">There is currently no item in your ${getListName(listType)}</div>`;
                                     return;
                                   }
+
                                   makeProductsCards(results[0][listType], listType);
       },
       error: function(error) { console.log(error); }
@@ -1275,7 +1281,6 @@ $('.edit-button').click(function(){
 
   // Map portfolios result into portfolio cards and attach to #myProductsDeck div
   function makeProductsCards(arr, arrType) {
-
     if (arrType === 'watchProducts') {
       document.getElementById('myProductsDeck').innerHTML = arr.map(product => 
                                                                     `<div class="card mb-4 col-sm-12 col-md-4">
@@ -1286,7 +1291,8 @@ $('.edit-button').click(function(){
                                                                         </div>
                                                                       </div>`)
                                                                 .join(' ');
-    } else if (arrType === 'sellingProducts') {
+    } else if (arrType === 'sellingProducts') {    
+      addUploadProductSection();                                         
       document.getElementById('myProductsDeck').innerHTML = arr.map(product => 
                                                                     `<div class="card mb-4 col-sm-12 col-md-4">
                                                                         <img src="${product.photoUrl}" alt="Avatar" class="mb-3">
@@ -1312,36 +1318,7 @@ $('.edit-button').click(function(){
                                                                         </div>
                                                                       </div>`)
                                                                 .join(' ');
-
-                                                                // console.log(document.getElementById('accountPage__uploadProject').querySelector('#addPortfolio'));
-        if (document.getElementById('accountPage__uploadProject').querySelector('#addPortfolio') === null) {
-          document.getElementById('accountPage__uploadProject').innerHTML += 
-                                                                          `<div class="mb-5 mt-3 pb-4 border-blue col-lg-10 col-md-10 col-sm-10 mx-auto text-center">
-                                                                            <div id="addPortfolio" class="button">
-                                                                              <svg class="addPortfolio__icon">
-                                                                                  <use xlink:href="images/icons.svg#icon-plus"></use>
-                                                                              </svg>
-                                                                            </div>
-                                                                          </div>`;
-          
-          //upload projects button to show upload project page
-          $('#addPortfolio').click(function() {
-            $('html, body').animate({ scrollTop: 0 }, 'fast');
-            // pages
-            $('#uploadProductPage').show();
-            $('#projectPage').hide();
-            $('#signUpPage').hide();
-            $('#loginPage').hide();
-            $('#landingPage').hide();
-            $('#viewMorePage').hide();
-            $('#updateProductPage').hide();
-          });
-        }
         
-
-  
-
-
     }
     
     
@@ -1368,6 +1345,42 @@ $('.edit-button').click(function(){
     for (let i = 0; i < deleteButtons.length; i++) {
         deleteButtons[i].addEventListener('click', displayDeletePopup);
     }
+  }
+
+  function addUploadProductSection() {
+    if (document.getElementById('accountPage__uploadProject').querySelector('#addPortfolio') === null) {
+      document.getElementById('accountPage__uploadProject').innerHTML += 
+                                                                      `<div class="mb-5 mt-3 pb-4 border-blue col-lg-10 col-md-10 col-sm-10 mx-auto text-center">
+                                                                        <div id="addPortfolio" class="button">
+                                                                          <svg class="addPortfolio__icon">
+                                                                              <use xlink:href="images/icons.svg#icon-plus"></use>
+                                                                          </svg>
+                                                                        </div>
+                                                                      </div>`;
+      
+      //upload projects button to show upload project page
+      $('#addPortfolio').click(function() {
+        $('html, body').animate({ scrollTop: 0 }, 'fast');
+        // pages
+        $('#uploadProductPage').show();
+        $('#projectPage').hide();
+        $('#signUpPage').hide();
+        $('#loginPage').hide();
+        $('#landingPage').hide();
+        $('#viewMorePage').hide();
+        $('#updateProductPage').hide();
+      });
+    }
+  }
+
+  function removeUploadProductSection() {
+    let uploadProductSection = document.getElementById('accountPage__uploadProject');
+
+    if (uploadProductSection.childNodes[0] !== undefined) {
+      uploadProductSection.innerHTML = '';
+    }
+  
+    return false;
   }
 
 
