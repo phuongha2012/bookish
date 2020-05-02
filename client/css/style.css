@@ -482,9 +482,30 @@ footer {
 }
 
 #myProductsDeck {
-  min-height: 600px;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.myProductsDeck__wrapper {
+  min-height: 400px;
   border: 1px #f5f1ed solid;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1), 0 3px 10px 0 rgba(0, 0, 0, 0.05);
+}
+
+#addPortfolio {
+  margin: 0 auto;
+  height: 10rem;
+  width: 10rem;
+  border: 1px #f1f1f1 solid;
+  border-radius: 50%;
+}
+
+.addPortfolio__icon {
+  width: 5rem;
+  height: 5rem;
+  fill: #f1f1f1;
+  margin-top: 70%;
+  margin-left: -22%;
 }
 
 .landingPage-banner {

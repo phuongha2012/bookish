@@ -30,7 +30,7 @@ $(document).ready(function(){
   $(document).ajaxComplete(function(){
     loadingTimer = setTimeout(function () {
       $(".loader").css("display", "none");
-  }, 1500);
+  }, 500);
   });
 
   // Show and hide pages ===============================================================
@@ -71,6 +71,7 @@ $(document).ready(function(){
   //Home button to show landing page
   $('.home-btn').click(function(){
     // pages
+    generateLandingPageCards();
     $('#landingPage').show();
     $('#viewMorePage').hide();
     $('#loginPage').hide();
@@ -130,7 +131,6 @@ $(document).ready(function(){
     $('#landingPage').hide();
     $('#viewMorePage').hide();
     $('#updateProductPage').hide();
-
   });
 
   // back button to my portfolio page
@@ -384,7 +384,8 @@ $('.edit-button').click(function(){
                                                                           </div>
                                                                       </div>
                                                                     </div>`
-                                                                  ).join(' ');
+                                                                  )
+                                                            .join(' ');
 
     handleProductCardViewMoreButton();
   }
@@ -1311,6 +1312,36 @@ $('.edit-button').click(function(){
                                                                         </div>
                                                                       </div>`)
                                                                 .join(' ');
+
+                                                                // console.log(document.getElementById('accountPage__uploadProject').querySelector('#addPortfolio'));
+        if (document.getElementById('accountPage__uploadProject').querySelector('#addPortfolio') === null) {
+          document.getElementById('accountPage__uploadProject').innerHTML += 
+                                                                          `<div class="mb-5 mt-3 pb-4 border-blue col-lg-10 col-md-10 col-sm-10 mx-auto text-center">
+                                                                            <div id="addPortfolio" class="button">
+                                                                              <svg class="addPortfolio__icon">
+                                                                                  <use xlink:href="images/icons.svg#icon-plus"></use>
+                                                                              </svg>
+                                                                            </div>
+                                                                          </div>`;
+          
+          //upload projects button to show upload project page
+          $('#addPortfolio').click(function() {
+            $('html, body').animate({ scrollTop: 0 }, 'fast');
+            // pages
+            $('#uploadProductPage').show();
+            $('#projectPage').hide();
+            $('#signUpPage').hide();
+            $('#loginPage').hide();
+            $('#landingPage').hide();
+            $('#viewMorePage').hide();
+            $('#updateProductPage').hide();
+          });
+        }
+        
+
+  
+
+
     }
     
     
