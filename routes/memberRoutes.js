@@ -47,9 +47,9 @@ module.exports = (app) => {
         Member.findOne({username:req.body.username},(err,memberResult) => {
         if (memberResult){
             if (bcryptjs.compareSync(req.body.password, memberResult.password)){
-            res.send(memberResult);
+                res.send(memberResult);
             } else {
-            res.send('Not Authorized');
+                res.send('Not Authorized');
             }
         } else {
             res.send('Member not found. Please register!');

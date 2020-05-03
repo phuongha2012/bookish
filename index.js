@@ -39,5 +39,6 @@ app.use(cors());
 require('./routes/memberRoutes')(app);
 require('./routes/productRoutes')(app);
 require('./routes/commentRoutes')(app);
+require('./routes/paymentRoutes')(app);
 
 app.listen(PORT, () => console.log(`Example app listening on port ${PORT}!`))

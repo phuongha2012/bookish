@@ -459,9 +459,7 @@ $('.edit-button').click(function(){
 
   // Get info of the artwork being clicked on from backend
   function getArtworkInfo(e) {
-    console.log(e);
     let id = e.target.id;
-    console.log(id);
 
     $.ajax({
       url: `${url}/products/${id}`,
@@ -554,7 +552,7 @@ $('.edit-button').click(function(){
                                                 return `<div class="flexContainer--col col-sm-12 col-lg-12 col-md-10 my-3">
                                                             <div class="flexContainer--row">
                                                                 <div class="col-sm-3 col-md-2 mb-2">
-                                                                    <div class="viewMorePage__thumbnail viewMorePage__thumbnail--commenter mx-auto" style="background-image:url(${item.commenter.memberPhotoUrl ? item.commenter.memberPhotoUrl : `../images/noavatar.png`})"></div>
+                                                                    <div class="viewMorePage__thumbnail viewMorePage__thumbnail--commenter mx-auto" style="background-image:url(${item.commenter.memberPhotoUrl ? item.commenter.memberPhotoUrl : '../images/noavatar.png'})"></div>
                                                                 </div>
                                                                 <div class="col-sm-9 col-md-10">
                                                                     <small class="comment-info flexContainer--row">
@@ -690,11 +688,11 @@ $('.edit-button').click(function(){
                                                               <div id="viewMorePage__sellerInfo" class="collapse viewMorePage__accordion--content" aria-labelledby="headingOne" data-parent="#accordion">
                                                                 <div class="card-body btBorder btBorder--medium">
                                                                   <div class="flexContainer--col flexContainer--col--centered">
-                                                                      <div class="viewMorePage__thumbnail viewMorePage__thumbnail--seller mb-2" style="background-image:url(${product.sellerInfo.photoUrl})"></div>
+                                                                      <div class="viewMorePage__thumbnail viewMorePage__thumbnail--seller mb-2" style="background-image:url(${product.sellerInfo.photoUrl ? product.sellerInfo.photoUrl : '../images/noavatar.png'})"></div>
                                                                       <span class="mb-3">${product.sellerInfo.username}</span>
                                                                       <div class="flexContainer--row">
                                                                           <small class="color-black mr-1">Location:</small>
-                                                                          <small>${product.sellerInfo.address.city}</small>
+                                                                          <small>${product.sellerInfo.address ? product.sellerInfo.address.city : 'N/A'}</small>
                                                                       </div>
                                                                       <div class="flexContainer--row">
                                                                           <small class="color-black mr-1">Member Since:</small>
@@ -840,7 +838,6 @@ $('.edit-button').click(function(){
             memberPhotoUrl: _photoUrl
       },
       success: function(comment) {
-        console.log(comment);
             $('textarea#viewMorePage-postComment').val('');
             addComment(comment);
       },
@@ -1482,11 +1479,8 @@ $('.edit-button').click(function(){
 
   // If deleteProject buttons clicked, show pop up to reconfirm delete
   function displayDeletePopup(e) {
-    console.log(e);
     let projectId = (e.target.id).slice(12);
-    console.log(projectId);
     sessionStorage.setItem('projectOnDelete', projectId);
-    console.log(sessionStorage);
 
     let idName = `productCard__buttonWrapper${projectId}`;
     let buttonWrapper = document.getElementById(idName);
@@ -1569,9 +1563,22 @@ $('.edit-button').click(function(){
     // Add bgColor to recently clicked button
     $(this).addClass('accountPage__activityBtn--focused');
 
-    console.log($(this).attr('data-value'));
     generatePersonalList($(this).attr('data-value'));
   }
+
+
+  // initialise Stripe.js
+  fetch('/config')
+    .then(function(result) {
+      return result.json();
+    })
+    .then(function(json) {
+      window.config = json;
+      console.log(json);
+      console.log(window.config);
+      const stripe = Stripe(window.config.publicKey);
+      console.log(stripe);
+    });
 
 
 
