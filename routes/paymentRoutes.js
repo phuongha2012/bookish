@@ -27,8 +27,8 @@ module.exports = (app) => {
                     quantity: 1
                 }
             ],
-            success_url: `${domainUrl}/success.html?session_id=`,
-            cancel_url: `${domainUrl}/canceled.html`
+            success_url: `${domainUrl}/paymentSuccess.html?session_id=`,
+            cancel_url: `${domainUrl}/paymentCanceled.html`
         });
 
         res.send({

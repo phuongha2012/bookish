@@ -728,12 +728,14 @@ $('.edit-button').click(function(){
 
     // setup event handler to create a checkout session on submit
     document.querySelector('.buyNowBtn').addEventListener('click', function(e) {
+
       let product = {
         id: (JSON.parse(sessionStorage.getItem('currentProduct')))._id,
         price: (JSON.parse(sessionStorage.getItem('currentProduct'))).price * 1000,
         photoUrl: (JSON.parse(sessionStorage.getItem('currentProduct'))).photoUrl,
         productName: (JSON.parse(sessionStorage.getItem('currentProduct'))).title,
       };
+
       // console.log(sessionStorage);
       createCheckoutSession(product).then(function(data) {
         stripe
@@ -1586,18 +1588,17 @@ $('.edit-button').click(function(){
   }
 
   function createCheckoutSession(product) {
-    $.ajax({
-      url: `${url}/payment/create-checkout-session`,
+    return fetch('/payment/create-checkout-session', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      data: JSON.stringify(product),
-      success: function(result) {
-        console.log('result from createing checkout session: ', result);
-      }
+      body: JSON.stringify(product)
+    }).then(function(result) {
+      return result.json();
     });
   }
+  
 
   function handleResult(result) {
     if (result.error) {
