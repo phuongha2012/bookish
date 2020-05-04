@@ -623,7 +623,7 @@ $('.edit-button').click(function(){
                                                                   ${product.description}
                                                               </p>
                                                               <div class="flexContainer--row float-right mb-5">
-                                                                  <div class="button button--bordered mr-3">Buy Now</div>
+                                                                  <div id="${product._id}" class="buyNowBtn button button--bordered mr-3">Buy Now</div>
                                                                   <div id="watchListWrapper">
                                                                     ${watchListHTML}
                                                                   </div>
@@ -724,6 +724,25 @@ $('.edit-button').click(function(){
                                                       </div>`;
 
     $('html, body').animate({ scrollTop: 0 }, 'fast');
+
+
+    // setup event handler to create a checkout session on submit
+    document.querySelector('.buyNowBtn').addEventListener('click', function(e) {
+      let product = {
+        id: (JSON.parse(sessionStorage.getItem('currentProduct')))._id,
+        price: (JSON.parse(sessionStorage.getItem('currentProduct'))).price * 1000,
+        photoUrl: (JSON.parse(sessionStorage.getItem('currentProduct'))).photoUrl,
+        productName: (JSON.parse(sessionStorage.getItem('currentProduct'))).title,
+      };
+      // console.log(sessionStorage);
+      createCheckoutSession(product).then(function(data) {
+        stripe
+          .redirectToCheckout({
+            sessionId: data.sessionId
+          })
+          .then(handleResult);
+      });
+    });
 
 
     // If product is in current user watchlist, display inWatchlist icon
@@ -1566,8 +1585,24 @@ $('.edit-button').click(function(){
     generatePersonalList($(this).attr('data-value'));
   }
 
-  function createCheckoutSession() {
-    
+  function createCheckoutSession(product) {
+    $.ajax({
+      url: `${url}/payment/create-checkout-session`,
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      data: JSON.stringify(product),
+      success: function(result) {
+        console.log('result from createing checkout session: ', result);
+      }
+    });
+  }
+
+  function handleResult(result) {
+    if (result.error) {
+      console.log(result.error.message);
+    }
   }
 
 
@@ -1579,7 +1614,6 @@ $('.edit-button').click(function(){
     .then(function(json) {
       window.config = json;
       const stripe = Stripe(window.config.publicKey);
-      console.log(stripe);
     });
 
 

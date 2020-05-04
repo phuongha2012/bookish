@@ -10,17 +10,19 @@ module.exports = (app) => {
 
     app.post('/payment/create-checkout-session', async (req, res) => {
         const domainUrl = keys.DOMAIN;
+        const { id, productName, price, photoUrl } = req.body
         const imagesArr = [];
-        imagesArr.push(req.body.photoUrl);
-        console.log(req.body.price);
+        imagesArr.push(photoUrl);
+
+        
 
         const session = await stripe.checkout.sessions.create({
             payment_method_types: ['card'],
             line_items: [
                 {
-                    name: req.body.productName,
+                    name: productName,
                     images: imagesArr,
-                    amount: req.body.price,
+                    amount: price,
                     currency: 'nzd',
                     quantity: 1
                 }
