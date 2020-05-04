@@ -2,6 +2,7 @@ $(document).ready(function(){
 
   $('html, body').animate({ scrollTop: 0 }, 'fast');
   sessionStorage.clear();
+  console.log(sessionStorage);
   let url;
 
   // Get server config data
@@ -623,7 +624,7 @@ $('.edit-button').click(function(){
                                                                   ${product.description}
                                                               </p>
                                                               <div class="flexContainer--row float-right mb-5">
-                                                                  <div id="${product._id}" class="buyNowBtn button button--bordered mr-3">Buy Now</div>
+                                                                  <a id="${product._id}" tabindex="0" class="buyNowBtn button button--bordered mr-3 popOver" role="button" data-toggle="popover" data-trigger="focus" data-content="Please login to buy this book">Buy Now</a>
                                                                   <div id="watchListWrapper">
                                                                     ${watchListHTML}
                                                                   </div>
@@ -725,6 +726,8 @@ $('.edit-button').click(function(){
 
     $('html, body').animate({ scrollTop: 0 }, 'fast');
 
+    // Initialise inWatchlist tooltip
+    $('.buyNowBtn').popover();
 
     // setup event handler to create a checkout session on submit
     function createCheckoutSession(product) {
@@ -757,28 +760,30 @@ $('.edit-button').click(function(){
         const stripe = Stripe(window.config.publicKey);
         document.querySelector('.buyNowBtn').addEventListener('click', function(e) {
 
-          let product = {
-            id: (JSON.parse(sessionStorage.getItem('currentProduct')))._id,
-            price: (JSON.parse(sessionStorage.getItem('currentProduct'))).price * 100,
-            photoUrl: (JSON.parse(sessionStorage.getItem('currentProduct'))).photoUrl,
-            productName: (JSON.parse(sessionStorage.getItem('currentProduct'))).title,
-          };
-    
-          // console.log(sessionStorage);
-          createCheckoutSession(product).then(function(data) {
-            stripe
-              .redirectToCheckout({
-                sessionId: data.sessionId
-              })
-              .then(handleResult);
-          });
+          if (!currentUser) {
+            $('.buyNowBtn').popover('show');
+          } else {
+            $('.buyNowBtn').popover('hide');
+
+            let product = {
+              id: (JSON.parse(sessionStorage.getItem('currentProduct')))._id,
+              price: (JSON.parse(sessionStorage.getItem('currentProduct'))).price * 100,
+              photoUrl: (JSON.parse(sessionStorage.getItem('currentProduct'))).photoUrl,
+              productName: (JSON.parse(sessionStorage.getItem('currentProduct'))).title,
+              customerEmail: (JSON.parse(sessionStorage.getItem('currentUser'))).email,
+            };
+      
+            // console.log(sessionStorage);
+            createCheckoutSession(product).then(function(data) {
+              stripe
+                .redirectToCheckout({
+                  sessionId: data.sessionId
+                })
+                .then(handleResult);
+            });
+          }  
         });
-
       });
-
-
-    
-
 
     // If product is in current user watchlist, display inWatchlist icon
     if(currentUser && currentUser.watchlist.includes(product._id)) {
@@ -797,9 +802,9 @@ $('.edit-button').click(function(){
     function addToWatchlist() {
         if (!currentUser) {
             $('.addToWatchButton').popover('show');
-        }
-        else {
+        } else {
           $('.addToWatchButton').popover('hide');
+
           $.ajax({
             url: `${url}/members/${currentUser._id}/watchlist/add`,
             type: 'PATCH',

@@ -9,7 +9,7 @@ module.exports = (app) => {
     })
 
     // Fetch the Checkout Session to display the JSON result on the success page
-    app.get('/checkout-session', async (req, res) => {
+    app.get('/payment/checkout-session', async (req, res) => {
         const { sessionId } = req.query;
         const session = await stripe.checkout.sessions.retrieve(sessionId);
         res.send(session);
@@ -17,7 +17,7 @@ module.exports = (app) => {
 
     app.post('/payment/create-checkout-session', async (req, res) => {
         const domainUrl = keys.DOMAIN;
-        const { id, productName, price, photoUrl } = req.body
+        const { id, productName, price, photoUrl, customerEmail } = req.body
         const imagesArr = [];
         imagesArr.push(photoUrl);
 
@@ -25,6 +25,7 @@ module.exports = (app) => {
 
         const session = await stripe.checkout.sessions.create({
             payment_method_types: ['card'],
+            customer_email: customerEmail,
             line_items: [
                 {
                     name: productName,
