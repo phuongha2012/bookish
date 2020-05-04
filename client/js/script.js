@@ -1566,16 +1566,18 @@ $('.edit-button').click(function(){
     generatePersonalList($(this).attr('data-value'));
   }
 
+  function createCheckoutSession() {
+    
+  }
+
 
   // initialise Stripe.js
-  fetch('/config')
+  fetch('/payment/config')
     .then(function(result) {
       return result.json();
     })
     .then(function(json) {
       window.config = json;
-      console.log(json);
-      console.log(window.config);
       const stripe = Stripe(window.config.publicKey);
       console.log(stripe);
     });
