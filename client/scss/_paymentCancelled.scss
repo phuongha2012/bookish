@@ -1,0 +1,11 @@
+.contentWrapper {
+    height: 300px;
+    margin-top: 25vh;
+    position: relative;
+
+    & > button {
+        position: absolute;
+        left: 35%;
+    }
+}
+

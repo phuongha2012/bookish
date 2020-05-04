@@ -686,4 +686,19 @@ footer {
   display: none;
 }
 
+#updateProductForm__missingDelivery,
+#updateProductForm__uploadedPhoto {
+  display: none;
+}
+
+.contentWrapper {
+  height: 300px;
+  margin-top: 25vh;
+  position: relative;
+}
+.contentWrapper > button {
+  position: absolute;
+  left: 35%;
+}
+
 /*# sourceMappingURL=style.css.map */

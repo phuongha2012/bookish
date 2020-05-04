@@ -12,9 +12,21 @@
 
   <body>
 
-    <div class="container py-5 px-5 mx-auto">
-        <h1 class="mx-auto">Your payment has been canceled</h1>
-        <button class="button" onclick="window.location.href = '/';">Back to Home</button>
+    <div class="container">
+        <div class="contentWrapper col-sm-12 col-md-8 mx-auto">
+            <div class="logo mx-auto mt-5 mb-5">
+                <a href="index.html"></a>
+                <svg class="logo__icon">
+                    <use xlink:href="images/icons.svg#icon-books"></use>
+                </svg>
+                <h3>
+                    Bookish
+                </h3>
+            </div>
+            <h1 class="text-center">Your payment has been cancelled</h1>
+            <button class="button mt-5" onclick="window.location.href = '/';">Back to Home</button>
+        </div>
+        
     </div>
 
     <script src="node_modules/jquery/dist/jquery.min.js"></script>
