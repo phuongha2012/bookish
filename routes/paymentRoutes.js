@@ -8,6 +8,13 @@ module.exports = (app) => {
         })
     })
 
+    // Fetch the Checkout Session to display the JSON result on the success page
+    app.get('/checkout-session', async (req, res) => {
+        const { sessionId } = req.query;
+        const session = await stripe.checkout.sessions.retrieve(sessionId);
+        res.send(session);
+    });
+
     app.post('/payment/create-checkout-session', async (req, res) => {
         const domainUrl = keys.DOMAIN;
         const { id, productName, price, photoUrl } = req.body
@@ -27,8 +34,8 @@ module.exports = (app) => {
                     quantity: 1
                 }
             ],
-            success_url: `${domainUrl}/paymentSuccess.html?session_id=`,
-            cancel_url: `${domainUrl}/paymentCanceled.html`
+            success_url: `${domainUrl}/paymentSuccess.html?session_id={CHECKOUT_SESSION_ID}`,
+            cancel_url: `${domainUrl}/paymentCancelled.html`
         });
 
         res.send({

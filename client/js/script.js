@@ -727,24 +727,57 @@ $('.edit-button').click(function(){
 
 
     // setup event handler to create a checkout session on submit
-    document.querySelector('.buyNowBtn').addEventListener('click', function(e) {
-
-      let product = {
-        id: (JSON.parse(sessionStorage.getItem('currentProduct')))._id,
-        price: (JSON.parse(sessionStorage.getItem('currentProduct'))).price * 1000,
-        photoUrl: (JSON.parse(sessionStorage.getItem('currentProduct'))).photoUrl,
-        productName: (JSON.parse(sessionStorage.getItem('currentProduct'))).title,
-      };
-
-      // console.log(sessionStorage);
-      createCheckoutSession(product).then(function(data) {
-        stripe
-          .redirectToCheckout({
-            sessionId: data.sessionId
-          })
-          .then(handleResult);
+    function createCheckoutSession(product) {
+      return fetch('/payment/create-checkout-session', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(product)
+      }).then(function(result) {
+        return result.json();
       });
-    });
+    }
+    
+  
+    function handleResult(result) {
+      if (result.error) {
+        console.log(result.error.message);
+      }
+    }
+  
+  
+    // initialise Stripe.js
+    fetch('/payment/config')
+      .then(function(result) {
+        return result.json();
+      })
+      .then(function(json) {
+        window.config = json;
+        const stripe = Stripe(window.config.publicKey);
+        document.querySelector('.buyNowBtn').addEventListener('click', function(e) {
+
+          let product = {
+            id: (JSON.parse(sessionStorage.getItem('currentProduct')))._id,
+            price: (JSON.parse(sessionStorage.getItem('currentProduct'))).price * 100,
+            photoUrl: (JSON.parse(sessionStorage.getItem('currentProduct'))).photoUrl,
+            productName: (JSON.parse(sessionStorage.getItem('currentProduct'))).title,
+          };
+    
+          // console.log(sessionStorage);
+          createCheckoutSession(product).then(function(data) {
+            stripe
+              .redirectToCheckout({
+                sessionId: data.sessionId
+              })
+              .then(handleResult);
+          });
+        });
+
+      });
+
+
+    
 
 
     // If product is in current user watchlist, display inWatchlist icon
@@ -1586,37 +1619,6 @@ $('.edit-button').click(function(){
 
     generatePersonalList($(this).attr('data-value'));
   }
-
-  function createCheckoutSession(product) {
-    return fetch('/payment/create-checkout-session', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(product)
-    }).then(function(result) {
-      return result.json();
-    });
-  }
-  
-
-  function handleResult(result) {
-    if (result.error) {
-      console.log(result.error.message);
-    }
-  }
-
-
-  // initialise Stripe.js
-  fetch('/payment/config')
-    .then(function(result) {
-      return result.json();
-    })
-    .then(function(json) {
-      window.config = json;
-      const stripe = Stripe(window.config.publicKey);
-    });
-
 
 
 }); // Document ready ends
