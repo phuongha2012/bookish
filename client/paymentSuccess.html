@@ -61,7 +61,30 @@
           .catch(function (err) {
             console.log('Error when fetching Checkout session', err);
           });
-      }
+      };
+      // update product as sold and corresponding seller/ buyer
+      
+      (() => {
+        return fetch('/products/')
+      })();
+
+
     </script>
   </body>
 </html>
+
+
+
+
+// setup event handler to create a checkout session on submit
+    function createCheckoutSession(product) {
+      return fetch('/payment/create-checkout-session', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(product)
+      }).then(function(result) {
+        return result.json();
+      });
+    }

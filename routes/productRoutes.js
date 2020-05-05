@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const upload = require('../middlewares/multer');
 
 const Product = require('../models/product.js');
+const Member = require('../models/member.js');
 
 module.exports = (app) => {
 
@@ -182,6 +183,106 @@ module.exports = (app) => {
         } else {
             res.send('Sorry, there is no artwork that matches your search!')
         }
+    });
+
+    // If a product is sold, mark isActive to false and update corresponding buyer/ seller Member records
+    app.patch('/products/:id/isSold', async (req, res) => {
+        const productId = req.params.id;
+        const { buyerId, sellerId } = req.body;
+
+        const updatedProductField = { isActive: false };
+
+        const [updatedProduct, updatedBuyer, updatedSeller] = await Promise.all([
+                                                                                Product.findByIdAndUpdate(productId,
+                                                                                                                    { $set: updatedProductField },
+                                                                                                                    { upsert: true, new: true }
+                                                                                                                    // (err, result) => {
+                                                                                                                    //                 if (err) res.send(err);
+                                                                                                                    //                 res.send({
+                                                                                                                    //                     _id: result._id,
+                                                                                                                    //                     title: result.title,
+                                                                                                                    //                     isActive: result.isActive,
+                                                                                                                    //                     author: result.author,
+                                                                                                                    //                     description: result.description,
+                                                                                                                    //                     photoUrl: result.photoUrl,
+                                                                                                                    //                     category: result.category,
+                                                                                                                    //                     price: result.price,
+                                                                                                                    //                     condition: result.condition,
+                                                                                                                    //                     listedCity: result.listedCity,
+                                                                                                                    //                     format: result.format,
+                                                                                                                    //                     shipping: result.shipping,
+                                                                                                                    //                     seller: result.seller
+                                                                                                                    //                 })
+                                                                                // }
+                                                                                ),
+                                                                                Member.findByIdAndUpdate(buyerId, { $push: { purchased: productId } }),
+                                                                                Member.findByIdAndUpdate(sellerId, { $push: { sold: productId } })
+        ])
+
+        console.log([updatedProduct, updatedBuyer, updatedSeller]);
+
+
     })
 
 }
+
+
+
+
+
+
+
+
+
+// Add a product to member's watchlist
+app.patch('/members/:id/watchlist/add/', (req, res) => {
+    const _memberId = req.params.id;
+
+    let productId = req.body.productId;
+
+    Member.findByIdAndUpdate(_memberId, { $push: { watchlist: productId }})
+            .then(result => res.send(result))
+            .catch(err => res.send("Error adding product to watchlist: " + err))
+})
+
+
+
+ // Update a product
+ app.patch('/products/:id/update', (req, res) => {
+    const _id = req.params.id;
+    const updatedProject = {
+                            title : req.body.title,
+                            author: req.body.author,
+                            description : req.body.description,
+                            photoUrl : req.body.photoUrl,
+                            category : req.body.category,
+                            price : req.body.price,
+                            condition : req.body.condition,
+                            listedCity : req.body.listedCity,
+                            format : req.body.format,
+                            shipping: req.body.shipping,
+                            seller : req.body.seller
+    };
+
+    Product.findByIdAndUpdate(_id, 
+                                    { $set: updatedProject }, 
+                                    { upsert: true, new: true }, 
+                                    (err, result) => {
+                                                        if (err) res.send(err);
+                                                        res.send({
+                                                            _id: result._id,
+                                                            title: result.title,
+                                                            author: result.author,
+                                                            description: result.description,
+                                                            photoUrl: result.photoUrl,
+                                                            category: result.category,
+                                                            price: result.price,
+                                                            condition: result.condition,
+                                                            listedCity: result.listedCity,
+                                                            format: result.format,
+                                                            shipping: result.shipping,
+                                                            seller: result.seller
+                                                        })
+            })
+            .catch(err => res.send(err));
+})
