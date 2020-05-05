@@ -43,8 +43,8 @@
       </div>
     </div>
     <script>
-      var urlParams = new URLSearchParams(window.location.search);
-      var sessionId = urlParams.get('session_id');
+      let urlParams = new URLSearchParams(window.location.search);
+      let sessionId = urlParams.get('session_id');
       if (sessionId) {
         fetch('/payment/checkout-session?sessionId=' + sessionId)
           .then(function (result) {
@@ -56,35 +56,39 @@
             document.getElementById('seller').innerHTML = session.display_items[0].custom.description;
             document.getElementById('imageContainer').style.backgroundImage = `url(${session.display_items[0].custom.images[0]})`;
 
-            console.log(sessionStorage);
+            markSoldProduct();
+            sessionStorage.removeItem('currentProduct');
           })
           .catch(function (err) {
             console.log('Error when fetching Checkout session', err);
           });
       };
-      // update product as sold and corresponding seller/ buyer
+
       
-      (() => {
-        return fetch('/products/')
-      })();
 
+      // update product as sold and corresponding seller/ buyer
+      async function markSoldProduct() {
+        const currentProduct = JSON.parse(sessionStorage.getItem('currentProduct'));
 
+        let partiesInfo = {
+          buyerId: (JSON.parse(sessionStorage.getItem('currentUser')))._id,
+          sellerId: currentProduct.seller
+        };
+
+        let result = await fetch(`/products/${currentProduct._id}/isSold`, {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(partiesInfo)
+        }).then(function(response) {
+          return response.json();
+        }).then(function(result) {
+          sessionStorage.setItem('currentUser', JSON.stringify(result));
+        }).catch(err => console.log(err));
+
+        return result;
+      }
     </script>
   </body>
 </html>
-
-
-
-
-// setup event handler to create a checkout session on submit
-    function createCheckoutSession(product) {
-      return fetch('/payment/create-checkout-session', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(product)
-      }).then(function(result) {
-        return result.json();
-      });
-    }
