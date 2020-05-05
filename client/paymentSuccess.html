@@ -11,46 +11,28 @@
   </head>
 
   <body>
-    <div class="sr-root">
-      <div class="sr-main">
-        <header class="sr-header">
-          <div class="sr-header__logo"></div>
-        </header>
-        <div class="sr-payment-summary completed-view">
-          <h1>Your payment succeeded</h1>
-          <h4>
-            View CheckoutSession response:
-          </h4>
-        </div>
-        <div class="sr-section completed-view">
-          <div class="sr-callout">
-            <pre></pre>
+    <div class="container successPageWrapper">
+      <div class="flexContainer--row">
+        <div class="flexContainer--col flexContainer--col--centered col-sm-12 col-md-4">
+          <div class="logo logo--small mx-auto mt-5 mb-5">
+              <a href="index.html"></a>
+              <svg class="logo__icon logo__icon--small">
+                  <use xlink:href="images/icons.svg#icon-books"></use>
+              </svg>
+              <h5>
+                  Bookish
+              </h5>
           </div>
-          <button onclick="window.location.href = '/';">Restart demo</button>
+          <h3 id="title" class="mb-2"></h3>
+          <p class="mb-2">NZ&dollar;<span id="price"></span></p>
+          <p class="mb-5">Seller: <span id="seller"></span></p>
+          <div id="imageContainer" class="mb-3"></div>
         </div>
-      </div>
-      <div class="sr-content">
-        <div class="pasha-image-stack">
-          <img
-            src="https://picsum.photos/280/320?random=1"
-            width="140"
-            height="160"
-          />
-          <img
-            src="https://picsum.photos/280/320?random=2"
-            width="140"
-            height="160"
-          />
-          <img
-            src="https://picsum.photos/280/320?random=3"
-            width="140"
-            height="160"
-          />
-          <img
-            src="https://picsum.photos/280/320?random=4"
-            width="140"
-            height="160"
-          />
+        <div class="flexContainer--col flexContainer--col--centered col-sm-12 col-md-8">
+          <img src="images/thankyou.png" class="thankyou mb-5" alt="thank you">
+          <!-- <h3>Thank you</h3> -->
+          <p class="text-center">Your payment has been successful. The seller will receive a confirmation of your payment and will process your order immediately</p>
+          <button class="button mt-5" onclick="window.location.href = '/';">Back to Home</button>
         </div>
       </div>
     </div>
@@ -58,13 +40,16 @@
       var urlParams = new URLSearchParams(window.location.search);
       var sessionId = urlParams.get('session_id');
       if (sessionId) {
-        fetch('/checkout-session?sessionId=' + sessionId)
+        fetch('/payment/checkout-session?sessionId=' + sessionId)
           .then(function (result) {
             return result.json();
           })
           .then(function (session) {
-            var sessionJSON = JSON.stringify(session, null, 2);
-            document.querySelector('pre').textContent = sessionJSON;
+            console.log(session);
+            document.getElementById('title').innerHTML = session.display_items[0].custom.name;
+            document.getElementById('price').innerHTML = session.display_items[0].amount / 100;
+            document.getElementById('seller').innerHTML = session.display_items[0].custom.description;
+            document.getElementById('imageContainer').style.backgroundImage = `url(${session.display_items[0].custom.images[0]})`;
           })
           .catch(function (err) {
             console.log('Error when fetching Checkout session', err);

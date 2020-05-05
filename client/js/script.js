@@ -1,7 +1,7 @@
 $(document).ready(function(){
 
   $('html, body').animate({ scrollTop: 0 }, 'fast');
-  sessionStorage.clear();
+  // sessionStorage.clear();
   console.log(sessionStorage);
   let url;
 
@@ -36,15 +36,18 @@ $(document).ready(function(){
 
   // Show and hide pages ===============================================================
 
+  let currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
+
   //check if there is any session sessionStorage
-  if (sessionStorage.username) {
+  if (currentUser) {
     // buttons
     $('#logoutBtn').show();
     $('.home-btn').show();
     $('#myPortfolioBtn').show();
     $('#loginBtn').hide();
     $('#signUpBtn').hide();
-    showMemberName(sessionStorage.username);
+    $('#authBtnGroup-question').hide();
+    // showMemberName(currentUser.username);
     // pages
     $('#landingPage').show();
     $('#viewMorePage').hide();
@@ -766,11 +769,12 @@ $('.edit-button').click(function(){
             $('.buyNowBtn').popover('hide');
 
             let product = {
-              id: (JSON.parse(sessionStorage.getItem('currentProduct')))._id,
+              productId: (JSON.parse(sessionStorage.getItem('currentProduct')))._id,
               price: (JSON.parse(sessionStorage.getItem('currentProduct'))).price * 100,
               photoUrl: (JSON.parse(sessionStorage.getItem('currentProduct'))).photoUrl,
               productName: (JSON.parse(sessionStorage.getItem('currentProduct'))).title,
               customerEmail: (JSON.parse(sessionStorage.getItem('currentUser'))).email,
+              seller: (JSON.parse(sessionStorage.getItem('currentProduct'))).sellerInfo.username
             };
       
             // console.log(sessionStorage);
