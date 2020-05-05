@@ -14,6 +14,8 @@
     <div class="container successPageWrapper">
       <div class="flexContainer--row">
         <div class="flexContainer--col flexContainer--col--centered col-sm-12 col-md-4">
+
+          <!-- app logo -->
           <div class="logo logo--small mx-auto mt-5 mb-5">
               <a href="index.html"></a>
               <svg class="logo__icon logo__icon--small">
@@ -23,17 +25,21 @@
                   Bookish
               </h5>
           </div>
-          <h3 id="title" class="mb-2"></h3>
+
+          <!-- product summary  -->
+          <h3 id="title" class="mb-5"></h3>
           <p class="mb-2">NZ&dollar;<span id="price"></span></p>
           <p class="mb-5">Seller: <span id="seller"></span></p>
           <div id="imageContainer" class="mb-3"></div>
         </div>
+
+        <!-- successful payment display -->
         <div class="flexContainer--col flexContainer--col--centered col-sm-12 col-md-8">
           <img src="images/thankyou.png" class="thankyou mb-5" alt="thank you">
-          <!-- <h3>Thank you</h3> -->
           <p class="text-center">Your payment has been successful. The seller will receive a confirmation of your payment and will process your order immediately</p>
           <button class="button mt-5" onclick="window.location.href = '/';">Back to Home</button>
         </div>
+
       </div>
     </div>
     <script>
@@ -45,11 +51,12 @@
             return result.json();
           })
           .then(function (session) {
-            console.log(session);
             document.getElementById('title').innerHTML = session.display_items[0].custom.name;
             document.getElementById('price').innerHTML = session.display_items[0].amount / 100;
             document.getElementById('seller').innerHTML = session.display_items[0].custom.description;
             document.getElementById('imageContainer').style.backgroundImage = `url(${session.display_items[0].custom.images[0]})`;
+
+            console.log(sessionStorage);
           })
           .catch(function (err) {
             console.log('Error when fetching Checkout session', err);

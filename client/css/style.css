@@ -717,6 +717,7 @@ footer {
   height: 200px;
   width: 160px;
   background-repeat: no-repeat;
+  background-size: contain;
 }
 
 .thankyou {

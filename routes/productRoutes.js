@@ -15,6 +15,7 @@ module.exports = (app) => {
 
         const product = new Product({
                                     _id : new mongoose.Types.ObjectId,
+                                    isActive: true,
                                     title : req.body.title,
                                     author: req.body.author,
                                     description : req.body.description,
@@ -108,6 +109,7 @@ module.exports = (app) => {
     // Return all products with corresponding sellers information
     app.get('/products', async (req, res) => {
         let query = await Product.aggregate([
+                                                { $match: { isActive: true }},
                                                 { $lookup: {
                                                             from: "members",
                                                             localField: "seller",

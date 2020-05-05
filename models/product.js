@@ -3,6 +3,7 @@ const Schema = mongoose.Schema;
 
 const productSchema = new Schema({
     _id : Schema.Types.ObjectId,
+    isActive: Boolean,
     title : String,
     author: String,
     description : String,
