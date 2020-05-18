@@ -1183,6 +1183,12 @@ $('.edit-button').click(function(){
 
   // Generate edit user form HTML and replace account summary with this in #memberAccount div
   function makeEditUserForm() {
+
+    let account = JSON.parse(sessionStorage.getItem('currentUser'));
+
+    // joined date display fallback
+    let joinedDate = (account.joinedDate.length === 29) ? (formatDate(account.joinedDate)).slice(3, 16) : formatDate(account.joinedDate);
+
     document.getElementById('memberAccount').innerHTML =
                                                         `<form id="editUserForm">
                                                             <div class="flexContainer--row flexContainer--row--space-between col-sm-12 mx-auto mt-5">
@@ -1199,7 +1205,7 @@ $('.edit-button').click(function(){
                                                                   </div>
                                                                   <div class="flexContainer--row mb-3">
                                                                     <div class="col-4 text-left">Member since:</div>
-                                                                    <div class="col-8 text-left">${(formatDate(JSON.parse(sessionStorage.getItem('currentUser')).joinedDate)).slice(3, 16)}</div>
+                                                                    <div class="col-8 text-left">${joinedDate}</div>
                                                                   </div>
                                                                 </div>
                                                                 <div class="flexContainer--col col-6 ml-auto">
