@@ -196,7 +196,9 @@ module.exports = (app) => {
                                                                                                                     { $set: updatedProductField },
                                                                                                                     { upsert: true, new: true }),
                                                                                 Member.findByIdAndUpdate(buyerId, { $push: { purchased: productId } }),
-                                                                                Member.findByIdAndUpdate(sellerId, { $push: { sold: productId } })
+                                                                                Member.findByIdAndUpdate(sellerId, 
+                                                                                                                    { $push: { sold: productId } },
+                                                                                                                    { $pop: { selling: productId } })
         ])
 
         res.send(updatedBuyer);

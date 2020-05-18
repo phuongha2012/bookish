@@ -1304,6 +1304,7 @@ $('.edit-button').click(function(){
       type: 'GET',
       success: function(results) {
                                   removeUploadProductSection();
+                                  console.log(results);
 
                                   if (listType === 'sellingProducts') {
                                     addUploadProductSection();
@@ -1347,7 +1348,7 @@ $('.edit-button').click(function(){
 
   // Map portfolios result into portfolio cards and attach to #myProductsDeck div
   function makeProductsCards(arr, arrType) {
-    if (arrType === 'watchProducts') {
+    if (arrType === 'watchProducts' || arrType === 'soldProducts' || arrType === 'purchasedProducts') {
       document.getElementById('myProductsDeck').innerHTML = arr.map(product => 
                                                                     `<div class="card mb-4 col-sm-12 col-md-4">
                                                                         <img src="${product.photoUrl}" alt="Avatar" class="mb-3">
