@@ -106,8 +106,13 @@ module.exports = (app) => {
                                             }},
                                             { $lookup: {
                                                         from: 'products',
-                                                        localField: '_id',
-                                                        foreignField: 'seller',
+                                                        let: { 'sellerId': '$id' }, // define sellerId variable with value from aggregating table (member) to refer to in pipeline
+                                                        pipeline: [
+                                                            { $match: {
+                                                                $expr: { $eq: [ '$seller', '$$sellerId' ]},
+                                                                'isActive': false
+                                                            }}
+                                                        ],
                                                         as: 'sellingProducts'
                                             }}
         ]).catch(err => console.log(err));
