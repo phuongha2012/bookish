@@ -362,6 +362,7 @@ $('.edit-button').click(function(){
       type: 'GET',
       dataType: 'json',
       success: function(products) {
+            hideOverlay();
             makeProductCards(products);
       },
       error: function(error) {
@@ -475,6 +476,10 @@ $('.edit-button').click(function(){
             $("#viewMorePage").show();
             $("#projectPage").hide();
             $("#landingPage").hide();
+
+            if (!product[0].isActive) {
+              showOverlay();
+            }
 
             if (product[0].comments.length === 0) {
                 document.getElementById('viewMorePage-comments').innerHTML =
@@ -1045,6 +1050,17 @@ $('.edit-button').click(function(){
 		else { return `on ${month} ${day} ${year} at ${hour}:${minute}${AMPM}`; }
   }
 
+  // functions to show/ hide overlay for no longer active product in viewMorePage
+  function showOverlay() {
+    document.getElementById('overlay').style.display = "block";
+    document.getElementById('overlay__text').style.display = "block";
+  }
+
+  function hideOverlay() {
+    document.getElementById('overlay').style.display = "none";
+    document.getElementById('overlay__text').style.display = "none";
+  }
+
 
   // ===================================================================================
   // ============================= MANAGE ACCOUNT PAGE ====================================
@@ -1066,6 +1082,7 @@ $('.edit-button').click(function(){
       dataType: 'json',
       success: function(result) {
             sessionStorage.setItem('currentUser', JSON.stringify(result[0]));
+            hideOverlay();
             generateAccountSummaryHTML(result[0]);
             generatePersonalList('watchProducts');
             document.getElementById('accountPage__watchlistButton').classList.add('accountPage__activityBtn--focused');
