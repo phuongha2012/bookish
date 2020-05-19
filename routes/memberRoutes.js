@@ -106,11 +106,11 @@ module.exports = (app) => {
                                             }},
                                             { $lookup: {
                                                         from: 'products',
-                                                        let: { 'sellerId': '$id' }, // define sellerId variable with value from aggregating table (member) to refer to in pipeline
+                                                        let: { 'sellerId': '$_id' }, // define sellerId variable with value from aggregating table (member) to refer to in pipeline
                                                         pipeline: [
                                                             { $match: {
-                                                                $expr: { $eq: [ '$seller', '$$sellerId' ]},
-                                                                'isActive': false
+                                                                $expr: { $eq: [ '$seller', { $toObjectId: '$$sellerId'} ]},
+                                                                'isActive': true
                                                             }}
                                                         ],
                                                         as: 'sellingProducts'
