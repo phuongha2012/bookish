@@ -1084,8 +1084,7 @@ $('.edit-button').click(function(){
             sessionStorage.setItem('currentUser', JSON.stringify(result[0]));
             hideOverlay();
             generateAccountSummaryHTML(result[0]);
-            generatePersonalList('watchProducts');
-            document.getElementById('accountPage__watchlistButton').classList.add('accountPage__activityBtn--focused');
+            changeBtnBgColor(); /* set background color for activity button that is being focused */
       },
       error: function(error) {
             console.log(error);
@@ -1311,17 +1310,22 @@ $('.edit-button').click(function(){
 
   // DISPLAY CURRENT USER'S ALL PROJECTS
 
-  // Get all portfolios of the currently logged in user from backend
-  function generatePersonalList(listType) {
+  // Get all products of the currently logged in user from backend
+  function generatePersonalList(list) {
     let currentUserId = JSON.parse(sessionStorage.getItem('currentUser'))._id;
     if (!currentUserId) { return; }
+
+    let listType = (list === undefined) ? 'watchProducts' : list;
 
     $.ajax({
       url: `${url}/members/${currentUserId}`,
       type: 'GET',
       success: function(results) {
                                   removeUploadProductSection();
-                                  console.log(results);
+
+                                  if (listType === 'watchProducts') {
+                                    document.getElementById('accountPage__watchlistButton').classList.add('accountPage__activityBtn--focused');
+                                  }
 
                                   if (listType === 'sellingProducts') {
                                     addUploadProductSection();
@@ -1636,10 +1640,10 @@ $('.edit-button').click(function(){
   let activitiyButtons = document.getElementsByClassName('accountPage__activityBtn');
 
   for (let i = 0; i < activitiyButtons.length; i++) {
-    activitiyButtons[i].addEventListener('click', changeBgColor.bind(activitiyButtons[i]));
+    activitiyButtons[i].addEventListener('click', changeBtnBgColor.bind(activitiyButtons[i]));
   }
 
-  function changeBgColor() {
+  function changeBtnBgColor() {
 
     // Remove bgColor of previously clicked button
     let activitiyButtons = document.getElementsByClassName('accountPage__activityBtn');
