@@ -31,7 +31,7 @@ $(document).ready(function(){
   $(document).ajaxComplete(function(){
     loadingTimer = setTimeout(function () {
       $(".loader").css("display", "none");
-  }, 500);
+  }, 200);
   });
 
   // Show and hide pages ===============================================================
@@ -1447,17 +1447,7 @@ $('.edit-button').click(function(){
                                                                       </div>`;
       
       //upload projects button to show upload project page
-      $('#addPortfolio').click(function() {
-        $('html, body').animate({ scrollTop: 0 }, 'fast');
-        // pages
-        $('#uploadProductPage').show();
-        $('#projectPage').hide();
-        $('#signUpPage').hide();
-        $('#loginPage').hide();
-        $('#landingPage').hide();
-        $('#viewMorePage').hide();
-        $('#updateProductPage').hide();
-      });
+      $('#addPortfolio').click(addProductClickHandler);
     }
   }
 
@@ -1470,6 +1460,21 @@ $('.edit-button').click(function(){
   
     return false;
   }
+
+  function addProductClickHandler() {
+    $('html, body').animate({ scrollTop: 0 }, 'fast');
+        // pages
+        $('#uploadProductPage').show();
+        $('#projectPage').hide();
+        $('#signUpPage').hide();
+        $('#loginPage').hide();
+        $('#landingPage').hide();
+        $('#viewMorePage').hide();
+        $('#updateProductPage').hide();
+  }
+
+   //upload projects button in navbar to show upload project page
+   $('#addProduct').click(addProductClickHandler);
 
 
   // EDIT A PROJECT IN CURRENT USER'S PORTFOLIO
