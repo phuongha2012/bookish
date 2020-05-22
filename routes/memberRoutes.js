@@ -139,8 +139,8 @@ module.exports = (app) => {
 
         let productId = req.body.productId;
 
-        Member.findByIdAndUpdate(_memberId, { $pull: { watchlist: productId }})
-                .then(result => res.send('result'))
+        Member.findByIdAndUpdate(_memberId, { $pull: { watchlist: productId }}, { new: true })
+                .then(result => res.send(result))
                 .catch(err => res.send("Error removing product to watchlist: " + err))
     })
 
