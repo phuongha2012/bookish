@@ -1375,7 +1375,18 @@ $('.edit-button').click(function(){
                                                                         <img src="${product.photoUrl}" alt="Avatar" class="mb-3">
                                                                         <div class="mx-1 my-1">
                                                                             <h5 class="productCard-title text-center">${product.title}</h5>
-                                                                            <div id="${product._id}" class="viewMoreButton button text-center mx-auto">View</div>
+                                                                            <div id="productCard__buttonWrapper${product._id}" class="flexContainer--row">
+                                                                              <div class="removeButton button button--iconButton text-center mx-auto">
+                                                                                <svg class="icon">
+                                                                                    <use id="removeButton${product._id}" xlink:href="images/icons.svg#icon-delete"></use>
+                                                                                </svg>
+                                                                              </div>
+                                                                              <div class="viewMoreButton button button--iconButton text-center mx-auto">
+                                                                                <svg class="icon">
+                                                                                    <use id="${product._id}" xlink:href="images/icons.svg#icon-view"></use>
+                                                                                </svg>
+                                                                              </div>
+                                                                            </div>  
                                                                         </div>
                                                                       </div>`)
                                                                 .join(' ');
@@ -1432,6 +1443,12 @@ $('.edit-button').click(function(){
 
     for (let i = 0; i < deleteButtons.length; i++) {
         deleteButtons[i].addEventListener('click', displayDeletePopup);
+    }
+
+    let removeButtons = document.getElementsByClassName('removeButton');
+
+    for (let i = 0; i < removeButtons.length; i++) {
+        removeButtons[i].addEventListener('click', displayRemovePopup);
     }
   }
 
@@ -1630,6 +1647,76 @@ $('.edit-button').click(function(){
                               <div class="editButton button button--iconButton text-center mx-auto">
                                 <svg class="icon">
                                     <use id="editButton${projectId}" xlink:href="images/icons.svg#icon-edit"></use>
+                                </svg>
+                              </div>
+                              <div class="viewMoreButton button button--iconButton text-center mx-auto">
+                                <svg class="icon">
+                                    <use id="${projectId}" xlink:href="images/icons.svg#icon-view"></use>
+                                </svg>
+                              </div>`;
+
+    addListenersToCardButtons();
+  }
+
+  // If removeProjectFromWatchlist buttons clicked, show pop up to reconfirm removal
+  function displayRemovePopup(e) {
+    let projectId = (e.target.id).slice(12);
+    sessionStorage.setItem('projectOnRemove', projectId);
+
+    let idName = `productCard__buttonWrapper${projectId}`;
+    let buttonWrapper = document.getElementById(idName);
+
+    buttonWrapper.innerHTML =
+                              `<div class="mx-auto">
+                                    <div class="text-center mb-3">
+                                        <small>Remove this from watchlist?</small>
+                                    </div>
+                                    <div id="abortRemoveProject"
+                                            class="buttonLink buttonLink--small buttonLink--noCap buttonLink--grey back-portfolio float-left">
+                                            Cancel</div>
+                                    <div id="confirmRemoveProject"
+                                            class="button button--small button--noCap float-right">
+                                            Remove</div>
+                              </div>`;
+
+    document.getElementById('confirmRemoveProject').addEventListener('click', removeProject);
+    document.getElementById('abortRemoveProject').addEventListener('click', abortRemoveProject);
+  }
+
+  // Delete a project from backend and re-generate My portfolio section
+  function removeProject() {
+    let currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
+    let projectId = sessionStorage.getItem('projectOnRemove');
+
+    $.ajax({
+      url: `${url}/members/${currentUser._id}/watchlist/remove/`,
+        type: 'PATCH',
+        data: {
+              productId: projectId
+        },
+        success: function(updatedUser) {
+          console.log(updatedUser);
+          sessionStorage.setItem('currentUser', JSON.stringify(updatedUser));
+          sessionStorage.removeItem('projectOnRemove');
+          generatePersonalList('watchProducts');
+          console.log(sessionStorage);
+      },
+      error: function(err) {
+            console.log(err);
+      }
+    });
+  }
+
+  // If user aborts delete project, remove delete popup and re-show view, edit, delete button group
+  function abortRemoveProject(e) {
+    let projectId = sessionStorage.getItem('projectOnRemove');
+    let idName = `productCard__buttonWrapper${projectId}`;
+    let buttonWrapper = document.getElementById(idName);
+
+    buttonWrapper.innerHTML =
+                              `<div class="deleteButton button button--iconButton text-center mx-auto">
+                                <svg class="icon">
+                                    <use id="deleteButton${projectId}" xlink:href="images/icons.svg#icon-delete"></use>
                                 </svg>
                               </div>
                               <div class="viewMoreButton button button--iconButton text-center mx-auto">
