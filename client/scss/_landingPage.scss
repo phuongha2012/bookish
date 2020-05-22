@@ -11,7 +11,7 @@
 }
 
 .filterDropdown {
-  background-color: $colour-aegean;
+  background-color: $colour-grey--light;
   justify-content: center;
   padding-bottom: 20px;
   padding-top: 20px;
@@ -69,9 +69,14 @@
   
   & > img {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.02), 0 6px 20px 0 rgba(0, 0, 0, 0.08);
-    height: 220px;
-    width: 150px;
+    height: 400px;
+    width: 300px;
     margin: 0 auto;
+
+      @media (min-width: 768px) {
+        height: 290px;
+        width: 200px;
+      }
   }
 }
 

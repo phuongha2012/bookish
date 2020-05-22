@@ -598,8 +598,8 @@ $(document).ready(function(){
     // Generate viewMorePgae HTML and attach to #viewMorePage
     document.getElementById('viewMorePage').innerHTML = `
                                                       <!-- General description section -->
-                                                      <div class="flexContainer--row flexContainer--row--top my-5">
-                                                          <div class="flexContainer--col col-sm-12 col-md-5">
+                                                      <div class="row my-5">
+                                                          <div class="col-sm-12 col-md-5">
                                                               <div class="col-sm-12 col-md-6 flexContainer--row mb-5">
                                                                   <svg class="backIcon mr-2">
                                                                       <use xlink:href="images/icons.svg#icon-arrow-left2"></use>
@@ -608,35 +608,37 @@ $(document).ready(function(){
                                                                       Back to Home
                                                                   </p>
                                                               </div>
-                                                              <img src="${product.photoUrl}" alt="Book image" class="viewMorePage__mainPhoto">
+                                                              <div class="viewMorePage__mainPhoto--container">
+                                                                <img src="${product.photoUrl}" alt="Book image" class="viewMorePage__mainPhoto">
+                                                              </div>
                                                           </div>
-                                                          <div class="flexContainer--col col-sm-12 col-md-7">
-                                                              <div class="flexContainer--row">
-                                                                  <h2 class="mr-3">${product.title}</h2>
-                                                                  <a id="inWatchlist" tabindex="0" class="buttonLink buttonLink--noCap buttonLink--grey buttonLink--small inWatchListIcon" role="button" data-toggle="popover" data-trigger="hover" data-content="This book is currently in your watchlist">
+                                                          <div class="col-sm-12 col-md-7">
+                                                              <div class="row">
+                                                                  <h2 class="mr-3 pl-3 col">${product.title}</h2>
+                                                                  <a id="inWatchlist" tabindex="0" class="buttonLink buttonLink--noCap buttonLink--grey buttonLink--small inWatchListIcon col" role="button" data-toggle="popover" data-trigger="hover" data-content="This book is currently in your watchlist">
                                                                       <svg class="inWatchlist__icon">
                                                                           <use xlink:href="images/icons.svg#icon-binoculars"></use>
                                                                       </svg>
                                                                   </a>
                                                               </div>
-                                                              <h3 class="color-grey mb-5">&dollar;${product.price}</h3>
-                                                              <p class="mb-5">
+                                                              <h3 class="color-grey mb-5 pl-3 row">&dollar;${product.price}</h3>
+                                                              <p class="mb-5 pl-3 row">
                                                                   ${product.description}
                                                               </p>
-                                                              <div class="flexContainer--row float-right mb-5">
+                                                              <div class="row mb-2 pl-3">
+                                                                  <small class="capitalised color-black mr-1">Condition:</small>
+                                                                  <small>${product.condition}</small>
+                                                              </div>
+                                                              <div class="row pl-3">
+                                                                  <small class="capitalised color-black mr-1">Listed city:</small>
+                                                                  <small>${product.listedCity}</small>
+                                                              </div> 
+                                                              <div class="row mt-5 pl-3">
                                                                   <a id="${product._id}" tabindex="0" class="buyNowBtn button button--bordered mr-3 popOver" role="button" data-toggle="popover" data-trigger="focus" data-content="Please login to buy this book">Buy Now</a>
                                                                   <div id="watchListWrapper">
                                                                     ${watchListHTML}
                                                                   </div>
                                                               </div>
-                                                              <div class="flexContainer--row mb-2">
-                                                                  <small class="capitalised color-black mr-1">Condition:</small>
-                                                                  <small>${product.condition}</small>
-                                                              </div>
-                                                              <div class="flexContainer--row">
-                                                                  <small class="capitalised color-black mr-1">Listed city:</small>
-                                                                  <small>${product.listedCity}</small>
-                                                              </div>        
                                                           </div>
                                                       </div>
                                                       <br/>

@@ -319,7 +319,7 @@ footer {
 }
 
 .filterDropdown {
-  background-color: #37465d;
+  background-color: #f0f1f052;
   justify-content: center;
   padding-bottom: 20px;
   padding-top: 20px;
@@ -377,9 +377,15 @@ footer {
 }
 .card > img {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.02), 0 6px 20px 0 rgba(0, 0, 0, 0.08);
-  height: 220px;
-  width: 150px;
+  height: 400px;
+  width: 300px;
   margin: 0 auto;
+}
+@media (min-width: 768px) {
+  .card > img {
+    height: 290px;
+    width: 200px;
+  }
 }
 
 @media (max-width: 720px) {
@@ -413,11 +419,21 @@ footer {
   height: 20px;
 }
 
+.viewMorePage__mainPhoto--container {
+  display: block;
+  text-align: center;
+}
+
 .viewMorePage__mainPhoto {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   height: 500px;
-  margin-left: 80px;
-  margin-right: 80px;
+  width: 400px;
+}
+@media (min-width: 768px) and (max-width: 992px) {
+  .viewMorePage__mainPhoto {
+    height: 300px;
+    width: 250px;
+  }
 }
 
 .viewMorePage__thumbnail {
