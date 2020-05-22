@@ -1,0 +1,49 @@
+.logo {
+    width: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  
+      &--small {
+        width: 100px;
+      }
+  
+      &__icon {
+        width: 50px;
+        height: 50px;
+        fill: $colour-rouge;
+      }
+  
+      &__icon--small {
+        width: 100px;
+        width: 25px;
+        height: 25px;
+      }
+  }
+
+.header {
+    align-items: center;
+    display: flex;
+    height: 10%;
+    justify-content: space-between;
+  }
+  
+  .nav {
+    justify-content: space-between;
+    width: 75vw;
+  }
+  
+  #addProduct {
+    color: $colour-aegean !important;
+  }
+  
+  .authBtnWrapper {
+    cursor: pointer;
+    display: flex;
+    justify-content: space-evenly;
+    width: 40%;
+  
+    & > div:hover {
+      border-bottom: 1px $colour-grey solid;
+    }
+  }

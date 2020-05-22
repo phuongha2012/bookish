@@ -173,12 +173,11 @@ $(document).ready(function(){
     $('#updateProductPage').hide();
   });
 
-// edit button to scroll up on update page
+   // Initialise #addProduct tooltip
+   $('#addProduct').popover();
 
-$('.edit-button').click(function(){
-      $('html, body').animate({ scrollTop: 0 }, 'fast');
-});
-
+   //upload projects button in navbar to show upload project page
+   $('#addProduct').click(addProductClickHandler);
 
   // Logout member 
   $('#logoutBtn').click(function(){
@@ -1472,20 +1471,24 @@ $('.edit-button').click(function(){
   }
 
   function addProductClickHandler() {
-    $('html, body').animate({ scrollTop: 0 }, 'fast');
-        // pages
-        $('#uploadProductPage').show();
-        $('#projectPage').hide();
-        $('#signUpPage').hide();
-        $('#loginPage').hide();
-        $('#landingPage').hide();
-        $('#viewMorePage').hide();
-        $('#updateProductPage').hide();
+
+    let currentUser = sessionStorage.getItem('currentUser');
+
+    if (!currentUser) {
+      $('#addProduct').popover('show');
+    } else {
+      $('#addProduct').popover('hide');
+      $('html, body').animate({ scrollTop: 0 }, 'fast');
+      // pages
+      $('#uploadProductPage').show();
+      $('#projectPage').hide();
+      $('#signUpPage').hide();
+      $('#loginPage').hide();
+      $('#landingPage').hide();
+      $('#viewMorePage').hide();
+      $('#updateProductPage').hide();
+    }
   }
-
-   //upload projects button in navbar to show upload project page
-   $('#addProduct').click(addProductClickHandler);
-
 
   // EDIT A PROJECT IN CURRENT USER'S PORTFOLIO
 
