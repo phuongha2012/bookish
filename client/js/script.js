@@ -250,15 +250,8 @@ $('.edit-button').click(function(){
         username : username,
         password : password
       },
-      success : function(response){
-        if (response === ' ') {
-          Swal.fire({
-            title: 'Empty Input Field',
-            text: 'Please fill in all input fields',
-            icon: 'warning',
-            confirmButtonText: 'OK'
-        });
-        } else if (response === 'Member not found. Please register') {
+      success: function(response){
+        if (response === 'Member not found. Please register!') {
           Swal.fire({
             title: 'Not Registered',
             text: 'Member not found. Please register',
