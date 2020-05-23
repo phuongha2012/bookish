@@ -43,7 +43,7 @@ $(document).ready(function(){
     // buttons
     $('#logoutBtn').show();
     $('.home-btn').show();
-    $('#myPortfolioBtn').show();
+    $('#myAccountBtn').show();
     $('#loginBtn').hide();
     $('#signUpBtn').hide();
     $('#authBtnGroup-question').hide();
@@ -58,7 +58,7 @@ $(document).ready(function(){
     $('#updateProductPage').hide();
   } else {
     $('#logoutBtn').hide();
-    $('#myPortfolioBtn').hide();
+    $('#myAccountBtn').hide();
     $('.home-btn').show();
     $('#loginBtn').show();
     $('#signUpBtn').show();
@@ -86,7 +86,11 @@ $(document).ready(function(){
   });
 
   //Login button to show login page
-  $('#loginBtn').click(function(){
+  $('#loginBtn').on('click', logInBtnClickHandler);
+  $('#loginBtnMobile').on('click', logInBtnClickHandler);
+
+  function logInBtnClickHandler() {
+    closeMobileNav();
     // pages
     $('#loginPage').show();
     $('#landingPage').hide();
@@ -95,11 +99,14 @@ $(document).ready(function(){
     $('#projectPage').hide();
     $('#uploadProductPage').hide();
     $('#updateProductPage').hide();
-
-  });
+  }
 
   //signup button to shoe register page
-  $('#signUpBtn').click(function(){
+  $('#signUpBtn').on('click', signUpBtnClickHandler);
+  $('#signUpBtnMobile').on('click', signUpBtnClickHandler);
+
+  function signUpBtnClickHandler() {
+    closeMobileNav();
     // pages
     $('#signUpPage').show();
     $('#projectPage').hide();
@@ -108,10 +115,14 @@ $(document).ready(function(){
     $('#viewMorePage').hide();
     $('#uploadProductPage').hide();
     $('#updateProductPage').hide();
-  });
+  }
 
   // my portfolio button to show my portfolio page
-  $('#myPortfolioBtn').click(function(){
+  $('#myAccountBtn').on('click', myAccountBtnClickHandler);
+  $('#myAccountBtnMobile').on('click', myAccountBtnClickHandler);
+
+  function myAccountBtnClickHandler() {
+    closeMobileNav();
     getMyAccountInfo();
     // pages
     $('#projectPage').show();
@@ -121,7 +132,8 @@ $(document).ready(function(){
     $('#viewMorePage').hide();
     $('#uploadProductPage').hide();
     $('#updateProductPage').hide();
-  });
+
+  }
 
   //upload projects button to show upload project page
   $('#addPortfolio').click(function(){
@@ -180,7 +192,11 @@ $(document).ready(function(){
    $('#addProduct').click(addProductClickHandler);
 
   // Logout member 
-  $('#logoutBtn').click(function(){
+  $('#logOutBtn').on('click', logOutBtnClickHandler);
+  $('#logOutBtnMobile').on('click', logOutBtnClickHandler);
+
+  function logOutBtnClickHandler() {
+    closeMobileNav();
     sessionStorage.clear();
     $('#landingPage').show();
     $('#loginPage').hide();
@@ -189,7 +205,21 @@ $(document).ready(function(){
     $('#uploadProductPage').hide();
     $('#updatePortfolio').hide();
     location.reload("#loginForm");
-  });
+  }
+
+  /* Open */
+  document.getElementById('openMobileNav').addEventListener('click', openMobileNav);
+
+  function openMobileNav() {
+    document.getElementById("mobileNav").style.height = "100%";
+  }
+
+  /* Close */
+  document.getElementById('closeMobileNav').addEventListener('click', closeMobileNav);
+
+  function closeMobileNav() {
+    document.getElementById("mobileNav").style.height = "0";
+  }
 
   // Register user
   $('#registerForm').submit(function(){
@@ -267,7 +297,7 @@ $(document).ready(function(){
         } else {
           sessionStorage.setItem('currentUser', JSON.stringify(response));
           $('#logoutBtn').show();
-          $('#myPortfolioBtn').show();
+          $('#myAccountBtn').show();
           $('#authBtnGroup-question').hide();
           $('#loginBtn').hide();
           $('#signUpBtn').hide();
@@ -1105,8 +1135,8 @@ $(document).ready(function(){
     document.getElementById('accountPage__memberPhoto').style.backgroundImage = `url(${photoUrl})`;
     document.getElementById('memberAccount').innerHTML =
                                                           `<div class="flexContainer--col btBorder pb-3">
-                                                            <div class="flexContainer--row flexContainer--row--space-between col-sm-12 mx-auto mt-5">
-                                                              <div class="flexContainer--col col-7">
+                                                            <div class="row col-sm-12 mx-auto mt-5">
+                                                              <div class="col-xs-12 col-md-7">
                                                                 <div class="flexContainer--row mb-3">
                                                                   <div class="col-4 text-left">Username:</div>
                                                                   <div class="col-8 text-left">${account.username}</div>
@@ -1120,10 +1150,10 @@ $(document).ready(function(){
                                                                   <div class="col-8 text-left">${joinedDate}</div>
                                                                 </div>
                                                               </div>
-                                                              <div class="flexContainer--col col-5">
+                                                              <div class="col-xs-12 col-md-5">
                                                                 <div class="flexContainer--row flexContainer--row--top mb-3">
-                                                                  <div class="mr-3">Shipping address:</div>
-                                                                  <div class="flexContainer--col">
+                                                                  <div class="mr-3 col-4 text-left">Shipping address:</div>
+                                                                  <div class="col-8 pl-0">
                                                                     <p>${street}</p>
                                                                     <p>${suburb}</p>
                                                                     <p>${city} ${zip}</p>
@@ -1202,8 +1232,8 @@ $(document).ready(function(){
 
     document.getElementById('memberAccount').innerHTML =
                                                         `<form id="editUserForm">
-                                                            <div class="flexContainer--row flexContainer--row--space-between col-sm-12 mx-auto mt-5">
-                                                                <div class="flexContainer--col col-5">
+                                                            <div class="row col-sm-12 mx-auto mt-5">
+                                                                <div class="col-xs-12 col-md-5">
                                                                   <div class="flexContainer--row mb-3">
                                                                       <div class="col-4 text-left">Username:</div>
                                                                       <div class="col-8 text-left">${JSON.parse(sessionStorage.getItem('currentUser')).username}</div>
@@ -1219,9 +1249,9 @@ $(document).ready(function(){
                                                                     <div class="col-8 text-left">${joinedDate}</div>
                                                                   </div>
                                                                 </div>
-                                                                <div class="flexContainer--col col-6 ml-auto">
+                                                                <div class="col-xs-12 col-md-6 ml-auto">
                                                                     <div class="flexContainer--row flexContainer--row--top mb-3">
-                                                                        <div class="mr-3">Shipping address:</div>
+                                                                        <div class="col-4 text-left">Shipping address:</div>
                                                                         <div class="flexContainer--col col-8">
                                                                             <input type="text" class="form-control mb-18" id="editUserForm__street" placeholder="street address">
                                                                             <input type="text" class="form-control mb-18" id="editUserForm__suburb" placeholder="suburb">

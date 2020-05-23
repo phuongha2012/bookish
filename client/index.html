@@ -24,20 +24,43 @@
                     Bookish
                 </h3>
             </div>
-            <div class="nav">
+            <div id="nav" class="nav">
                 <div class="flexContainer--row">
                     <div class="buttonLink home-btn mr-5">Shop</div>
-                    <!-- <div id="addProduct" class="buttonLink ml-5">List a book</div> -->
                     <a id="addProduct" tabindex="0" class="buttonLink ml-5 color-aegean" role="button" data-toggle="popover" data-trigger="focus" data-content="Please sign up or log in to list a book">List a book</a>
                 </div>
                 <div class="authBtnWrapper">
                   <small id="authBtnGroup-question">Are you a member?</small>
                   <div id="loginBtn">Login</div>
                   <div id="signUpBtn">Sign Up</div>
-                  <div id="myPortfolioBtn" class="buttonLink">My Account</div>
-                  <div id="logoutBtn"><small>Logout</small></div>
+                  <div id="myAccountBtn" class="buttonLink">My Account</div>
+                  <div id="logOutBtn"><small>Logout</small></div>
                 </div>
             </div>
+
+            <!-- The overlay -->
+            <div id="mobileNav" class="mobileNav--overlay">
+
+              <!-- Button to close the overlay navigation -->
+              <a href="javascript:void(0)" id="closeMobileNav" class="closebtn">&times;</a>
+
+              <!-- Overlay content -->
+              <div class="mobileNav--overlay__content">
+                <a class="buttonLink color-aegean home-btn mx-auto">Shop</a>
+                <a id="addProduct" tabindex="0" class="buttonLink mx-auto color-aegean" role="button" data-toggle="popover" data-trigger="focus" data-content="Please sign up or log in to list a book">List a book</a>
+                <div class="authBtnWrapper">
+                  <small id="authBtnGroup-question">Are you a member?</small>
+                  <div id="loginBtnMobile">Login</div>
+                  <div id="signUpBtnMobile">Sign Up</div>
+                  <div id="myAccountBtnMobile" class="buttonLink">My Account</div>
+                  <div id="logOutBtnMobile"><small>Logout</small></div>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- Use any element to open/show the overlay navigation menu -->
+            <span id="openMobileNav">Menu</span>
           </div>
 
           <!--  =========================== LANDING PAGE ================================  -->
@@ -46,7 +69,7 @@
             <!-- Banner -->
             <div class="landingPage-banner"></div>
             <div class="filterDropdown row">
-              <div class="input-group col-12 col-sm-12 col-md-3 col-lg-3">
+              <div class="input-group col-xs-10 col-md-3 col-lg-3">
                 <select id="filterDropdown-byPrice" class="custom-select filterInputGroup mx-2 my-2">
                   <option value='{"min":0,"max":500000}' selected>All Price</option>
                   <option value='{"min":0,"max":10}'>Under $10</option>
@@ -56,7 +79,7 @@
               </div>
 
               <!-- Filter dropdown -->
-              <div class="input-group col-12 col-sm-12 col-md-3 col-lg-3">
+              <div class="input-group col-xs-10 col-md-3 col-lg-3">
                 <select class="custom-select filterInputGroup mx-2 my-2" id="filterDropdown-byCategory">
                   <option value="all" selected>All Categories</option>
                   <option value="Arts & Photography">Arts & Photography</option>
@@ -150,14 +173,14 @@
                   </div>
 
                   <!-- Member's activities section -->
-                  <div class="flexContainer--row flexContainer--row--top col-12 mt-5">
-                    <div class="flexContainer--col col-3">
+                  <div class="row col-12 mt-5">
+                    <div class="flexContainer--col col-xs-12 col-md-3">
                       <div id="accountPage__watchlistButton" class="button accountPage__activityBtn" data-value="watchProducts">Watchlist</div>
                       <div class="button accountPage__activityBtn" data-value="sellingProducts">On sale</div>
                       <div class="button accountPage__activityBtn" data-value="soldProducts">Sold</div>
                       <div class="button accountPage__activityBtn" data-value="purchasedProducts">Purchased</div>
                     </div>
-                    <div class="col-9">
+                    <div class="col-xs-12 col-md-9">
                       <!-- <h2 class="text-center mb-5">Items</h2> -->
                       <div class="myProductsDeck__wrapper flexContainer--col">
                         <div class="loader mt-5 mb-5"></div>
