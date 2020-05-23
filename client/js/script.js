@@ -517,10 +517,10 @@ $(document).ready(function(){
 
                                               // Conditionally display comment input box based on member auth status
                                               let replyInputBox = currentUser ? `<div class="flexContainer--row">
-                                                                                    <div class="col-sm-3 col-md-2 mb-2">
+                                                                                    <div class="col-sm-3 col-md-2 mb-2 currentUser__reply-thumbnail">
                                                                                         <div class="viewMorePage__thumbnail viewMorePage__thumbnail--commenter mx-auto" style="background-image:url(${(JSON.parse(sessionStorage.getItem('currentUser'))).photoUrl ? (JSON.parse(sessionStorage.getItem('currentUser'))).photoUrl : `../images/noavatar.png`})"></div>
                                                                                     </div>
-                                                                                    <div class="flexContainer--col col-10 flexContainer--col--right viewMorePage-postComment">
+                                                                                    <div class="flexContainer--col col-xs-12 col-md-10 flexContainer--col--right viewMorePage-postComment">
                                                                                         <textarea id="viewMorePage-postReplyInput${item._id}" class="col-12" rows="2" cols="100"></textarea>
                                                                                         <div id="viewMorePage-postReplyButton${item._id}" class="viewMorePage-postReplyButton button button--small button--noCap mt-2">Reply</div>
                                                                                     </div>
@@ -551,11 +551,11 @@ $(document).ready(function(){
 
 
                                                 return `<div class="flexContainer--col col-sm-12 col-lg-12 col-md-10 my-3">
-                                                            <div class="flexContainer--row">
-                                                                <div class="col-sm-3 col-md-2 mb-2">
+                                                            <div class="row">
+                                                                <div class="col-xs-2 col-sm-3 col-md-2 mb-2 width-auto">
                                                                     <div class="viewMorePage__thumbnail viewMorePage__thumbnail--commenter mx-auto" style="background-image:url(${item.commenter.memberPhotoUrl ? item.commenter.memberPhotoUrl : '../images/noavatar.png'})"></div>
                                                                 </div>
-                                                                <div class="col-sm-9 col-md-10">
+                                                                <div class="col-xs-10 col-sm-9 col-md-10 width-auto comment-container">
                                                                     <small class="comment-info flexContainer--row">
                                                                         <span class="font-italic mr-1">${item.commenter.memberUsername}</span>
                                                                         <span class="font-italic">${formatDate(item.postedOn)}</span>
@@ -569,11 +569,11 @@ $(document).ready(function(){
 
     // Conditionally render addComment HTML base on user's login status
     addCommentHTML = currentUser ? `<div class="col-sm-3 col-md-2 mb-2">
-                                        <div class="viewMorePage__thumbnail viewMorePage__thumbnail--commenter mx-auto" style="background-image:url(${(JSON.parse(sessionStorage.getItem('currentUser'))).photoUrl ? (JSON.parse(sessionStorage.getItem('currentUser'))).photoUrl : `../images/noavatar.png`})"></div>
+                                        <div class="viewMorePage__thumbnail viewMorePage__thumbnail--commenter viewMorePage__thumbnail--currentUser mx-auto" style="background-image:url(${(JSON.parse(sessionStorage.getItem('currentUser'))).photoUrl ? (JSON.parse(sessionStorage.getItem('currentUser'))).photoUrl : `../images/noavatar.png`})"></div>
                                     </div>
-                                    <div class="flexContainer--col flexContainer--col--right viewMorePage-postComment">
+                                    <div class="col-xs-9 col-md-10 viewMorePage-postComment pb-3 btBorder">
                                         <textarea id="viewMorePage-postComment" class="col-12" rows="3" cols="100"></textarea>
-                                        <div id="viewMorePage-postCommentButton" class="button button--small button--noCap mt-2">
+                                        <div id="viewMorePage-postCommentButton" class="button button--small button--noCap float-right mt-2">
                                             Submit
                                         </div>
                                     </div>` : `
@@ -598,7 +598,7 @@ $(document).ready(function(){
     // Generate viewMorePgae HTML and attach to #viewMorePage
     document.getElementById('viewMorePage').innerHTML = `
                                                       <!-- General description section -->
-                                                      <div class="row my-5">
+                                                      <div class="row my-2">
                                                           <div class="col-sm-12 col-md-5">
                                                               <div class="col-sm-12 col-md-6 flexContainer--row mb-5">
                                                                   <svg class="backIcon mr-2">
@@ -614,8 +614,8 @@ $(document).ready(function(){
                                                           </div>
                                                           <div class="col-sm-12 col-md-7">
                                                               <div class="row">
-                                                                  <h2 class="mr-3 pl-3 col">${product.title}</h2>
-                                                                  <a id="inWatchlist" tabindex="0" class="buttonLink buttonLink--noCap buttonLink--grey buttonLink--small inWatchListIcon col" role="button" data-toggle="popover" data-trigger="hover" data-content="This book is currently in your watchlist">
+                                                                  <h2 class="mr-3 mt-5 pl-3 col">${product.title}</h2>
+                                                                  <a id="inWatchlist" tabindex="0" class="inWatchListIcon col mt-3" role="button" data-toggle="popover" data-trigger="hover" data-content="This book is currently in your watchlist">
                                                                       <svg class="inWatchlist__icon">
                                                                           <use xlink:href="images/icons.svg#icon-binoculars"></use>
                                                                       </svg>
@@ -633,7 +633,7 @@ $(document).ready(function(){
                                                                   <small class="capitalised color-black mr-1">Listed city:</small>
                                                                   <small>${product.listedCity}</small>
                                                               </div> 
-                                                              <div class="row mt-5 pl-3">
+                                                              <div class="flexContainer--row mt-5 pl-0">
                                                                   <a id="${product._id}" tabindex="0" class="buyNowBtn button button--bordered mr-3 popOver" role="button" data-toggle="popover" data-trigger="focus" data-content="Please login to buy this book">Buy Now</a>
                                                                   <div id="watchListWrapper">
                                                                     ${watchListHTML}
@@ -644,7 +644,7 @@ $(document).ready(function(){
                                                       <br/>
 
                                                       <!-- Detail section -->
-                                                      <div class="flexContainer--row flexContainer--row--top mt-5">
+                                                      <div class="row mt-5">
 
                                                           <!-- Accordion section -->
                                                           <div id="accordion" class="col-sm-12 col-md-5 pt-5">
@@ -709,11 +709,11 @@ $(document).ready(function(){
                                                           </div>
 
                                                           <!-- Q&A section -->
-                                                          <div class="flexContainer--col col-sm-12 col-md-6">
-                                                              <h3 class="mb-3">Chat about this book</h3>
+                                                          <div class="flexContainer--col col-xs-12 col-md-7">
+                                                              <h3 class="my-5 text-center">Chat about this book</h3>
 
                                                               <!-- Add comment section -->
-                                                              <div id="viewMorePage-addCommentWrapper" class="flexContainer--row mx-auto">
+                                                              <div id="viewMorePage-addCommentWrapper" class="row mx-auto">
                                                                     ${addCommentHTML}
                                                               </div>
 
@@ -913,11 +913,11 @@ $(document).ready(function(){
   function addComment(comment) {
     let commentHtml = `
                         <div class="flexContainer--col col-sm-12 col-lg-12 col-md-10 my-3">
-                            <div class="flexContainer--row">
-                                <div class="col-sm-3 col-md-2 mb-2">
+                            <div class="row">
+                                <div class="col-xs-2 col-sm-3 col-md-2 mb-2 width-auto">
                                     <div class="viewMorePage__thumbnail viewMorePage__thumbnail--commenter mx-auto" style="background-image:url(${(JSON.parse(sessionStorage.getItem('currentUser'))).photoUrl})"></div>
                                 </div>
-                                <div class="col-sm-9 col-md-10">
+                                <div class="col-xs-10 col-sm-9 col-md-10 comment-container width-auto">
                                     <small class="comment-info flexContainer--row">
                                         <span class="font-italic mr-1">${(JSON.parse(sessionStorage.getItem('currentUser'))).username}</span>
                                         <span class="font-italic">${formatDate(comment.postedOn)}</span>

@@ -36,7 +36,11 @@
   }
 
   &--accordion {
-    width: 400px;
+    width: 425px;
+
+    @media (min-width: 768px) and (max-width: 992px) {
+      width: 265px;
+    }
   }
 
   &--iconButton {

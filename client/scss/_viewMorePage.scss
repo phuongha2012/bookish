@@ -18,8 +18,8 @@
 
 .viewMorePage__mainPhoto {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    height: 500px;
-    width: 400px;
+    height: 430px;
+    width: 330px;
 
     @media (min-width: 768px) and (max-width: 992px) {
         height: 300px;
@@ -40,12 +40,30 @@
 
     &--commenter {
         height: 50px;
-        width: 50px;
+        width: 50px;   
+    }
+
+    &--currentUser {
+        @media (max-width: 768px) {
+            display: none;
+        }
+    }
+}
+
+.currentUser__reply-thumbnail {
+    display: none;
+
+    @media (min-width: 768px) {
+        display: block;
     }
 }
 
 .viewMorePage__accordion--content {
-    max-width: 400px;
+    max-width: 450px;
+
+    @media (min-width: 768px) {
+        max-width: 400px;
+    }
 }
 
 #inWatchlist {
@@ -80,6 +98,12 @@
     color: #f78d8d;
     transform: translate(-50%,-50%);
     -ms-transform: translate(-50%,-50%);
+}
+
+.comment-container {
+    @media (max-width: 550px) {
+        max-width: 300px;
+    }
 }
 
 
