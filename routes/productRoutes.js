@@ -156,7 +156,7 @@ module.exports = (app) => {
 
         if(_category === "all") {
             query = await Product.aggregate([
-                                            { $match: { price: { $gt: _minPrice, $lt: _maxPrice }}},
+                                            { $match: { $and: [{ price: { $gt: _minPrice, $lt: _maxPrice }},  {isActive: true}] } },
                                             { $lookup: {
                                                         from: "members",
                                                         localField: "seller",
@@ -167,7 +167,7 @@ module.exports = (app) => {
             ])
         } else {
             query = await Product.aggregate([
-                                            { $match: { $and: [{ category: _category }, { price: { $gt: _minPrice, $lt: _maxPrice }}]}},
+                                            { $match: { $and: [{ category: _category }, { price: { $gt: _minPrice, $lt: _maxPrice }}, {isActive: true}]} },
                                             { $lookup: {
                                                         from: "members",
                                                         localField: "seller",

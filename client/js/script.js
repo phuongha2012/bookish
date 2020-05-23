@@ -429,15 +429,16 @@ $(document).ready(function(){
     let category = $("#filterDropdown-byCategory").val();
 
     $.ajax({
-      url: `${url}/filterPortfolios/${minPrice}/${maxPrice}/${category}`,
+      url: `${url}/products/filter/${minPrice}/${maxPrice}/${category}`,
       type: 'GET',
       success: function(response) {
+        console.log(response);
             if (response === 'Sorry, there is no artwork that matches your search!') {
-              document.getElementById('artsDeck').innerHTML = `
+              document.getElementById('productsDeck').innerHTML = `
                                                                 <div class="row mx-auto">
-                                                                    <h5 class="text-center mt-5 mb-5">
+                                                                    <h4 class="text-center mt-5 mb-5">
                                                                         Sorry, there is no artwork that matches your search!
-                                                                    </h5>
+                                                                    </h4>
                                                                 </div>`;
             } else {
               makeProductCards(response);

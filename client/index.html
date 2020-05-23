@@ -48,21 +48,26 @@
             <div class="filterDropdown row">
               <div class="input-group col-12 col-sm-12 col-md-3 col-lg-3">
                 <select id="filterDropdown-byPrice" class="custom-select filterInputGroup mx-2 my-2">
-                  <option value='{"min":0,"max":500000}' selected>Price</option>
-                  <option value='{"min":0,"max":50}'>Under $50</option>
-                  <option value='{"min":51,"max":150}'>From $51 to $150</option>
-                  <option value='{"min":151,"max":100000}'>From $151</option>
+                  <option value='{"min":0,"max":500000}' selected>All Price</option>
+                  <option value='{"min":0,"max":10}'>Under $10</option>
+                  <option value='{"min":11,"max":30}'>From $11 to $30</option>
+                  <option value='{"min":31,"max":100000}'>From $31</option>
                 </select>
               </div>
 
               <!-- Filter dropdown -->
               <div class="input-group col-12 col-sm-12 col-md-3 col-lg-3">
                 <select class="custom-select filterInputGroup mx-2 my-2" id="filterDropdown-byCategory">
-                  <option value="all" selected>Category</option>
-                  <option value="Painting">Painting</option>
-                  <option value="Photography">Photography</option>
-                  <option value="Prints">Prints</option>
-                  <option value="Others">Others</option>
+                  <option value="all" selected>All Categories</option>
+                  <option value="Arts & Photography">Arts & Photography</option>
+                  <option value="Biography">Biography</option>
+                  <option value="Business">Business</option>
+                  <option value="Family">Family</option>
+                  <option value="Fiction">Fiction</option>
+                  <option value="Home & Garden">Home & Garden</option>
+                  <option value="Children">Children</option>
+                  <option value="Cookbooks">Cookbooks</option>
+                  <option value="Self Help">Self Help</option>
                 </select>
               </div>
               <button id="filterButton" class="button">Search</button>
@@ -70,7 +75,6 @@
 
             <!-- Arts listing -->
             <div class="landingPage-listing">
-              <div class="text-center h3 mt-4 mb-4">Latest Artworks</div>
               <div class="loader mt-5 mb-5"></div>
               <div id="productsDeck" class="row"></div>
             </div>
