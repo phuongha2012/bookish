@@ -11,7 +11,8 @@ $(document).ready(function(){
     type: 'GET',
     dataType: 'json',
     success: function(config) {
-      url = config.SERVER_URL + ":" + config.SERVER_PORT;
+      // url = config.SERVER_URL + ":" + config.SERVER_PORT;
+      url = config.SERVER_URL;
       generateLandingPageCards();
     },
     error: function() {
@@ -41,12 +42,17 @@ $(document).ready(function(){
   //check if there is any session sessionStorage
   if (currentUser) {
     // buttons
-    $('#logoutBtn').show();
+    $('#logOutBtn').show();
+    $('#logOutBtnMobile').show();
     $('.home-btn').show();
     $('#myAccountBtn').show();
+    $('#myAccountBtnMobile').show();
     $('#loginBtn').hide();
+    $('#loginBtnMobile').hide();
     $('#signUpBtn').hide();
+    $('#signUpBtnMobile').hide();
     $('#authBtnGroup-question').hide();
+    $('#authBtnGroup-question--mobile').hide();
     // showMemberName(currentUser.username);
     // pages
     $('#landingPage').show();
@@ -57,7 +63,7 @@ $(document).ready(function(){
     $('#uploadProductPage').hide();
     $('#updateProductPage').hide();
   } else {
-    $('#logoutBtn').hide();
+    $('#logOutBtn').hide();
     $('#myAccountBtn').hide();
     $('.home-btn').show();
     $('#loginBtn').show();
@@ -296,7 +302,7 @@ $(document).ready(function(){
         });
         } else {
           sessionStorage.setItem('currentUser', JSON.stringify(response));
-          $('#logoutBtn').show();
+          $('#logOutBtn').show();
           $('#myAccountBtn').show();
           $('#authBtnGroup-question').hide();
           $('#loginBtn').hide();
