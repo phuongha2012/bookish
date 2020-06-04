@@ -1,24 +1,23 @@
 $(document).ready(function(){
 
   $('html, body').animate({ scrollTop: 0 }, 'fast');
-  // sessionStorage.clear();
-  console.log(sessionStorage);
-  let url;
+  sessionStorage.clear();
+  let url = "https://bookish-platform.herokuapp.com";
+  generateLandingPageCards();
 
   // Get server config data
-  $.ajax({
-    url: 'config.json',
-    type: 'GET',
-    dataType: 'json',
-    success: function(config) {
-      // url = config.SERVER_URL + ":" + config.SERVER_PORT;
-      url = "https://bookish-platform.herokuapp.com";
-      generateLandingPageCards();
-    },
-    error: function() {
-      console.log('Cannnot retrieve server url');
-    }
-  });
+  // $.ajax({
+  //   url: 'config.json',
+  //   type: 'GET',
+  //   dataType: 'json',
+  //   success: function(config) {
+  //     url = config.SERVER_URL + ":" + config.SERVER_PORT;
+  //     generateLandingPageCards();
+  //   },
+  //   error: function() {
+  //     console.log('Cannnot retrieve server url');
+  //   }
+  // });
 
 
   // Display spinner on ajax requests
