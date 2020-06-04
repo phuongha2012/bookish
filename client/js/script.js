@@ -12,7 +12,7 @@ $(document).ready(function(){
     dataType: 'json',
     success: function(config) {
       // url = config.SERVER_URL + ":" + config.SERVER_PORT;
-      url = config.SERVER_URL;
+      url = "https://bookish-platform.herokuapp.com";
       generateLandingPageCards();
     },
     error: function() {
