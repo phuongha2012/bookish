@@ -1,7 +1,7 @@
 $(document).ready(function(){
 
   $('html, body').animate({ scrollTop: 0 }, 'fast');
-  sessionStorage.clear();
+  // sessionStorage.clear();
   let url = "https://bookish-platform.herokuapp.com";
   generateLandingPageCards();
 
