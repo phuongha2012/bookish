@@ -3,5 +3,6 @@ module.exports = {
     MONGO_PASSWORD: process.env.MONGO_PASSWORD,
     MONGO_CLUSTER_NAME: process.env.MONGO_CLUSTER_NAME,
     STRIPE_PUBLISHABLE_KEY: process.env.STRIPE_PUBLISHABLE_KEY,
-    STRIPE_SECRET_KEY: process.env.STRIPE_SECRET_KEY
+    STRIPE_SECRET_KEY: process.env.STRIPE_SECRET_KEY,
+    DOMAIN: process.env.DOMAIN
 };
